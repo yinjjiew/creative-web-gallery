@@ -86,7 +86,7 @@ Choose a visual language with some conviction and commit to it — a tool that c
       "Interaction Design",
     ],
     resultRoute: "/r/creative-tools-wallpaper-generator",
-    status: "planned",
+    status: "complete",
     blurb:
       "A risograph-inspired wallpaper press: layered spot inks with real halftone and misregistration, composed around the icon and clock safe areas of actual devices.",
     direction:

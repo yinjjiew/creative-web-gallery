@@ -1,0 +1,845 @@
+/*
+ * Leva. Paper, ink, brass and one extraction red, set like a workshop manual:
+ * a mono label in the left margin against a text column, hairline rules, and no
+ * decoration that is not either a scale or a division.
+ */
+
+.page {
+  --paper: #f3f0e8;
+  --paper-2: #eae6dc;
+  --paper-3: #ddd8ca;
+  --ink: #191811;
+  --ink-2: #4c4939;
+  --ink-3: #7c7663;
+  --rule: rgba(25, 24, 17, 0.14);
+  --rule-2: rgba(25, 24, 17, 0.075);
+  --brass: #8e6b2d;
+  --extract: #8c3117;
+
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-text);
+  font-size: 16px;
+  line-height: 1.55;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.page *,
+.page *::before,
+.page *::after {
+  box-sizing: border-box;
+}
+
+.wrap {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 0 clamp(18px, 4vw, 52px);
+}
+
+/* ------------------------------------------------------------------ top bar */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+}
+
+.topbarInner {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  height: 54px;
+}
+
+.wordmark {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.topbarNote {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  border-left: 1px solid var(--rule);
+  padding-left: 18px;
+}
+
+.topbarSpacer {
+  flex: 1;
+}
+
+.topbarPrice {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-2);
+}
+
+/* ------------------------------------------------------------------- buttons */
+
+.button {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: var(--ink);
+  border: 1px solid var(--ink);
+  border-radius: 1px;
+  padding: 8px 14px 7px;
+  cursor: pointer;
+  transition: background 140ms ease, color 140ms ease;
+}
+
+.button:hover {
+  background: var(--extract);
+  border-color: var(--extract);
+}
+
+.buttonGhost {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--ink);
+  border-radius: 1px;
+  padding: 8px 14px 7px;
+  cursor: pointer;
+  transition: background 140ms ease, color 140ms ease;
+}
+
+.buttonGhost:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.page :is(button, a, [tabindex]):focus-visible {
+  outline: 2px solid var(--extract);
+  outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------------- hero */
+
+.hero {
+  padding: clamp(38px, 6vw, 76px) 0 clamp(24px, 3vw, 34px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.72fr);
+  gap: clamp(24px, 5vw, 72px);
+  align-items: end;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin: 0 0 18px;
+}
+
+.headline {
+  font-size: clamp(2.15rem, 5.1vw, 4rem);
+  font-weight: 500;
+  line-height: 0.99;
+  letter-spacing: -0.032em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.lede {
+  font-size: clamp(0.98rem, 1.15vw, 1.09rem);
+  color: var(--ink-2);
+  margin: 0;
+  max-width: 40ch;
+}
+
+/* --------------------------------------------------------------------- stage */
+
+.stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 372px;
+  border: 1px solid var(--rule);
+  background: var(--paper-2);
+}
+
+.stagePlaceholder {
+  height: clamp(480px, 62vh, 680px);
+  border: 1px solid var(--rule);
+  background: linear-gradient(178deg, #eeebe2 0%, #e4e0d4 58%, #d8d3c4 100%);
+}
+
+.canvasWrap {
+  position: relative;
+  min-height: 0;
+  height: clamp(480px, 62vh, 680px);
+  background: linear-gradient(178deg, #eeebe2 0%, #e4e0d4 58%, #d8d3c4 100%);
+  overflow: hidden;
+  touch-action: none;
+  cursor: grab;
+}
+
+.canvasWrap[data-grab="lever"],
+.canvasWrap[data-grab="orbit"] {
+  cursor: grabbing;
+}
+
+.canvasWrap[data-grab="hover"] {
+  cursor: ns-resize;
+}
+
+.canvasWrap canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.canvasWrap:focus-visible {
+  outline: 2px solid var(--extract);
+  outline-offset: -2px;
+}
+
+.hint {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: rgba(243, 240, 232, 0.86);
+  border: 1px solid var(--rule);
+  padding: 4px 8px 3px;
+  white-space: nowrap;
+  transition: opacity 300ms ease;
+}
+
+.stageFoot {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 12px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.stageFoot > * {
+  pointer-events: auto;
+}
+
+.views {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.viewButton {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  background: rgba(243, 240, 232, 0.82);
+  border: 1px solid var(--rule);
+  border-radius: 1px;
+  padding: 5px 9px 4px;
+  cursor: pointer;
+}
+
+.viewButton:hover {
+  color: var(--ink);
+  border-color: var(--ink-3);
+}
+
+.viewButton[aria-pressed="true"] {
+  color: var(--paper);
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.pull {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: var(--ink);
+  border: 1px solid var(--ink);
+  border-radius: 1px;
+  padding: 9px 15px 8px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  white-space: nowrap;
+}
+
+.pull[data-held="true"] {
+  background: var(--extract);
+  border-color: var(--extract);
+}
+
+.stageFootMain {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+}
+
+.viewNote {
+  max-width: 34ch;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--ink-2);
+  background: rgba(243, 240, 232, 0.92);
+  border-left: 2px solid var(--brass);
+  padding: 8px 11px;
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------- panel */
+
+.panel {
+  border-left: 1px solid var(--rule);
+  background: var(--paper);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.panelHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 13px 16px 11px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.panelTitle {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.phase {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  text-align: right;
+}
+
+.phase[data-phase="pulling"] {
+  color: var(--extract);
+}
+
+.chart {
+  height: 178px;
+  padding: 8px 12px 2px;
+}
+
+.chart canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.readouts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--rule);
+}
+
+.readout {
+  padding: 10px 12px 11px;
+}
+
+.readout + .readout {
+  border-left: 1px solid var(--rule-2);
+}
+
+.readoutLabel {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 3px;
+}
+
+.readoutValue {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 19px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.readoutUnit {
+  font-size: 11px;
+  color: var(--ink-3);
+  letter-spacing: 0;
+  margin-left: 3px;
+}
+
+.loadTrack {
+  height: 3px;
+  background: var(--paper-3);
+  position: relative;
+  overflow: hidden;
+}
+
+.loadFill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0%;
+  background: var(--ink);
+}
+
+.verdict {
+  padding: 15px 16px 18px;
+  border-top: 1px solid var(--rule);
+  flex: 1;
+  min-height: 0;
+  /* The longest readings run to four paragraphs, which is more than the stage is
+     tall on a laptop. Scrolling the reading beats clipping it. */
+  overflow-y: auto;
+}
+
+.verdictTitle {
+  font-size: 1.28rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 0 0 10px;
+}
+
+.verdictStats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 14px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  padding-bottom: 10px;
+  margin: 0 0 11px;
+  border-bottom: 1px solid var(--rule-2);
+}
+
+.verdictStats b {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.verdict p {
+  font-size: 13.6px;
+  line-height: 1.56;
+  color: var(--ink-2);
+  margin: 0 0 9px;
+}
+
+.verdict p:last-child {
+  margin-bottom: 0;
+}
+
+.waiting {
+  font-size: 13.6px;
+  line-height: 1.56;
+  color: var(--ink-3);
+  margin: 0 0 9px;
+}
+
+.waiting:last-child {
+  margin-bottom: 0;
+}
+
+.waiting kbd {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  border: 1px solid var(--rule);
+  border-bottom-width: 2px;
+  border-radius: 2px;
+  padding: 1px 4px;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+
+.simNote {
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: var(--ink-3);
+  border-top: 1px solid var(--rule);
+  padding: 11px 16px 13px;
+  margin: 0;
+}
+
+/* ------------------------------------------------------------------ sections */
+
+.section {
+  border-top: 1px solid var(--rule);
+  padding-top: 20px;
+  margin-top: clamp(48px, 7vw, 88px);
+  display: grid;
+  grid-template-columns: 168px minmax(0, 1fr);
+  gap: clamp(20px, 4vw, 46px);
+  align-items: start;
+}
+
+.sectionLabel {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 2px 0 0;
+  position: sticky;
+  top: 74px;
+}
+
+.argument {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: clamp(22px, 3vw, 40px);
+}
+
+.argument h3 {
+  font-size: 1.02rem;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  margin: 0 0 8px;
+}
+
+.argument p {
+  margin: 0;
+  font-size: 14.6px;
+  color: var(--ink-2);
+  line-height: 1.6;
+}
+
+.anatomy {
+  display: grid;
+  border-top: 1px solid var(--rule-2);
+}
+
+.anatomyRow {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  gap: 20px;
+  align-items: baseline;
+  border: 0;
+  border-bottom: 1px solid var(--rule-2);
+  padding: 13px 0;
+  text-align: left;
+  background: none;
+  width: 100%;
+  cursor: pointer;
+  font-family: inherit;
+  color: inherit;
+  transition: background 140ms ease;
+}
+
+.anatomyRow:hover {
+  background: var(--paper-2);
+}
+
+.anatomyRow[aria-current="true"] .anatomyName {
+  color: var(--extract);
+}
+
+.anatomyName {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.anatomyNote {
+  font-size: 14px;
+  color: var(--ink-2);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.table {
+  margin: 0;
+  border-top: 1px solid var(--rule-2);
+}
+
+.tableRow {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  gap: 20px;
+  border-bottom: 1px solid var(--rule-2);
+  padding: 9px 0;
+}
+
+.tableKey {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 0;
+}
+
+.tableValue {
+  font-size: 14.5px;
+  margin: 0;
+}
+
+.numeric {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 13.5px;
+  text-align: right;
+}
+
+.twoUp {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: clamp(24px, 4vw, 48px);
+  align-items: start;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--rule-2);
+}
+
+.list li {
+  font-size: 14.2px;
+  color: var(--ink-2);
+  border-bottom: 1px solid var(--rule-2);
+  padding: 8px 0;
+}
+
+.prose {
+  font-size: 14.6px;
+  line-height: 1.62;
+  color: var(--ink-2);
+  margin: 0 0 14px;
+  max-width: 54ch;
+}
+
+/* ------------------------------------------------------------------ purchase */
+
+.buy {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(22px, 4vw, 54px);
+  align-items: end;
+}
+
+.priceBlock {
+  text-align: right;
+}
+
+.price {
+  font-family: var(--font-mono);
+  font-size: clamp(1.9rem, 3.4vw, 2.7rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin: 0;
+}
+
+.priceNote {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 8px 0 14px;
+}
+
+.aside {
+  font-size: 13.5px;
+  color: var(--ink-3);
+  margin: 14px 0 0;
+  font-style: italic;
+}
+
+.dialog {
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-text);
+  max-width: 46ch;
+  padding: 22px 24px 24px;
+}
+
+.dialog::backdrop {
+  background: rgba(25, 24, 17, 0.42);
+}
+
+.dialog h3 {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin: 0 0 12px;
+  color: var(--ink-3);
+}
+
+.dialog p {
+  font-size: 14.4px;
+  line-height: 1.6;
+  color: var(--ink-2);
+  margin: 0 0 14px;
+}
+
+/* -------------------------------------------------------------------- footer */
+
+.footer {
+  border-top: 1px solid var(--rule);
+  margin-top: clamp(56px, 8vw, 104px);
+  padding: 22px 0 34px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 32px;
+  align-items: baseline;
+}
+
+.disclosure {
+  font-size: 12.2px;
+  line-height: 1.55;
+  color: var(--ink-3);
+  margin: 0;
+  max-width: 62ch;
+  flex: 1;
+  min-width: 260px;
+}
+
+.backlink {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 2px;
+  white-space: nowrap;
+}
+
+.backlink:hover {
+  color: var(--extract);
+  border-bottom-color: var(--extract);
+}
+
+/* -------------------------------------------------------------- narrow, quiet */
+
+@media (max-width: 1080px) {
+  .stage {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .panel {
+    border-left: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .canvasWrap {
+    height: clamp(360px, 54vh, 520px);
+  }
+
+  .stagePlaceholder {
+    height: clamp(360px, 54vh, 520px);
+  }
+}
+
+@media (max-width: 760px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .section {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .sectionLabel {
+    position: static;
+  }
+
+  .tableRow,
+  .anatomyRow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+  }
+
+  .numeric {
+    text-align: left;
+  }
+
+  .buy {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .priceBlock {
+    text-align: left;
+  }
+
+  .viewNote {
+    display: none;
+  }
+
+  .topbarNote {
+    display: none;
+  }
+
+  .stageFoot {
+    flex-direction: column;
+    align-items: stretch;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    gap: 8px;
+  }
+
+  .views {
+    justify-content: flex-start;
+  }
+
+  .pull {
+    text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page *,
+  .page *::before,
+  .page *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

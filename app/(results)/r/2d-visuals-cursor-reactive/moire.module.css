@@ -1,0 +1,238 @@
+/*
+ * A plate on paper, with its margins carrying the type. Nothing overlaps the
+ * artwork, which keeps every label at full contrast no matter what the
+ * interference is doing behind it.
+ */
+
+.page {
+  --paper: #eaeaea;
+  --ink: #111111;
+  --quiet: #5c5c5c;
+  --rule: #a6a6a6;
+
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(9px, 1.2vw, 16px);
+  height: 100dvh;
+  padding: clamp(13px, 2.1vw, 30px);
+  overflow: hidden;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 11px;
+  line-height: 1.35;
+  -webkit-font-smoothing: antialiased;
+}
+
+.head,
+.foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: clamp(10px, 2vw, 30px);
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(11px, 0.95vw, 13px);
+  font-weight: 400;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+}
+
+.caption {
+  margin: 0;
+  color: var(--quiet);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* ------------------------------------------------------------------- plate */
+
+.plate {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  cursor: crosshair;
+}
+
+.plate::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 0 1px var(--ink);
+  pointer-events: none;
+}
+
+.canvas,
+.canvasPending {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+
+.canvas:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+}
+
+/* The mean tone of the plate itself, so the first frame is not a flash. */
+.canvasPending {
+  background: #808080;
+}
+
+.unavailable {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 2em;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-wrap: balance;
+}
+
+/* ------------------------------------------------------------------ margins */
+
+.readout {
+  display: grid;
+  min-width: 0;
+}
+
+.readout > * {
+  grid-area: 1 / 1;
+}
+
+.invitation {
+  margin: 0;
+  color: var(--quiet);
+  font-size: 10px;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  transition: opacity 700ms ease;
+}
+
+.values {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 clamp(14px, 2.6vw, 36px);
+  margin: 0;
+  opacity: 0;
+  transition: opacity 700ms ease 120ms;
+}
+
+.readoutLive .invitation {
+  opacity: 0;
+}
+
+.readoutLive .values {
+  opacity: 1;
+}
+
+.cell {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7em;
+}
+
+.cell dt {
+  color: var(--quiet);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.cell dd {
+  margin: 0;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+}
+
+.keys {
+  margin: 0;
+  color: var(--quiet);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 260ms ease;
+}
+
+.keysShown {
+  opacity: 1;
+}
+
+.link {
+  color: var(--ink);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 2px;
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: border-color 200ms ease;
+}
+
+.link:hover,
+.link:focus-visible {
+  border-bottom-color: var(--ink);
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+}
+
+.offscreen {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 620px) {
+  .page {
+    gap: 10px;
+  }
+
+  .caption,
+  .keys {
+    display: none;
+  }
+
+  .foot {
+    align-items: flex-end;
+  }
+
+  .values {
+    gap: 0 14px;
+  }
+
+  .cell {
+    gap: 0.5em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .invitation,
+  .values,
+  .keys,
+  .link {
+    transition: none;
+  }
+}

@@ -173,7 +173,7 @@ Avoid full-screen video of hands plating, parallax food photography, the word jo
       "Robustness / Product Polish",
     ],
     resultRoute: "/r/traditional-websites-restaurant",
-    status: "planned",
+    status: "complete",
     blurb:
       "Eighteen seats, one sitting, no choices: a site whose real job is making sure nobody books without knowing exactly what they agreed to.",
     direction:

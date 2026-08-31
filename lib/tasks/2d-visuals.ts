@@ -161,7 +161,7 @@ The piece should also be beautiful when nobody is touching it. A resting state t
       "Robustness / Product Polish",
     ],
     resultRoute: "/r/2d-visuals-cursor-reactive",
-    status: "planned",
+    status: "complete",
     blurb:
       "Two line grids in near-alignment, their offset driven by the cursor. Sub-pixel movements swing vast interference figures that exist in neither layer.",
     direction:

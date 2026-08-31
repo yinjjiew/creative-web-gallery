@@ -278,7 +278,7 @@ Sound synthesized. Visually, this suits strong graphic restraint — silhouette,
       "Audio Design",
     ],
     resultRoute: "/r/games-one-button",
-    status: "planned",
+    status: "polishing",
     blurb:
       "One button, one decision, repeated: when to let go. Real pendulum momentum decides your arc, so the skill is reading a swing and knowing the exact moment.",
     direction:

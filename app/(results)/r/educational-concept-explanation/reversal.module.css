@@ -1,0 +1,1249 @@
+/* Reversal — Simpson's paradox.
+   A serious explanatory publication: one text column, wide figures, a warm
+   paper ground, two data colours and nothing else. */
+
+.root {
+  --paper: #f7f5f0;
+  --tint: #f1ede3;
+  --ink: #17171a;
+  --ink-soft: #3d3c40;
+  --muted: #6d6a61;
+  --rule: #d8d2c4;
+  --hair: #e5dfd2;
+  --a: #13505f;
+  --b: #9c4a22;
+  --a-wash: rgba(19, 80, 95, 0.09);
+  --b-wash: rgba(156, 74, 34, 0.09);
+  --measure: 34rem;
+  --wide: 60rem;
+
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  line-height: 1.62;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  min-height: 100vh;
+  padding: 0 clamp(1.1rem, 5vw, 3rem) 6rem;
+  overflow-x: hidden;
+}
+
+@media (min-width: 60rem) {
+  .root {
+    font-size: 18px;
+  }
+}
+
+.root :focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+/* ---------------------------------------------------------------- structure */
+
+.col {
+  margin: 0 auto;
+  max-width: var(--measure);
+}
+
+.mono {
+  font-family: var(--font-mono), ui-monospace, "SF Mono", Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* ------------------------------------------------------------------- header */
+
+.masthead {
+  max-width: var(--wide);
+  margin: 0 auto;
+  padding: clamp(2.5rem, 8vw, 5.5rem) 0 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+/* The masthead shares the body column's left edge, so the whole page hangs off
+   one vertical line and the figures bleed either side of it. */
+.mastheadInner {
+  max-width: var(--measure);
+  margin: 0 auto;
+}
+
+.eyebrow {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 clamp(1.4rem, 5vw, 2.6rem);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.2rem;
+}
+
+.title {
+  font-size: clamp(3.4rem, 15vw, 8rem);
+  line-height: 0.9;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  margin: 0 0 0.6rem;
+}
+
+.deck {
+  max-width: 33rem;
+  font-size: clamp(1.06rem, 3.4vw, 1.28rem);
+  line-height: 1.5;
+  color: var(--ink-soft);
+  margin: 0 0 clamp(1.6rem, 5vw, 2.4rem);
+  text-wrap: pretty;
+}
+
+.byline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 1.4rem;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  padding-bottom: 1rem;
+}
+
+/* ------------------------------------------------------------------ section */
+
+.section {
+  padding-top: clamp(3rem, 9vw, 5.5rem);
+}
+
+.sectionHead {
+  margin: 0 auto clamp(1.4rem, 4vw, 2rem);
+  max-width: var(--measure);
+}
+
+.sectionNum {
+  display: block;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.7rem;
+}
+
+.h2 {
+  font-size: clamp(1.55rem, 5vw, 2.1rem);
+  line-height: 1.14;
+  letter-spacing: -0.018em;
+  font-weight: 400;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.h3 {
+  font-size: 1.02rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  margin: 2.2rem 0 0.5rem;
+}
+
+.p {
+  margin: 0 0 1.15em;
+  text-wrap: pretty;
+  hanging-punctuation: first;
+}
+
+.p a,
+.li a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  text-decoration-color: var(--rule);
+}
+
+.p a:hover,
+.li a:hover {
+  text-decoration-color: currentColor;
+}
+
+.first::first-letter {
+  initial-letter: 2;
+  -webkit-initial-letter: 2;
+  font-weight: 500;
+  margin-right: 0.09em;
+}
+
+.aside {
+  border-left: 2px solid var(--rule);
+  padding: 0.1rem 0 0.1rem 1.1rem;
+  margin: 1.8rem 0 1.8rem;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.aside p {
+  margin: 0 0 0.7em;
+}
+
+.aside p:last-child {
+  margin-bottom: 0;
+}
+
+.pull {
+  font-size: clamp(1.15rem, 4vw, 1.42rem);
+  line-height: 1.34;
+  margin: 2.4rem 0;
+  padding-left: 0;
+  letter-spacing: -0.012em;
+  text-wrap: pretty;
+}
+
+.list {
+  margin: 0 0 1.3em;
+  padding-left: 1.1rem;
+}
+
+.li {
+  margin-bottom: 0.55em;
+  padding-left: 0.2rem;
+}
+
+.ref {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.62em;
+  vertical-align: 0.42em;
+  letter-spacing: 0.02em;
+  padding-left: 0.12em;
+  text-decoration: none;
+  color: var(--muted);
+}
+
+.ref:hover,
+.ref:focus-visible {
+  color: var(--ink);
+}
+
+/* ------------------------------------------------------------------- tables */
+
+/* A table of mono figures cannot be reflowed below about thirty rems, so on a
+   phone it scrolls sideways. The two radial gradients are shadows that appear
+   only while there is more table in that direction — the classic pure-CSS
+   scroll cue, so the overflow announces itself instead of looking like a
+   rendering fault. */
+.tableWrap {
+  --table-bg: var(--paper);
+  margin: 2rem auto;
+  max-width: var(--wide);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  background:
+    linear-gradient(to right, var(--table-bg) 40%, transparent) left center /
+      2rem 100% no-repeat local,
+    linear-gradient(to left, var(--table-bg) 40%, transparent) right center /
+      2rem 100% no-repeat local,
+    radial-gradient(
+        farthest-side at 0 50%,
+        rgba(23, 23, 26, 0.14),
+        rgba(23, 23, 26, 0)
+      )
+      left center / 0.7rem 100% no-repeat scroll,
+    radial-gradient(
+        farthest-side at 100% 50%,
+        rgba(23, 23, 26, 0.14),
+        rgba(23, 23, 26, 0)
+      )
+      right center / 0.7rem 100% no-repeat scroll;
+}
+
+/* Four or five columns do not want sixty rems; the row label ends up an inch
+   from the first number. */
+.tableMid {
+  max-width: 44rem;
+}
+
+.table {
+  width: 100%;
+  min-width: 30rem;
+  border-collapse: collapse;
+  font-family: var(--font-mono), monospace;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.76rem;
+  letter-spacing: -0.01em;
+}
+
+.table caption {
+  caption-side: top;
+  text-align: left;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 0.86rem;
+  line-height: 1.45;
+  color: var(--muted);
+  padding-bottom: 0.9rem;
+  /* The caption sits inside the horizontal scroller, so it has to be held to
+     the visible width or its last words scroll out of sight. */
+  max-width: min(38rem, calc(100vw - 4.6rem));
+}
+
+.table caption b {
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.table th,
+.table td {
+  text-align: right;
+  padding: 0.5rem 0.55rem;
+  border-bottom: 1px solid var(--hair);
+  white-space: nowrap;
+}
+
+.table thead th {
+  font-weight: 400;
+  font-size: 0.63rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--ink);
+  vertical-align: bottom;
+  line-height: 1.3;
+  white-space: normal;
+}
+
+.table thead th:first-child {
+  text-align: left;
+}
+
+.table th[scope="row"] {
+  text-align: left;
+  font-weight: 400;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 0.9rem;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.table tfoot td,
+.table tfoot th {
+  border-bottom: none;
+  border-top: 1px solid var(--ink);
+  font-weight: 500;
+}
+
+.table .sub {
+  color: var(--muted);
+  font-size: 0.92em;
+}
+
+.armA {
+  color: var(--a);
+}
+
+.armB {
+  color: var(--b);
+}
+
+.swatch {
+  display: inline-block;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  margin-right: 0.45rem;
+  vertical-align: 0.02em;
+}
+
+/* -------------------------------------------------------------- the machine */
+
+.machine {
+  max-width: var(--wide);
+  margin: 2.4rem auto 0;
+  background: var(--tint);
+  border: 1px solid var(--hair);
+  padding: clamp(0.9rem, 3vw, 1.7rem);
+}
+
+.machine .tableWrap {
+  --table-bg: var(--tint);
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.machineTop {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1.2rem;
+  margin-bottom: 0.9rem;
+}
+
+.machineLabel {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.63rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.badge {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.63rem;
+  letter-spacing: 0.06em;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid currentColor;
+  color: var(--muted);
+}
+
+.badgeReal {
+  color: var(--a);
+}
+
+.chartHolder {
+  position: relative;
+  margin: 0 -0.2rem;
+}
+
+.chart {
+  display: block;
+  width: 100%;
+  height: auto;
+  touch-action: pan-y;
+}
+
+.gridLine {
+  stroke: var(--hair);
+  stroke-width: 1;
+}
+
+.axisLine {
+  stroke: var(--rule);
+  stroke-width: 1;
+}
+
+.axisText {
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.02em;
+  fill: var(--muted);
+}
+
+.axisTitle {
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  fill: var(--muted);
+}
+
+.armLine {
+  fill: none;
+  stroke-width: 1.5;
+}
+
+.armLabel {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.dropLine {
+  stroke-dasharray: 2 3;
+  stroke-width: 1;
+  opacity: 0.75;
+}
+
+.valueTag {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.handle {
+  cursor: grab;
+  touch-action: none;
+  outline: none;
+}
+
+.handle:active {
+  cursor: grabbing;
+}
+
+.handleMix {
+  cursor: ew-resize;
+}
+
+.handleRate {
+  cursor: ns-resize;
+}
+
+.handleRing {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.5;
+  opacity: 0;
+}
+
+.handle:focus-visible .handleRing,
+.handle:hover .handleRing {
+  opacity: 1;
+}
+
+.hint {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.63rem;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin: 0.6rem 0 0;
+  line-height: 1.5;
+}
+
+/* verdict */
+
+.verdict {
+  margin: 1.4rem 0 0;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--rule);
+  display: grid;
+  gap: 0.7rem 1.5rem;
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+
+@media (min-width: 46rem) {
+  .verdict {
+    grid-template-columns: 1fr auto;
+  }
+}
+
+.verdictText {
+  font-size: clamp(1rem, 3.4vw, 1.15rem);
+  line-height: 1.42;
+  margin: 0;
+  max-width: 34rem;
+  text-wrap: pretty;
+}
+
+.verdictText em {
+  font-style: italic;
+}
+
+.stamp {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.34rem 0.6rem;
+  border: 1px solid currentColor;
+  white-space: nowrap;
+  align-self: start;
+  justify-self: start;
+}
+
+.stampOn {
+  color: var(--b);
+  background: var(--b-wash);
+}
+
+.stampOff {
+  color: var(--muted);
+}
+
+/* controls */
+
+.controls {
+  margin-top: 1.5rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--hair);
+  display: grid;
+  gap: 1.4rem 2.6rem;
+  grid-template-columns: 1fr;
+  border-width: 1px 0 0;
+}
+
+@media (min-width: 46rem) {
+  .controls {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.controlsLegend {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.63rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 0;
+  margin-bottom: 0.2rem;
+}
+
+.controlGroup {
+  min-width: 0;
+}
+
+.controlGroupName {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0 0 0.7rem;
+}
+
+.control {
+  margin-bottom: 0.85rem;
+}
+
+.controlTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.8rem;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  margin-bottom: 0.25rem;
+}
+
+.controlValue {
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 20px;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.slider::-webkit-slider-runnable-track {
+  height: 1px;
+  background: var(--rule);
+}
+
+.slider::-moz-range-track {
+  height: 1px;
+  background: var(--rule);
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 13px;
+  height: 13px;
+  margin-top: -6px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 1.5px solid var(--arm, var(--ink));
+}
+
+.slider::-moz-range-thumb {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 1.5px solid var(--arm, var(--ink));
+}
+
+.presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1.4rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--hair);
+}
+
+.preset {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.02em;
+  color: var(--ink-soft);
+  background: transparent;
+  border: 1px solid var(--rule);
+  padding: 0.35rem 0.6rem;
+  cursor: pointer;
+}
+
+.preset:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.presetActive {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+.presetNote {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.63rem;
+  color: var(--muted);
+  margin: 0.7rem 0 0;
+  min-height: 1.2em;
+}
+
+/* ------------------------------------------------------------------ algebra */
+
+.algebra {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.78rem;
+  line-height: 1.75;
+  letter-spacing: -0.01em;
+  background: var(--tint);
+  border-left: 2px solid var(--rule);
+  padding: 0.9rem 1rem;
+  margin: 1.7rem 0;
+  /* An equation is one of the few things that must not be re-wrapped, so it is
+     allowed to scroll instead. The right-edge shadow is what stops a long line
+     reading as truncated; the `local` layer over it hides the shadow once there
+     is nothing further to scroll to. */
+  overflow-x: auto;
+  background-image:
+    linear-gradient(to left, var(--tint) 40%, rgba(0, 0, 0, 0)),
+    radial-gradient(
+      farthest-side at 100% 50%,
+      rgba(23, 23, 26, 0.16),
+      rgba(23, 23, 26, 0)
+    );
+  background-position: right center, right center;
+  background-size: 1.6rem 100%, 0.7rem 100%;
+  background-repeat: no-repeat, no-repeat;
+  background-attachment: local, scroll;
+}
+
+@media (max-width: 34rem) {
+  .algebra {
+    font-size: 0.72rem;
+    padding: 0.8rem 0.75rem;
+  }
+}
+
+.algebra span {
+  display: block;
+  white-space: nowrap;
+}
+
+.algebra sub {
+  font-size: 0.76em;
+  line-height: 0;
+  letter-spacing: 0;
+}
+
+.algebra .algebraNote {
+  display: block;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--muted);
+  margin-top: 0.6rem;
+  white-space: normal;
+}
+
+/* --------------------------------------------------------------- prediction */
+
+.quiz {
+  max-width: var(--wide);
+  margin: 2rem auto 0;
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 56rem) {
+  .quiz {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+  }
+}
+
+.card {
+  border: 1px solid var(--hair);
+  background: var(--tint);
+  padding: 1.1rem 1.1rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.cardNum {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.63rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.6rem;
+}
+
+.cardPrompt {
+  font-size: 0.94rem;
+  line-height: 1.5;
+  margin: 0 0 1rem;
+  text-wrap: pretty;
+}
+
+.choices {
+  border: 0;
+  padding: 0;
+  margin: 0 0 0.4rem;
+  display: grid;
+  gap: 0.3rem;
+}
+
+.choice {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  cursor: pointer;
+  padding: 0.22rem 0;
+}
+
+.choice input {
+  accent-color: var(--ink);
+  margin: 0;
+  flex: none;
+  transform: translateY(0.15em);
+}
+
+.reveal {
+  margin-top: 0.7rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--rule);
+}
+
+.mark {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 0 0 0.6rem;
+}
+
+.markRight {
+  color: var(--a);
+}
+
+.markWrong {
+  color: var(--b);
+}
+
+.working {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.68rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 0 0 0.7rem;
+  padding: 0;
+  list-style: none;
+}
+
+.working li {
+  margin-bottom: 0.3rem;
+  text-indent: -0.7rem;
+  padding-left: 0.7rem;
+}
+
+.working li::before {
+  content: "→ ";
+  color: var(--muted);
+}
+
+.lesson {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  margin: 0 0 0.8rem;
+  text-wrap: pretty;
+}
+
+.textButton {
+  align-self: flex-start;
+  margin-top: auto;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--rule);
+  padding: 0.2rem 0;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.textButton:hover {
+  border-bottom-color: var(--ink);
+}
+
+/* ----------------------------------------------------------- Berkeley figure */
+
+.mosaic {
+  max-width: var(--wide);
+  margin: 2rem auto 0;
+}
+
+.mosaicSvg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.mosaicLabel {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 13px;
+  fill: var(--ink);
+}
+
+.mosaicSmall {
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+  fill: var(--muted);
+}
+
+.mosaicSeg {
+  font-family: var(--font-mono), monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.04em;
+}
+
+.figcaption {
+  max-width: 38rem;
+  margin: 1rem auto 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+
+.figcaption b {
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+/* -------------------------------------------------------------- causal tabs */
+
+.stories {
+  max-width: var(--wide);
+  margin: 2rem auto 0;
+}
+
+.tablist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.tab {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  padding: 0.55rem 0.8rem;
+  margin-bottom: -1px;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.tab:first-child {
+  padding-left: 0;
+}
+
+.tab:hover {
+  color: var(--ink);
+}
+
+.tabOn {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+/* Three tabs of prose do not fit across a phone, so they stack and the
+   selected one is marked down its left edge instead of underneath. */
+@media (max-width: 40rem) {
+  .tablist {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tab,
+  .tab:first-child {
+    text-align: left;
+    padding: 0.45rem 0 0.45rem 0.65rem;
+    margin-bottom: 0;
+    border-bottom: 0;
+    border-left: 2px solid transparent;
+  }
+
+  .tabOn {
+    border-left-color: var(--ink);
+  }
+}
+
+.storyBody {
+  display: grid;
+  gap: 1.6rem;
+  grid-template-columns: 1fr;
+  padding-top: 1.5rem;
+}
+
+@media (min-width: 52rem) {
+  .storyBody {
+    grid-template-columns: 15rem 1fr;
+    gap: 2.4rem;
+  }
+}
+
+.dagBox {
+  min-width: 0;
+}
+
+.dag {
+  display: block;
+  width: 100%;
+  max-width: 15rem;
+  height: auto;
+}
+
+.dagNode {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  fill: var(--ink);
+}
+
+.dagCaption {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.63rem;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 0.6rem 0 0;
+}
+
+.storyText p {
+  margin: 0 0 0.9em;
+  font-size: 0.96rem;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.storyText p:last-child {
+  margin-bottom: 0;
+}
+
+.storyTag {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.63rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 0.5rem;
+}
+
+.actTable {
+  margin-top: 1.4rem;
+  border-collapse: collapse;
+  font-family: var(--font-mono), monospace;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.72rem;
+  width: 100%;
+  max-width: 28rem;
+}
+
+.actTable th,
+.actTable td {
+  padding: 0.4rem 0.5rem;
+  text-align: right;
+  border-bottom: 1px solid var(--hair);
+}
+
+.actTable thead th {
+  font-weight: 400;
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--ink);
+}
+
+.actTable tbody th {
+  text-align: left;
+  font-weight: 400;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 0.85rem;
+}
+
+.dim {
+  color: var(--muted);
+  opacity: 0.5;
+}
+
+/* The case-mix column repeats what the mix sliders already say, so it is the
+   one to drop when the table has to scroll on a phone. */
+@media (max-width: 46rem) {
+  .mixCol {
+    display: none;
+  }
+}
+
+/* Phones: squeeze the tables to fit rather than scroll them. This block has to
+   come after every other .table rule in the file, because a media query adds no
+   specificity — an equally specific rule further down would otherwise win. */
+@media (max-width: 34rem) {
+  .table {
+    min-width: 0;
+    font-size: 0.68rem;
+    letter-spacing: -0.02em;
+  }
+
+  .table th,
+  .table td {
+    padding: 0.4rem 0.25rem;
+  }
+
+  /* Long labels — "Percutaneous nephrolithotomy" — wrap instead of setting a
+     floor under the table's width. */
+  .table th[scope="row"] {
+    white-space: normal;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    font-size: 0.78rem;
+    line-height: 1.25;
+  }
+
+  /* Auto layout will not narrow a text column on its own while numeric columns
+     have room, so the label column is given an explicit share. */
+  .table th[scope="row"],
+  .table thead th:first-child {
+    width: 30%;
+  }
+
+  /* Percentage over raw count rather than beside it: roughly half the width,
+     and the fraction stays visible so the figure is still checkable. */
+  .table td .sub {
+    display: block;
+  }
+}
+
+.live {
+  background: rgba(23, 23, 26, 0.07);
+  box-shadow: inset 0 0 0 1px rgba(23, 23, 26, 0.22);
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* ------------------------------------------------------------------ closing */
+
+.notes {
+  max-width: var(--wide);
+  margin: clamp(3.5rem, 10vw, 6rem) auto 0;
+  padding-top: 1.6rem;
+  border-top: 1px solid var(--ink);
+}
+
+.notesTitle {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.63rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 1.2rem;
+}
+
+.notesList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  columns: 1;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+@media (min-width: 52rem) {
+  .notesList {
+    columns: 2;
+    column-gap: 3rem;
+  }
+}
+
+.noteItem {
+  margin: 0 0 0.9rem;
+  padding-left: 1.6rem;
+  text-indent: -1.6rem;
+  break-inside: avoid;
+  color: var(--ink-soft);
+}
+
+.noteItem i {
+  font-style: italic;
+}
+
+.noteNum {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.72em;
+  color: var(--muted);
+  padding-right: 0.5rem;
+}
+
+.noteItem:target {
+  color: var(--ink);
+}
+
+.noteItem:target .noteNum {
+  color: var(--b);
+}
+
+.colophon {
+  max-width: var(--wide);
+  margin: 2.5rem auto 0;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--hair);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.5rem;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.63rem;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+.backLink {
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 0.1rem;
+}
+
+.backLink:hover {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

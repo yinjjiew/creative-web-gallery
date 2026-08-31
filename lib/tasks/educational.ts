@@ -41,7 +41,7 @@ Be rigorous. Every number must be arithmetically correct, and it must be possibl
       "Visual Design / Taste",
     ],
     resultRoute: "/r/educational-concept-explanation",
-    status: "planned",
+    status: "complete",
     blurb:
       "Simpson's paradox made visible: drag the group sizes and watch a trend reverse under your own hands, with a real cited case and the question of which number to act on.",
     direction:

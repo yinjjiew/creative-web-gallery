@@ -1,0 +1,723 @@
+/*
+ * The booking form.
+ *
+ * Same paper, same two faces, same rule work as the reading page. Controls are
+ * drawn as boxes on a ticket rather than as buttons on a website: square
+ * corners, hairline borders, ink fill only where something has been chosen.
+ * The minium red appears exactly three places — focus, error, and the
+ * demonstration warning — because those are the only three moments the page
+ * needs to interrupt you.
+ */
+
+.page {
+  max-width: 42rem;
+}
+
+/* -------------------------------------------------------------------- head */
+
+.head {
+  padding: 3rem 0 0;
+  margin-bottom: 2.25rem;
+}
+
+.head > div:last-child {
+  margin-bottom: 0;
+}
+
+.headWhere {
+  margin: 0 0 0.6rem;
+  font-family: var(--wb-sans), system-ui, sans-serif;
+  font-size: 0.6875rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--wb-ink-3);
+}
+
+.headWhere a {
+  color: var(--wb-ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--wb-rule);
+}
+
+.headWhere a:hover,
+.headWhere a:focus-visible {
+  border-bottom-color: var(--wb-minium);
+  color: var(--wb-minium);
+}
+
+.headTitle {
+  margin: 0 0 0.5rem;
+  font-weight: 400;
+  font-size: clamp(1.25rem, 1.05rem + 1vw, 1.5rem);
+  line-height: 1.15;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-indent: 0.16em;
+}
+
+.headDemo {
+  margin: 0 0 1.1rem;
+  font-size: 0.95em;
+  font-style: italic;
+  color: var(--wb-ink-2);
+}
+
+/* ----------------------------------------------------------------- stepper */
+
+.stepper ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.4rem;
+  list-style: none;
+  margin: 0 0 2.5rem;
+  padding: 0;
+  font-family: var(--wb-sans), system-ui, sans-serif;
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.stepper li button,
+.stepper li span {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: default;
+  color: var(--wb-ink-3);
+}
+
+.stepper li button {
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: var(--wb-rule);
+  text-underline-offset: 0.3em;
+}
+
+.stepper li button:hover {
+  color: var(--wb-minium);
+  text-decoration-color: var(--wb-minium);
+}
+
+.stepNumber {
+  font-variant-numeric: tabular-nums lining-nums;
+  color: var(--wb-rule-strong);
+}
+
+.stepCurrent > span {
+  color: var(--wb-ink);
+}
+
+.stepCurrent .stepNumber {
+  color: var(--wb-ink);
+}
+
+.stepPassed > button {
+  color: var(--wb-ink-2);
+}
+
+.stepAhead > span {
+  color: var(--wb-rule-strong);
+}
+
+/* -------------------------------------------------------------------- form */
+
+.stepHeading {
+  margin: 0 0 0.9rem;
+  font-weight: 500;
+  font-size: clamp(1.4rem, 1.15rem + 1vw, 1.7rem);
+  line-height: 1.2;
+  letter-spacing: 0.005em;
+  text-wrap: balance;
+}
+
+.stepHeading:focus {
+  outline: none;
+}
+
+.stepNote {
+  max-width: 32rem;
+  margin: 0 0 1.6rem;
+  text-wrap: pretty;
+}
+
+.inlineNote {
+  max-width: 30rem;
+  margin: 0.2rem 0 1.1rem;
+  padding-left: 0.9rem;
+  border-left: 2px solid var(--wb-rule-strong);
+  font-size: 0.94em;
+  color: var(--wb-ink-2);
+}
+
+.fieldset {
+  margin: 0 0 2.4rem;
+  padding: 0;
+  border: 0;
+  border-top: 1px solid var(--wb-rule);
+}
+
+.fieldset legend {
+  font-family: var(--wb-sans), system-ui, sans-serif;
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--wb-ink-3);
+  padding: 0.9rem 0 0.1rem;
+  max-width: 30rem;
+  line-height: 1.6;
+}
+
+/* ------------------------------------------------------------- text fields */
+
+.field {
+  margin: 1.1rem 0 0;
+  max-width: 26rem;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-family: var(--wb-sans), system-ui, sans-serif;
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+  color: var(--wb-ink);
+}
+
+.optional {
+  color: var(--wb-ink-3);
+  letter-spacing: 0.02em;
+}
+
+.hint,
+.fieldError {
+  margin: 0 0 0.4rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  max-width: 30rem;
+}
+
+.hint {
+  color: var(--wb-ink-2);
+  font-style: italic;
+}
+
+.fieldError {
+  color: var(--wb-minium);
+  padding-left: 0.7rem;
+  border-left: 2px solid var(--wb-minium);
+}
+
+.input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.55rem 0.7rem;
+  font-family: var(--wb-serif), Georgia, serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--wb-ink);
+  background: var(--wb-paper-sunk);
+  border: 1px solid var(--wb-rule-strong);
+  border-radius: 0;
+  transition: border-color 120ms linear, background 120ms linear;
+}
+
+.input:hover {
+  border-color: var(--wb-ink-2);
+}
+
+.input:focus-visible {
+  background: #efedea;
+  border-color: var(--wb-ink);
+  outline: 2px solid var(--wb-minium);
+  outline-offset: 1px;
+}
+
+.inputTabular {
+  font-family: var(--wb-sans), system-ui, sans-serif;
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: 0.06em;
+}
+
+.inputBad {
+  border-color: var(--wb-minium);
+  border-width: 2px;
+}
+
+.pair {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1.25rem;
+}
+
+.pair > * {
+  flex: 1 1 9rem;
+  max-width: 12rem;
+}
+
+/* -------------------------------------------------- chips (radio/checkbox) */
+
+.chips,
+.checkGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0 0;
+}
+
+.chip,
+.chipOn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.6rem;
+  padding: 0.35rem 0.85rem;
+  border: 1px solid var(--wb-rule-strong);
+  font-family: var(--wb-sans), system-ui, sans-serif;
+  font-size: 0.8125rem;
+  letter-spacing: 0.03em;
+  font-variant-numeric: tabular-nums lining-nums;
+  cursor: pointer;
+  transition: border-color 120ms linear, background 120ms linear,
+    color 120ms linear;
+}
+
+.chip:hover {
+  border-color: var(--wb-ink);
+}
+
+.chipOn {
+  background: var(--wb-ink);
+  border-color: var(--wb-ink);
+  color: var(--wb-paper);
+}
+
+/* The native control stays in the accessibility tree and keeps the keyboard
+   behaviour; it is simply not drawn. */
+.chip input,
+.chipOn input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.chip:has(input:focus-visible),
+.chipOn:has(input:focus-visible) {
+  outline: 2px solid var(--wb-minium);
+  outline-offset: 2px;
+}
+
+/* In forced-colours mode the ink fill that marks a chosen chip is discarded, so
+   the selected state has to be carried by something the mode keeps. */
+@media (forced-colors: active) {
+  .chipOn {
+    outline: 3px solid;
+    outline-offset: -3px;
+  }
+  .night:has(input:checked) {
+    outline: 2px solid;
+    outline-offset: -2px;
+  }
+}
+
+/* ------------------------------------------------------------------ nights */
+
+.nights {
+  list-style: none;
+  margin: 1.1rem 0 0;
+  padding: 0;
+  border-top: 1px solid var(--wb-rule);
+  max-width: 28rem;
+}
+
+.night,
+.nightOff {
+  border-bottom: 1px solid color-mix(in srgb, var(--wb-rule) 55%, transparent);
+}
+
+.night label,
+.nightOff label {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.6rem 0.55rem;
+  position: relative;
+  transition: background 120ms linear;
+}
+
+.night label {
+  cursor: pointer;
+}
+
+.night label:hover {
+  background: var(--wb-paper-sunk);
+}
+
+.night input,
+.nightOff input {
+  margin: 0;
+  accent-color: var(--wb-ink);
+  align-self: center;
+  flex: 0 0 auto;
+}
+
+.nightLabel {
+  flex: 1 1 auto;
+  font-size: 0.98em;
+}
+
+.nightState {
+  flex: 0 0 auto;
+  font-family: var(--wb-sans), system-ui, sans-serif;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: var(--wb-ink-3);
+}
+
+.nightOff {
+  color: var(--wb-ink-3);
+}
+
+.nightOff label {
+  cursor: not-allowed;
+}
+
+.night:has(input:checked) {
+  background: var(--wb-ink);
+  color: var(--wb-paper);
+}
+
+.night:has(input:checked) .nightState {
+  color: var(--wb-rule);
+}
+
+.night:has(input:checked) label:hover {
+  background: transparent;
+}
+
+.night:has(input:focus-visible) {
+  outline: 2px solid var(--wb-minium);
+  outline-offset: -2px;
+}
+
+/* ----------------------------------------------------------- confirmations */
+
+.confirmations {
+  list-style: none;
+  margin: 1.1rem 0 0;
+  padding: 0;
+  border-top: 1px solid var(--wb-rule);
+}
+
+.confirmations li {
+  border-bottom: 1px solid color-mix(in srgb, var(--wb-rule) 55%, transparent);
+}
+
+.confirmations label {
+  display: grid;
+  grid-template-columns: 1.2rem 5.4rem 1fr;
+  gap: 0 0.85rem;
+  align-items: baseline;
+  padding: 0.85rem 0.5rem;
+  cursor: pointer;
+  transition: background 120ms linear;
+}
+
+.confirmations label:hover {
+  background: var(--wb-paper-sunk);
+}
+
+.confirmations input {
+  margin: 0;
+  width: 1.05rem;
+  height: 1.05rem;
+  accent-color: var(--wb-ink);
+  align-self: start;
+  position: relative;
+  top: 0.2rem;
+}
+
+.confirmFigure {
+  font-family: var(--wb-sans), system-ui, sans-serif;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  color: var(--wb-ink-2);
+}
+
+.confirmText {
+  font-size: 0.98em;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.confirmations li:has(input:checked) .confirmFigure,
+.confirmations li:has(input:checked) .confirmText {
+  color: var(--wb-ink-3);
+}
+
+.confirmations li:has(input:focus-visible) {
+  outline: 2px solid var(--wb-minium);
+  outline-offset: -2px;
+}
+
+@media (max-width: 34rem) {
+  .confirmations label {
+    grid-template-columns: 1.2rem 1fr;
+  }
+  .confirmFigure {
+    grid-column: 2;
+    margin-bottom: 0.15rem;
+  }
+  .confirmText {
+    grid-column: 2;
+  }
+}
+
+/* ----------------------------------------------------------------- details */
+
+.details {
+  margin: 0 0 2.2rem;
+  border-top: 1px solid var(--wb-rule);
+  padding-top: 0.9rem;
+}
+
+.details summary {
+  font-family: var(--wb-sans), system-ui, sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--wb-ink-2);
+  cursor: pointer;
+}
+
+.details summary:hover {
+  color: var(--wb-minium);
+}
+
+.details p {
+  max-width: 30rem;
+  margin: 0.9rem 0 0;
+  text-wrap: pretty;
+}
+
+/* ------------------------------------------------------- warnings + errors */
+
+.warning {
+  margin: 0 0 1.6rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--wb-minium);
+  border-left-width: 3px;
+  max-width: 32rem;
+}
+
+.warning p {
+  margin: 0;
+  font-size: 0.96em;
+  line-height: 1.55;
+}
+
+.warning strong {
+  font-weight: 500;
+  color: var(--wb-minium);
+}
+
+.errorSummary {
+  margin: 0 0 2rem;
+  padding: 1rem 1.15rem;
+  border: 2px solid var(--wb-minium);
+  max-width: 32rem;
+}
+
+.errorSummary:focus {
+  outline: 2px solid var(--wb-ink);
+  outline-offset: 2px;
+}
+
+.errorSummary h2 {
+  margin: 0 0 0.6rem;
+  font-family: var(--wb-sans), system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--wb-minium);
+}
+
+.errorSummary ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.errorSummary li {
+  margin-bottom: 0.35rem;
+  font-size: 0.96em;
+  line-height: 1.5;
+}
+
+.errorSummary li:last-child {
+  margin-bottom: 0;
+}
+
+.errorSummary a {
+  color: var(--wb-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--wb-minium);
+  text-underline-offset: 0.18em;
+}
+
+.errorSummary a:hover {
+  color: var(--wb-minium);
+}
+
+/* ----------------------------------------------------------------- actions */
+
+.actions,
+.doneActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem 1.4rem;
+  padding-top: 1.6rem;
+  border-top: 1px solid var(--wb-ink);
+}
+
+.primary,
+.secondary {
+  font-family: var(--wb-sans), system-ui, sans-serif;
+  font-size: 0.8125rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  padding: 0.75rem 1.4rem;
+  border-radius: 0;
+  cursor: pointer;
+  transition: background 120ms linear, color 120ms linear,
+    border-color 120ms linear;
+}
+
+.primary {
+  background: var(--wb-ink);
+  color: var(--wb-paper);
+  border: 1px solid var(--wb-ink);
+}
+
+.primary:hover {
+  background: #000;
+}
+
+.secondary {
+  background: transparent;
+  color: var(--wb-ink);
+  border: 1px solid var(--wb-rule-strong);
+}
+
+.secondary:hover {
+  border-color: var(--wb-ink);
+}
+
+.backLink {
+  font-family: var(--wb-sans), system-ui, sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--wb-ink-3);
+  text-decoration: none;
+  border-bottom: 1px solid var(--wb-rule);
+}
+
+.backLink:hover {
+  color: var(--wb-minium);
+  border-bottom-color: var(--wb-minium);
+}
+
+/* ------------------------------------------------------------ confirmation */
+
+.doneHeading {
+  margin: 0 0 1.2rem;
+  font-weight: 500;
+  font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2rem);
+  line-height: 1.15;
+  letter-spacing: 0.005em;
+  text-wrap: balance;
+}
+
+.doneHeading:focus {
+  outline: none;
+}
+
+.doneBody {
+  max-width: 32rem;
+  margin-bottom: 2.2rem;
+}
+
+.doneBody p {
+  margin: 0 0 1.1rem;
+  text-wrap: pretty;
+}
+
+.summary {
+  margin: 0 0 2.4rem;
+  max-width: 28rem;
+}
+
+.summaryHeading {
+  margin: 0 0 0.2rem;
+  font-family: var(--wb-sans), system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 0.6875rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--wb-ink-3);
+}
+
+.doneActions {
+  margin-top: 0.6rem;
+}
+
+/* -------------------------------------------------------------------- foot */
+
+.foot {
+  margin-top: 3.5rem;
+  padding-top: 1.3rem;
+  border-top: 1px solid var(--wb-rule);
+  font-family: var(--wb-sans), system-ui, sans-serif;
+  font-size: 0.75rem;
+  line-height: 1.65;
+  color: var(--wb-ink-3);
+  max-width: 30rem;
+}
+
+.foot p {
+  margin: 0;
+}
+
+.foot a {
+  color: var(--wb-ink-2);
+  text-decoration: underline;
+  text-decoration-color: var(--wb-rule-strong);
+  text-underline-offset: 0.18em;
+}
+
+.foot a:hover {
+  color: var(--wb-minium);
+  text-decoration-color: var(--wb-minium);
+}
+
+/* ------------------------------------------------------------------- print */
+
+@media print {
+  .stepper,
+  .doneActions,
+  .actions {
+    display: none;
+  }
+}

@@ -1,0 +1,583 @@
+/*
+ * Weighbridge.
+ *
+ * One vertical hairline runs the length of the document. Figures sit to the
+ * left of it, words to the right — the layout of a weighbridge ticket, where
+ * everything is declared against a single printed line. Serif for anything the
+ * chef says, sans for anything measured.
+ *
+ * Colour is only used where the page wants your attention or your action: the
+ * focus ring, a link under the cursor, an error. Nothing is coloured to be
+ * decorative and nothing is set in bold.
+ */
+
+.root {
+  --wb-paper: #e9e6e0;
+  --wb-paper-sunk: #e2dfd7;
+  --wb-ink: #16181a;
+  --wb-ink-2: #4c4f52;
+  --wb-ink-3: #63666a;
+  --wb-rule: #c0bcb3;
+  --wb-rule-strong: #8f8b82;
+  --wb-minium: #8f3b25;
+
+  --wb-col: 7.75rem;
+  --wb-gutter: 2.5rem;
+  --wb-measure: 34rem;
+  --wb-line: 1.6rem;
+
+  background: var(--wb-paper);
+  color: var(--wb-ink);
+  font-family: var(--wb-serif), Georgia, "Times New Roman", serif;
+  font-size: clamp(1.0625rem, 1rem + 0.35vw, 1.1875rem);
+  line-height: 1.62;
+  font-kerning: normal;
+  font-variant-numeric: lining-nums;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100dvh;
+  padding-bottom: 1px;
+}
+
+/* The results layout owns <html> and <body>; the paper has to reach them or the
+   overscroll area flashes white on a phone. */
+:global(html) {
+  background: #e9e6e0;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :global(html) {
+    scroll-behavior: auto;
+  }
+  .root * {
+    transition: none !important;
+  }
+}
+
+.root ::selection {
+  background: var(--wb-minium);
+  color: var(--wb-paper);
+}
+
+.root :focus-visible {
+  outline: 2px solid var(--wb-minium);
+  outline-offset: 3px;
+}
+
+.skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+}
+
+.skip:focus {
+  left: 1rem;
+  top: 1rem;
+  z-index: 2;
+  background: var(--wb-paper);
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--wb-ink);
+  font-family: var(--wb-sans), system-ui, sans-serif;
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--wb-ink);
+  text-decoration: none;
+}
+
+.page {
+  position: relative;
+  max-width: calc(
+    var(--wb-col) + var(--wb-gutter) + var(--wb-measure) + 2.75rem
+  );
+  margin: 0 auto;
+  padding: 0 1.375rem 5rem;
+}
+
+/* ---------------------------------------------------------------- masthead */
+
+.masthead {
+  padding-top: 4.5rem;
+}
+
+@media (min-width: 52rem) {
+  .masthead {
+    display: grid;
+    grid-template-columns: var(--wb-col) minmax(0, var(--wb-measure));
+    column-gap: var(--wb-gutter);
+    align-items: baseline;
+  }
+
+  .where {
+    grid-area: 1 / 1;
+    text-align: right;
+  }
+  .wordmark {
+    grid-area: 1 / 2;
+  }
+  .standfirst {
+    grid-area: 2 / 2;
+  }
+  .scale {
+    grid-area: 3 / 1 / 4 / -1;
+  }
+  .contents {
+    grid-area: 4 / 2;
+  }
+
+  /* The single line everything on the page is weighed against, from the
+     address at the top to the last figure at the bottom. */
+  .ruled::before {
+    content: "";
+    position: absolute;
+    top: 4.5rem;
+    bottom: 5rem;
+    left: calc(1.375rem + var(--wb-col) + var(--wb-gutter) / 2 - 0.5px);
+    width: 1px;
+    background: var(--wb-rule);
+  }
+}
+
+.where,
+.contents {
+  font-family: var(--wb-sans), system-ui, sans-serif;
+  font-size: 0.6875rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--wb-ink-3);
+}
+
+.where {
+  margin: 0 0 0.75rem;
+}
+
+.wordmark {
+  margin: 0;
+  font-weight: 400;
+  font-size: clamp(1.5rem, 1.05rem + 2.4vw, 2.125rem);
+  line-height: 1.1;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-indent: 0.22em;
+}
+
+.standfirst {
+  max-width: 30rem;
+  margin: 1.75rem 0 0;
+  font-size: 1.16em;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+/* A steelyard scale: a printed line with graduations hanging off it, every
+   fifth one full height. Drawn rather than illustrated. */
+.scale {
+  height: 9px;
+  margin: 2.25rem 0 1.5rem;
+  border-top: 1px solid var(--wb-ink);
+  background-image: repeating-linear-gradient(
+      to right,
+      var(--wb-rule-strong) 0 1px,
+      transparent 1px 45px
+    ),
+    repeating-linear-gradient(to right, var(--wb-rule) 0 1px, transparent 1px 9px);
+  background-size: 100% 9px, 100% 5px;
+  background-position: left top, left top;
+  background-repeat: repeat-x;
+}
+
+.contents ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.3rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.contents a {
+  display: block;
+  color: var(--wb-ink-3);
+  text-decoration: none;
+}
+
+.contents a:hover,
+.contents a:focus-visible {
+  color: var(--wb-minium);
+}
+
+/* -------------------------------------------------------------------- beam */
+
+.beam {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: baseline;
+}
+
+.beam > * {
+  min-width: 0;
+}
+
+@media (min-width: 52rem) {
+  .beam {
+    grid-template-columns: var(--wb-col) minmax(0, var(--wb-measure));
+    column-gap: var(--wb-gutter);
+  }
+
+  .beam > * {
+    grid-column: 2;
+  }
+}
+
+.sectionRule {
+  grid-column: 1 / -1;
+  align-self: start;
+  height: 0;
+  margin: 4rem 0 1.4rem;
+  border: 0;
+  border-top: 1px solid var(--wb-rule);
+}
+
+.sectionRule:first-of-type {
+  margin-top: 2.6rem;
+}
+
+.sectionNumber,
+.termFigure {
+  font-family: var(--wb-sans), system-ui, sans-serif;
+  font-variant-numeric: tabular-nums lining-nums;
+  margin: 0;
+}
+
+.sectionNumber {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--wb-ink-3);
+}
+
+.sectionTitle {
+  margin: 0 0 1.1rem;
+  font-weight: 500;
+  font-size: 1.32em;
+  line-height: 1.25;
+  letter-spacing: 0.005em;
+  scroll-margin-top: 1.5rem;
+  text-wrap: balance;
+}
+
+@media (min-width: 52rem) {
+  .sectionNumber,
+  .termFigure {
+    grid-column: 1;
+    text-align: right;
+  }
+}
+
+/* ------------------------------------------------------------------ ticket */
+
+.ticket {
+  margin: 0;
+  max-width: 24rem;
+}
+
+.ticketRow {
+  display: flex;
+  align-items: baseline;
+  padding: 0.42rem 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--wb-rule) 55%, transparent);
+}
+
+.ticketRow:first-child {
+  border-top: 1px solid var(--wb-rule);
+}
+
+.ticketRow dt {
+  flex: 0 0 auto;
+  font-family: var(--wb-sans), system-ui, sans-serif;
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--wb-ink-2);
+}
+
+@media (min-width: 30rem) {
+  .ticketRow dt {
+    font-size: 0.78rem;
+    letter-spacing: 0.09em;
+  }
+}
+
+.ticketRow dd {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: baseline;
+  margin: 0;
+  font-family: var(--wb-sans), system-ui, sans-serif;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-size: 0.95rem;
+}
+
+/* The leader. A ticket has one; a menu with prices has dots, which this is not. */
+.ticketRow dd::before {
+  content: "";
+  flex: 1 1 0.75rem;
+  min-width: 0.75rem;
+  margin: 0 0.6rem;
+  position: relative;
+  top: -0.32em;
+  border-bottom: 1px solid var(--wb-rule);
+}
+
+.ticketRow dd span {
+  flex: 0 1 auto;
+  min-width: 3.5rem;
+  text-align: right;
+}
+
+.footnote {
+  margin: 0.9rem 0 0;
+  font-style: italic;
+  font-size: 0.95em;
+  color: var(--wb-ink-2);
+}
+
+/* ------------------------------------------------------------------- prose */
+
+/* No hyphenation and no last-line balancing in the body copy. At this measure
+   both make the rag worse than leaving it alone. */
+.prose p,
+.termBody p,
+.bookBlock p {
+  margin: 0 0 var(--wb-line);
+}
+
+.prose p:last-child,
+.termBody p:last-child {
+  margin-bottom: 0;
+}
+
+.lede {
+  color: var(--wb-ink);
+}
+
+.coda {
+  margin-top: 0.4rem !important;
+  padding-top: 1.35rem;
+  border-top: 1px solid var(--wb-rule);
+  font-style: italic;
+}
+
+/* ------------------------------------------------------------------- terms */
+
+.termFigure {
+  display: flex;
+  align-items: baseline;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  color: var(--wb-ink);
+  padding-top: 1.9rem;
+}
+
+.termFigure::after {
+  content: "";
+  flex: 1 1 auto;
+  margin-left: 0.75rem;
+  position: relative;
+  top: -0.3em;
+  border-bottom: 1px solid var(--wb-rule);
+}
+
+/* Stacked, the figure is a caption for the term below it, so the space belongs
+   above the figure rather than between the two. */
+.termBody {
+  padding-top: 0.5rem;
+}
+
+.termHeading {
+  margin: 0 0 0.5rem;
+  font-weight: 500;
+  font-size: 1.02em;
+  line-height: 1.4;
+  letter-spacing: 0.005em;
+  text-wrap: pretty;
+}
+
+@media (min-width: 52rem) {
+  .termFigure {
+    display: block;
+    padding-top: 2rem;
+  }
+  .termFigure::after {
+    content: none;
+  }
+  .termBody {
+    padding-top: 2rem;
+  }
+}
+
+/* ----------------------------------------------------------------- courses */
+
+.courses {
+  list-style: none;
+  margin: 0.4rem 0 var(--wb-line);
+  padding: 0;
+  counter-reset: course;
+  border-top: 1px solid var(--wb-rule);
+}
+
+.courses li {
+  counter-increment: course;
+  display: grid;
+  grid-template-columns: 2.1rem 1fr;
+  align-items: baseline;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--wb-rule) 55%, transparent);
+}
+
+.courses li::before {
+  content: counter(course);
+  font-family: var(--wb-sans), system-ui, sans-serif;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-size: 0.8rem;
+  color: var(--wb-ink-3);
+}
+
+/* ------------------------------------------------------------------- links */
+
+.prose a,
+.termBody p a,
+.colophon a,
+.disclosure a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--wb-rule-strong);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  transition: text-decoration-color 120ms linear, color 120ms linear;
+}
+
+.prose a:hover,
+.termBody p a:hover,
+.colophon a:hover,
+.disclosure a:hover,
+.prose a:focus-visible,
+.colophon a:focus-visible,
+.disclosure a:focus-visible {
+  color: var(--wb-minium);
+  text-decoration-color: var(--wb-minium);
+}
+
+/* -------------------------------------------------------------- book block */
+
+.bookBlock {
+  padding-top: 0.4rem;
+}
+
+.bookBlock p {
+  max-width: 30rem;
+}
+
+.bookLink {
+  display: inline-block;
+  margin: 0.35rem 0 1.1rem;
+  padding: 0.7rem 1.35rem;
+  border: 1px solid var(--wb-ink);
+  font-family: var(--wb-sans), system-ui, sans-serif;
+  font-size: 0.8125rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--wb-ink);
+  text-decoration: none;
+  background: transparent;
+  transition: background 120ms linear, color 120ms linear;
+}
+
+.bookLink:hover,
+.bookLink:focus-visible {
+  background: var(--wb-ink);
+  color: var(--wb-paper);
+}
+
+.demoNote {
+  font-family: var(--wb-sans), system-ui, sans-serif;
+  font-size: 0.75rem;
+  line-height: 1.55;
+  letter-spacing: 0.03em;
+  color: var(--wb-ink-3);
+  max-width: 26rem;
+}
+
+/* ---------------------------------------------------------------- colophon */
+
+.colophon {
+  display: grid;
+  gap: 1.9rem 2.5rem;
+  padding-top: 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--wb-ink-2);
+}
+
+@media (min-width: 34rem) {
+  .colophon {
+    grid-template-columns: 1fr 1fr;
+  }
+  /* Address and hours sit side by side; the note about press and photographs
+     is prose and needs the full measure. */
+  .colophonBlock:nth-of-type(3) {
+    grid-column: 1 / -1;
+    max-width: 30rem;
+  }
+}
+
+.colophonBlock p {
+  margin: 0 0 0.75rem;
+}
+
+.colophonHeading {
+  margin: 0 0 0.6rem;
+  font-family: var(--wb-sans), system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 0.6875rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--wb-ink-3);
+}
+
+.disclosure {
+  grid-column: 1 / -1;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--wb-rule);
+  font-family: var(--wb-sans), system-ui, sans-serif;
+  font-size: 0.75rem;
+  line-height: 1.65;
+  color: var(--wb-ink-3);
+  max-width: 30rem;
+}
+
+.disclosure p {
+  margin: 0 0 0.7rem;
+}
+
+.disclosure p:last-child {
+  margin-bottom: 0;
+}
+
+/* ------------------------------------------------------------------- print */
+
+@media print {
+  .root {
+    background: #fff;
+    font-size: 11pt;
+  }
+  .skip,
+  .contents,
+  .bookLink {
+    display: none;
+  }
+  .page::before {
+    display: none;
+  }
+}

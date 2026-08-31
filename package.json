@@ -8,6 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "validate": "tsx scripts/validate.ts",
+    "smoke": "tsx scripts/smoke.ts",
+    "shoot": "tsx scripts/shoot.ts",
     "check": "npm run validate && tsc --noEmit && npm run lint && npm run build"
   },
   "dependencies": {

@@ -58,8 +58,31 @@ it would collapse the isolation.
 npm run dev                     # localhost:3000, credentials in .env.local
 npm run validate                # registry structure
 npm run check                   # validate + tsc + lint + build
+npm run smoke                   # every result: status, console, stubs, blank canvases
+npm run smoke -- <task-id>      # just one
 npx tsx scripts/shoot.ts /path  # screenshot a page (dev server must be running)
 ```
+
+`smoke` exists because a placeholder passes both `validate` and `build`: a page
+that renders a heading and nothing else compiles perfectly and returns 200. It
+flags thin pages, console errors, and canvases that paint a flat field. Run it
+before you call a result finished.
+
+### When several agents build at once
+
+They share one dev server, and **a compile error in any result breaks every
+route**. So a 500 on your page is often not your fault. If the error names a
+file outside your own directory, another agent is mid-write: wait a moment and
+retry rather than debugging your own code. `npm run smoke` reports this as
+`inconclusive` and names the culprit instead of blaming your result.
+
+Write files early and often. Save a working skeleton before refining it, so an
+interruption leaves something that renders rather than a half-written import.
+
+There is no GPU here, so WebGL runs on a software rasteriser and a heavy scene
+can take a minute or more to capture. `shoot.ts` allows for that and retries at
+1x if a frame will not commit in time; `SHOOT_DPR=1` from the start is faster
+while you iterate. A slow screenshot is not a bug in your result.
 
 Screenshots need browser libraries that are not installed system-wide here.
 Prefix with:

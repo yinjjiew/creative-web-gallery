@@ -1,15 +1,13 @@
-"use client";
+import type { Metadata } from "next";
 
-import { Archivo, Spline_Sans_Mono } from "next/font/google";
+import Leva from "./Leva";
 
-const archivo = Archivo({ subsets: ["latin"], display: "swap" });
-const mono = Spline_Sans_Mono({ subsets: ["latin"], display: "swap" });
+export const metadata: Metadata = {
+  title: "Leva — a manual lever espresso machine",
+  description:
+    "Pull the lever yourself and watch the pressure curve you make. A launch page for a direct-lever espresso machine.",
+};
 
 export default function Page() {
-  return (
-    <main className={archivo.className}>
-      <h1>Leva</h1>
-      <p className={mono.className}>SPLINE SANS MONO 0123456789</p>
-    </main>
-  );
+  return <Leva />;
 }
