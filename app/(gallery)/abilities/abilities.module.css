@@ -1,0 +1,86 @@
+.head {
+  padding: clamp(2.5rem, 7vw, 4.5rem) 0 2rem;
+  border-bottom: 1px solid var(--ink);
+}
+
+.title {
+  font-size: clamp(2.25rem, 6.5vw, 3.75rem);
+  line-height: 1.03;
+}
+
+.lede {
+  color: var(--ink-soft);
+  font-size: clamp(1.0625rem, 1.5vw, 1.1875rem);
+  line-height: 1.55;
+  max-width: 38rem;
+  padding-top: 1.25rem;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 22rem) minmax(0, 1fr);
+  gap: 0.5rem 1.5rem;
+  align-items: baseline;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--rule);
+  transition: background 120ms ease;
+}
+
+.item:hover {
+  background: var(--paper-sunk);
+}
+
+.count {
+  color: var(--faint);
+  text-align: right;
+}
+
+.item:hover .count {
+  color: var(--signal);
+}
+
+.name {
+  font-size: 1.125rem;
+}
+
+/**
+ * A distribution bar per ability, showing which settings demand it. This is the
+ * one piece of the catalogue that anticipates the later analysis the metadata
+ * exists for, without doing any scoring.
+ */
+.spread {
+  display: flex;
+  gap: 2px;
+  height: 0.5rem;
+  align-items: stretch;
+}
+
+.segment {
+  background: var(--rule-strong);
+  min-width: 3px;
+}
+
+.settingsList {
+  grid-column: 2 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.8rem;
+  color: var(--faint);
+  padding-top: 0.15rem;
+}
+
+@media (max-width: 44rem) {
+  .item {
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+  }
+
+  .spread {
+    grid-column: 2;
+  }
+}

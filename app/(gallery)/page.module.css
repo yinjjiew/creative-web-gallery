@@ -1,0 +1,70 @@
+.intro {
+  padding: clamp(3rem, 9vw, 6.5rem) 0 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 20rem);
+  gap: 2rem clamp(2rem, 6vw, 5rem);
+  align-items: end;
+}
+
+.title {
+  font-size: clamp(2.25rem, 6.2vw, 4rem);
+  line-height: 1.02;
+  max-width: 22em;
+}
+
+.title em {
+  font-style: italic;
+}
+
+.lede {
+  color: var(--ink-soft);
+  font-size: clamp(1.0625rem, 1.5vw, 1.1875rem);
+  line-height: 1.5;
+  max-width: 30em;
+  padding-top: 1.5rem;
+}
+
+.tally {
+  border-top: 1px solid var(--ink);
+  padding-top: 0.75rem;
+}
+
+.tallyRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.3rem 0;
+  color: var(--muted);
+}
+
+.tallyRow strong {
+  font-weight: 400;
+  color: var(--ink);
+}
+
+.hierarchy {
+  padding: clamp(2.5rem, 6vw, 4rem) 0 0.5rem;
+}
+
+.hierarchyInner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 0.9rem;
+  color: var(--muted);
+}
+
+.hierarchyInner span:not(.arrow) {
+  color: var(--ink);
+}
+
+.arrow {
+  color: var(--faint);
+}
+
+@media (max-width: 48rem) {
+  .intro {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+}

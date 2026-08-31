@@ -1,0 +1,201 @@
+.top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.5rem 0 0;
+  color: var(--faint);
+}
+
+.back {
+  color: var(--muted);
+  border-bottom: 1px solid transparent;
+}
+
+.back:hover {
+  color: var(--signal);
+  border-bottom-color: currentColor;
+}
+
+.head {
+  padding: clamp(2.5rem, 7vw, 4.5rem) 0 0;
+  border-bottom: 1px solid var(--ink);
+}
+
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.6rem;
+  color: var(--muted);
+  padding-bottom: 1.25rem;
+}
+
+.breadcrumb a:hover {
+  color: var(--signal);
+}
+
+.sep {
+  color: var(--faint);
+}
+
+.title {
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  line-height: 1;
+  letter-spacing: -0.022em;
+}
+
+.blurb {
+  color: var(--ink-soft);
+  font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
+  line-height: 1.5;
+  max-width: 42rem;
+  padding: 1.25rem 0 2rem;
+}
+
+/* ---- Field blocks ---- */
+
+.field {
+  padding: 2.5rem 0;
+  border-bottom: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: 9rem minmax(0, 1fr);
+  gap: 1rem 2rem;
+  align-items: start;
+}
+
+.fieldLabel {
+  color: var(--faint);
+  padding-top: 0.35rem;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.tag {
+  border: 1px solid var(--rule-strong);
+  color: var(--ink-soft);
+  padding: 0.28rem 0.55rem;
+  transition: color 120ms ease, border-color 120ms ease;
+}
+
+.tag:hover {
+  color: var(--signal);
+  border-color: var(--signal);
+}
+
+/**
+ * The prompt is the centre of this page and is reproduced verbatim. It gets a
+ * larger measure, a hanging rule and preserved line breaks, so that the
+ * paragraph structure it was written with survives.
+ */
+.prompt {
+  white-space: pre-line;
+  font-size: clamp(1.0625rem, 1.55vw, 1.1875rem);
+  line-height: 1.62;
+  max-width: 40rem;
+  border-left: 2px solid var(--signal);
+  padding-left: clamp(1rem, 3vw, 1.75rem);
+  color: var(--ink);
+}
+
+.direction {
+  max-width: 40rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+/* ---- Result ---- */
+
+.result {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.5rem;
+}
+
+.launch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.85rem 1.35rem;
+  transition: background 140ms ease;
+}
+
+.launch:hover {
+  background: var(--signal);
+}
+
+.launchArrow {
+  transition: transform 160ms ease;
+}
+
+.launch:hover .launchArrow {
+  transform: translateX(3px);
+}
+
+.pending {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  border: 1px dashed var(--rule-strong);
+  color: var(--muted);
+  padding: 0.85rem 1.35rem;
+}
+
+.statusNote {
+  color: var(--muted);
+  font-size: 0.9375rem;
+  max-width: 26rem;
+}
+
+/* ---- Adjacent tasks ---- */
+
+.adjacent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 2rem;
+  padding: 2.5rem 0 4rem;
+}
+
+.adjacentItem {
+  display: block;
+  color: var(--muted);
+}
+
+.adjacentItem:hover {
+  color: var(--signal);
+}
+
+.adjacentNext {
+  text-align: right;
+}
+
+.adjacentTitle {
+  display: block;
+  font-family: var(--font-text), Georgia, serif;
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: var(--ink);
+  padding-top: 0.35rem;
+}
+
+.adjacentItem:hover .adjacentTitle {
+  color: var(--signal);
+}
+
+@media (max-width: 44rem) {
+  .field {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+
+  .fieldLabel {
+    padding-top: 0;
+  }
+}

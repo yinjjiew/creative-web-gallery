@@ -1,0 +1,237 @@
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1.5rem 2.5rem;
+  padding: 1.75rem 0 1.25rem;
+}
+
+.searchField {
+  flex: 1 1 16rem;
+  min-width: 0;
+}
+
+.label {
+  display: block;
+  color: var(--faint);
+  padding-bottom: 0.5rem;
+}
+
+.search {
+  width: 100%;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--rule-strong);
+  padding: 0.3rem 0;
+  font: inherit;
+  font-size: 1.0625rem;
+  color: var(--ink);
+  border-radius: 0;
+}
+
+.search::placeholder {
+  color: var(--faint);
+}
+
+.search:focus {
+  outline: none;
+  border-bottom-color: var(--signal);
+}
+
+.abilities {
+  flex: 1 1 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.chip {
+  appearance: none;
+  background: transparent;
+  border: 1px solid var(--rule-strong);
+  color: var(--muted);
+  padding: 0.28rem 0.55rem;
+  cursor: pointer;
+  transition: color 120ms ease, border-color 120ms ease, background 120ms ease;
+  font: inherit;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: var(--step-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.chip:hover {
+  color: var(--ink);
+  border-color: var(--ink-soft);
+}
+
+.chipOn {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+.chipCount {
+  opacity: 0.5;
+  margin-left: 0.4em;
+}
+
+.status {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 0 0;
+  color: var(--faint);
+}
+
+.clear {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  color: var(--signal);
+  font: inherit;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: var(--step-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-bottom: 1px solid currentColor;
+}
+
+/* ---- Setting groups ---- */
+
+.group {
+  padding-top: 3.25rem;
+}
+
+.groupHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 0.75rem;
+}
+
+.groupTitle {
+  font-size: clamp(1.375rem, 2.4vw, 1.75rem);
+}
+
+.groupTitle a:hover {
+  color: var(--signal);
+}
+
+.groupPremise {
+  color: var(--muted);
+  font-style: italic;
+  font-size: 0.9375rem;
+  padding-bottom: 1rem;
+  max-width: 46rem;
+}
+
+.groupCount {
+  color: var(--faint);
+  white-space: nowrap;
+}
+
+/* ---- Rows ---- */
+
+.rows {
+  border-top: 1px solid var(--rule-strong);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 3.25rem minmax(0, 1fr) auto;
+  gap: 0 1rem;
+  align-items: baseline;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--rule);
+  transition: background 120ms ease;
+}
+
+.row:hover {
+  background: var(--paper-sunk);
+}
+
+.num {
+  color: var(--faint);
+  padding-top: 0.28rem;
+}
+
+.row:hover .num {
+  color: var(--signal);
+}
+
+.headline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 0.7rem;
+}
+
+.rowTitle {
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
+}
+
+.rowTypical {
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+.rowTypical::before {
+  content: "· ";
+  color: var(--faint);
+}
+
+.blurb {
+  grid-column: 2;
+  color: var(--ink-soft);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  padding-top: 0.3rem;
+  max-width: 52rem;
+}
+
+.rowTags {
+  grid-column: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.7rem;
+  padding-top: 0.55rem;
+  color: var(--faint);
+}
+
+.tagHit {
+  color: var(--signal);
+}
+
+.rowStatus {
+  padding-top: 0.3rem;
+  white-space: nowrap;
+  color: var(--muted);
+}
+
+.empty {
+  padding: 4rem 0;
+  color: var(--muted);
+  font-size: 1.0625rem;
+}
+
+@media (max-width: 40rem) {
+  .row {
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+  }
+
+  .rowStatus {
+    grid-column: 2;
+    padding-top: 0.5rem;
+  }
+
+  .rowTags {
+    display: none;
+  }
+}
