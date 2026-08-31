@@ -17,13 +17,16 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
+/**
+ * Zoom is deliberately left enabled. Several results are text-heavy and a
+ * reader must be able to scale them; suppressing pinch zoom here to protect the
+ * few canvas-based results would break the many for the sake of the few. A
+ * result whose interaction genuinely conflicts with pinch zoom can export its
+ * own `viewport` from its page, which overrides this.
+ */
 export const viewport = {
   width: "device-width",
   initialScale: 1,
-  // Results include drag, pinch-sensitive canvases and games. Letting the page
-  // itself zoom on a double tap would break them; individual results that want
-  // pinch zoom can re-enable it.
-  maximumScale: 1,
 };
 
 export default function ResultsLayout({
