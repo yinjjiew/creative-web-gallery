@@ -15,6 +15,8 @@ export const metadata: Metadata = {
 
 export default function AbilitiesPage() {
   const entries = abilityCounts();
+  // abilityCounts() is sorted most-used first, so the head is the maximum.
+  const busiest = entries[0]?.count ?? 1;
 
   return (
     <div className="shell">
@@ -43,14 +45,19 @@ export default function AbilitiesPage() {
               <Link href={`/abilities/${abilitySlug(ability)}`} className={styles.item}>
                 <span className={`${styles.count} mono`}>{count}</span>
                 <span className={styles.name}>{ability}</span>
-                <span className={styles.spread} aria-hidden="true">
-                  {perSetting.map(({ setting, n }) => (
-                    <span
-                      key={setting.slug}
-                      className={styles.segment}
-                      style={{ flexGrow: n }}
-                    />
-                  ))}
+                <span className={styles.spreadTrack} aria-hidden="true">
+                  <span
+                    className={styles.spread}
+                    style={{ width: `${(count / busiest) * 100}%` }}
+                  >
+                    {perSetting.map(({ setting, n }) => (
+                      <span
+                        key={setting.slug}
+                        className={styles.segment}
+                        style={{ flexGrow: n }}
+                      />
+                    ))}
+                  </span>
                 </span>
                 <span className={`${styles.settingsList} mono`}>
                   {perSetting.map(({ setting, n }) => (

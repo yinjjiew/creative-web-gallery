@@ -53,12 +53,22 @@
  * A distribution bar per ability, showing which settings demand it. This is the
  * one piece of the catalogue that anticipates the later analysis the metadata
  * exists for, without doing any scoring.
+ *
+ * The track is the full column; the bar inside it is scaled to the ability's
+ * count against the most-demanded ability. Normalising every bar to full width
+ * would make a 3-task ability look as prevalent as a 69-task one, which is the
+ * kind of misrepresentation this catalogue's own prompts complain about.
  */
+.spreadTrack {
+  height: 0.5rem;
+  display: flex;
+}
+
 .spread {
   display: flex;
   gap: 2px;
-  height: 0.5rem;
   align-items: stretch;
+  min-width: 4px;
 }
 
 .segment {
@@ -80,7 +90,7 @@
     grid-template-columns: 2.5rem minmax(0, 1fr);
   }
 
-  .spread {
+  .spreadTrack {
     grid-column: 2;
   }
 }

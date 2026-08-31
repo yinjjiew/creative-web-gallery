@@ -197,7 +197,7 @@ Résumés are a genre with real conventions and hiring managers read them extrem
       "Interaction Design",
       "Functional Logic",
       "Robustness / Product Polish",
-      "Narrative / Communication",
+      "Export / Reusability",
     ],
     resultRoute: "/r/personal-studio-interactive-resume",
     status: "planned",

@@ -169,7 +169,7 @@ Nothing may fabricate a reading. If the software suggests anything, its suggesti
       "Information Architecture",
       "Interaction Design",
       "Educational Correctness",
-      "Layout & Typography",
+      "Export / Reusability",
       "Robustness / Product Polish",
     ],
     resultRoute: "/r/practical-apps-document-processing",
