@@ -33,7 +33,7 @@ Avoid a dark showroom with a spotlit product on a turntable.`,
       "Brand Interpretation",
     ],
     resultRoute: "/r/interactive-3d-product-showcase",
-    status: "polishing",
+    status: "complete",
     blurb:
       "A lever machine you actually pull: dragging the handle works against real spring resistance and draws the pressure curve you just made, which is also the product's whole argument.",
     direction:
