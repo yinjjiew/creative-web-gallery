@@ -477,7 +477,7 @@ export class Stage {
 
     for (let i = 0; i < n; i++) {
       const l = g.levers[i]!;
-      const x = lerp(left, right, n === 1 ? 0.5 : i / (n - 1));
+      const x = lerp(left, right, i / (n - 1));
       this.paintOneLever(ctx, l, x, y0, pivotY, g);
     }
 

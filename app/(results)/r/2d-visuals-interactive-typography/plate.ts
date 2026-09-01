@@ -488,6 +488,7 @@ export async function createPlate(
       canvas.width = buf.w;
       canvas.height = buf.h;
     }
+    if (!gl) return;
     gl.viewport(0, 0, buf.w, buf.h);
     if (!parked) {
       const idle = idleLamp(cssW, cssH);
@@ -507,6 +508,7 @@ export async function createPlate(
   }
 
   function rebuildSheet() {
+    if (!gl) return;
     const { sheet, form } = bake(texW, texH, options.fontFamily);
     if (sheetTex) gl.deleteTexture(sheetTex);
     if (formTex) gl.deleteTexture(formTex);
@@ -516,7 +518,7 @@ export async function createPlate(
   }
 
   function draw() {
-    if (!sheetTex || !formTex) return;
+    if (!gl || !sheetTex || !formTex) return;
     const lift = lifted ? 1 : 0;
     if (!reducedMotion) {
       lightU += (heldU - lightU) * 0.28;
@@ -593,6 +595,7 @@ export async function createPlate(
     contextLost = false;
     needsBake = true;
     dirty = true;
+    if (!gl) return;
     if (sheetTex) gl.deleteTexture(sheetTex);
     if (formTex) gl.deleteTexture(formTex);
     sheetTex = null;

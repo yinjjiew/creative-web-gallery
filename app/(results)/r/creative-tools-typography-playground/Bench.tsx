@@ -18,7 +18,7 @@ import {
   useSyncExternalStore,
   type KeyboardEvent,
   type MouseEvent,
-  type PointerEvent,
+  type PointerEvent as ReactPointerEvent,
 } from "react";
 
 import s from "./bench.module.css";
@@ -299,7 +299,7 @@ export default function Bench() {
   }, []);
 
   useEffect(() => {
-    const onMove = (event: PointerEvent) => {
+    const onMove = (event: globalThis.PointerEvent) => {
       const drag = dragRef.current;
       if (!drag) return;
       const point = clientToGraph(event.clientX, event.clientY);
@@ -353,7 +353,7 @@ export default function Bench() {
     }
   };
 
-  const onPlotPointerDown = (event: PointerEvent<SVGSVGElement>) => {
+  const onPlotPointerDown = (event: ReactPointerEvent<SVGSVGElement>) => {
     if (event.button !== 0) return;
     const point = clientToGraph(event.clientX, event.clientY);
     const hit = knots.findIndex((k) => Math.hypot(k.x - point.x, k.y - point.y) < 0.06);
@@ -374,7 +374,7 @@ export default function Bench() {
     setKnots((prev) => [...prev, { x: point.x, y: point.y }].sort((a, b) => a.x - b.x));
   };
 
-  const onStagePointer = (event: PointerEvent<HTMLDivElement>) => {
+  const onStagePointer = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (driver !== "pointer") return;
     pointerRef.current = { x: event.clientX, y: event.clientY };
   };

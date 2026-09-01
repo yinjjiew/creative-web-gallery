@@ -57,7 +57,7 @@ export function isThrough(from: Road, to: Road): boolean {
 
 /** Cells a booked route occupies. Shared cells mean the routes lock. */
 export function cells(from: Road, to: Road): string[] {
-  const out = [from, to];
+  const out: string[] = [from, to];
   if (isThrough(from, to)) {
     out.push(from === "A" || from === "C" ? "NS" : "EW", "X");
   } else {
@@ -571,7 +571,7 @@ function step(g: Game) {
   maybeSpawn(g);
   const snapshot = g.trains.slice();
   for (const tr of snapshot) {
-    if (g.phase === "dead") break;
+    if (g.phase !== "run") break;
     if (g.trains.includes(tr)) stepTrain(g, tr);
   }
   if (g.phase === "run") collisions(g);

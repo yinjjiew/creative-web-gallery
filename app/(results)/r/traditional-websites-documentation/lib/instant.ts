@@ -16,14 +16,16 @@ import {
   fmtCivil,
   fmtOffset,
   pad,
-  type Calendar,
-  type Civil,
-  type Clock,
-  type Instant,
   type ResolveOptions,
-  type Span,
   type Transition,
-  type Zone,
+} from "./types";
+import type {
+  Calendar as CalendarT,
+  Civil as CivilT,
+  Clock as ClockT,
+  Instant as InstantT,
+  Span as SpanT,
+  Zone as ZoneT,
 } from "./types";
 import {
   abbreviationAt,
@@ -45,32 +47,26 @@ export {
   UnknownZoneError,
 } from "./types";
 export type {
-  Calendar,
-  Civil,
-  Clock,
-  Instant,
   ResolveOptions,
-  Span,
   Transition,
-  Zone,
 } from "./types";
 
-function instantOf(epochMs: number): Instant {
+function instantOf(epochMs: number): InstantT {
   if (!Number.isFinite(epochMs)) {
     throw new ParseError("Instant requires a finite epoch millisecond.");
   }
   return { kind: "instant", epochMs };
 }
 
-function spanOf(ms: number): Span {
+function spanOf(ms: number): SpanT {
   return { kind: "span", ms };
 }
 
-function clockOf(civil: Civil, zone: Zone, offsetMs: number): Clock {
+function clockOf(civil: CivilT, zone: ZoneT, offsetMs: number): ClockT {
   return { kind: "clock", civil, zone, offsetMs };
 }
 
-function civilEquals(a: Civil, b: Civil): boolean {
+function civilEquals(a: CivilT, b: CivilT): boolean {
   return (
     a.year === b.year &&
     a.month === b.month &&
@@ -82,16 +78,16 @@ function civilEquals(a: Civil, b: Civil): boolean {
   );
 }
 
-function addMillisToCivil(c: Civil, ms: number): Civil {
+function addMillisToCivil(c: CivilT, ms: number): CivilT {
   return utcMsToCivil(civilToUtcMs(c) + ms);
 }
 
-function resolveClock(civil: Civil, zone: Zone, options: ResolveOptions = {}): Clock {
+function resolveClock(civil: CivilT, zone: ZoneT, options: ResolveOptions = {}): ClockT {
   assertCivil(civil);
   const ifSkipped = options.ifSkipped ?? "reject";
   const ifAmbiguous = options.ifAmbiguous ?? "reject";
   const asUtc = civilToUtcMs(civil);
-  const candidates: Clock[] = [];
+  const candidates: ClockT[] = [];
   for (const offsetMs of nearbyOffsets(zone, asUtc)) {
     const epochMs = asUtc - offsetMs;
     const instant = instantOf(epochMs);
@@ -100,7 +96,7 @@ function resolveClock(civil: Civil, zone: Zone, options: ResolveOptions = {}): C
     }
   }
   candidates.sort((a, b) => a.offsetMs - b.offsetMs);
-  const unique = new Map<number, Clock>();
+  const unique = new Map<number, ClockT>();
   for (const c of candidates) unique.set(c.offsetMs, c);
   const found = [...unique.values()].sort(
     (a, b) => a.civil.hour - b.civil.hour || clockToEpoch(a) - clockToEpoch(b),
@@ -141,15 +137,15 @@ function resolveClock(civil: Civil, zone: Zone, options: ResolveOptions = {}): C
   throw new SkippedTimeError(civil, zone.id);
 }
 
-function clockToEpoch(c: Clock): number {
+function clockToEpoch(c: ClockT): number {
   return civilToUtcMs(c.civil) - c.offsetMs;
 }
 
 export const Instant = {
-  now(): Instant {
+  now(): InstantT {
     return instantOf(Date.now());
   },
-  fromEpochMs(ms: number): Instant {
+  fromEpochMs(ms: number): InstantT {
     return instantOf(ms);
   },
   /**
@@ -157,7 +153,7 @@ export const Instant = {
    * offset. Offset-less strings are Civil, not Instant — Instant.parse will
    * not guess.
    */
-  parse(input: string): Instant {
+  parse(input: string): InstantT {
     const p = parseIso(input);
     if (p.zoneId && p.offsetMs == null) {
       throw new ParseError(
@@ -171,22 +167,22 @@ export const Instant = {
     }
     return instantOf(civilToUtcMs(p.civil) - p.offsetMs);
   },
-  toEpochMs(i: Instant): number {
+  toEpochMs(i: InstantT): number {
     return i.epochMs;
   },
-  add(i: Instant, span: Span): Instant {
+  add(i: InstantT, span: SpanT): InstantT {
     return instantOf(i.epochMs + span.ms);
   },
-  until(a: Instant, b: Instant): Span {
+  until(a: InstantT, b: InstantT): SpanT {
     return spanOf(b.epochMs - a.epochMs);
   },
-  compare(a: Instant, b: Instant): -1 | 0 | 1 {
+  compare(a: InstantT, b: InstantT): -1 | 0 | 1 {
     return a.epochMs < b.epochMs ? -1 : a.epochMs > b.epochMs ? 1 : 0;
   },
-  equals(a: Instant, b: Instant): boolean {
+  equals(a: InstantT, b: InstantT): boolean {
     return a.epochMs === b.epochMs;
   },
-  toString(i: Instant): string {
+  toString(i: InstantT): string {
     const c = utcMsToCivil(i.epochMs);
     return `${fmtCivil(c)}Z`;
   },
@@ -194,7 +190,7 @@ export const Instant = {
 
 export const Civil = {
   of: civilOf,
-  parse(input: string): Civil {
+  parse(input: string): CivilT {
     const p = parseIso(input);
     if (p.offsetMs != null) {
       throw new ParseError(
@@ -208,14 +204,14 @@ export const Civil = {
     }
     return p.civil;
   },
-  add(c: Civil, cal: Calendar, overflow: "clamp" | "reject" = "clamp"): Civil {
+  add(c: CivilT, cal: CalendarT, overflow: "clamp" | "reject" = "clamp"): CivilT {
     return addCalendar(c, cal, overflow);
   },
   with(
-    c: Civil,
-    parts: Partial<Omit<Civil, "kind">>,
+    c: CivilT,
+    parts: Partial<Omit<CivilT, "kind">>,
     overflow: "clamp" | "reject" = "clamp",
-  ): Civil {
+  ): CivilT {
     const next = { ...c, ...parts, kind: "civil" as const };
     if (overflow === "clamp" && next.month >= 1 && next.month <= 12) {
       const dim = daysInMonth(next.year, next.month);
@@ -224,7 +220,7 @@ export const Civil = {
     assertCivil(next);
     return next;
   },
-  untilDays(a: Civil, b: Civil): number {
+  untilDays(a: CivilT, b: CivilT): number {
     const aMid = Date.UTC(a.year, a.month - 1, a.day);
     const bMid = Date.UTC(b.year, b.month - 1, b.day);
     return Math.round((bMid - aMid) / 86_400_000);
@@ -240,7 +236,7 @@ export const Span = {
     minutes?: number;
     seconds?: number;
     millis?: number;
-  }): Span {
+  }): SpanT {
     const ms =
       (parts.hours ?? 0) * 3_600_000 +
       (parts.minutes ?? 0) * 60_000 +
@@ -248,7 +244,7 @@ export const Span = {
       (parts.millis ?? 0);
     return spanOf(ms);
   },
-  parse(input: string): Span {
+  parse(input: string): SpanT {
     const m = /^P(?:T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)(?:\.(\d+))?S)?)?$/.exec(input);
     if (!m || input === "P" || input === "PT") {
       throw new ParseError(
@@ -262,22 +258,22 @@ export const Span = {
       millis: m[4] != null ? Number(m[4].padEnd(3, "0")) : 0,
     });
   },
-  total(span: Span, unit: "hours" | "minutes" | "seconds" | "millis"): number {
+  total(span: SpanT, unit: "hours" | "minutes" | "seconds" | "millis"): number {
     if (unit === "millis") return span.ms;
     if (unit === "seconds") return span.ms / 1000;
     if (unit === "minutes") return span.ms / 60_000;
     return span.ms / 3_600_000;
   },
-  add(a: Span, b: Span): Span {
+  add(a: SpanT, b: SpanT): SpanT {
     return spanOf(a.ms + b.ms);
   },
-  negate(span: Span): Span {
+  negate(span: SpanT): SpanT {
     return spanOf(-span.ms);
   },
-  abs(span: Span): Span {
+  abs(span: SpanT): SpanT {
     return spanOf(Math.abs(span.ms));
   },
-  toString(span: Span): string {
+  toString(span: SpanT): string {
     if (span.ms === 0) return "PT0S";
     const sign = span.ms < 0 ? "-" : "";
     let rest = Math.abs(span.ms);
@@ -299,7 +295,7 @@ export const Span = {
 
 export const Calendar = {
   of: calendarOf,
-  toString(c: Calendar): string {
+  toString(c: CalendarT): string {
     if (!c.years && !c.months && !c.weeks && !c.days) return "P0D";
     let out = "P";
     if (c.years) out += `${c.years}Y`;
@@ -318,21 +314,21 @@ export const Zone = {
   abbreviationAt,
   nextTransition,
   previousTransition,
-  toString(z: Zone): string {
+  toString(z: ZoneT): string {
     return z.id;
   },
 };
 
 export const Clock = {
-  of(civil: Civil, zone: Zone, options?: ResolveOptions): Clock {
+  of(civil: CivilT, zone: ZoneT, options?: ResolveOptions): ClockT {
     return resolveClock(civil, zone, options);
   },
-  at(instant: Instant, zone: Zone): Clock {
+  at(instant: InstantT, zone: ZoneT): ClockT {
     const offsetMs = offsetAt(zone, instant);
     const civil = utcMsToCivil(instant.epochMs + offsetMs);
     return clockOf(civil, zone, offsetMs);
   },
-  parse(input: string, options?: ResolveOptions): Clock {
+  parse(input: string, options?: ResolveOptions): ClockT {
     const p = parseIso(input);
     if (!p.zoneId) {
       throw new ParseError(
@@ -352,34 +348,34 @@ export const Clock = {
     }
     return resolveClock(p.civil, zone, options);
   },
-  toInstant(clock: Clock): Instant {
+  toInstant(clock: ClockT): InstantT {
     return instantOf(clockToEpoch(clock));
   },
-  toCivil(clock: Clock): Civil {
+  toCivil(clock: ClockT): CivilT {
     return clock.civil;
   },
-  addSpan(clock: Clock, span: Span): Clock {
+  addSpan(clock: ClockT, span: SpanT): ClockT {
     return Clock.at(Instant.add(Clock.toInstant(clock), span), clock.zone);
   },
-  addCalendar(clock: Clock, cal: Calendar, options?: ResolveOptions): Clock {
+  addCalendar(clock: ClockT, cal: CalendarT, options?: ResolveOptions): ClockT {
     const civil = Civil.add(clock.civil, cal);
     return resolveClock(civil, clock.zone, options);
   },
-  withZone(clock: Clock, zone: Zone): Clock {
+  withZone(clock: ClockT, zone: ZoneT): ClockT {
     return Clock.at(Clock.toInstant(clock), zone);
   },
-  offset(clock: Clock): Span {
+  offset(clock: ClockT): SpanT {
     return spanOf(clock.offsetMs);
   },
-  abbreviation(clock: Clock): string {
+  abbreviation(clock: ClockT): string {
     return abbreviationAt(clock.zone, Clock.toInstant(clock));
   },
-  toString(clock: Clock): string {
+  toString(clock: ClockT): string {
     return `${fmtCivil(clock.civil)}${fmtOffset(clock.offsetMs)}[${clock.zone.id}]`;
   },
 };
 
-export function formatClockLong(clock: Clock): string {
+export function formatClockLong(clock: ClockT): string {
   const abbr = Clock.abbreviation(clock);
   return `${Clock.toString(clock)} ${abbr}`;
 }
