@@ -49,18 +49,21 @@ export default function Bed({ reduced, onReadings, onAnnounce }: Props) {
   talkRef.current = onAnnounce;
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d", { alpha: false });
-    if (!ctx) return;
+    const canvasEl = canvasRef.current;
+    if (!canvasEl) return;
+    const canvas: HTMLCanvasElement = canvasEl;
+    const maybeCtx = canvas.getContext("2d", { alpha: false });
+    if (!maybeCtx) return;
+    const ctx: CanvasRenderingContext2D = maybeCtx;
 
     const left = makeField(COLS, ROWS, true);
     const right = makeField(COLS, ROWS, false);
     const plate = document.createElement("canvas");
     plate.width = RW;
     plate.height = RH;
-    const pctx = plate.getContext("2d", { alpha: true });
-    if (!pctx) return;
+    const maybePlate = plate.getContext("2d", { alpha: true });
+    if (!maybePlate) return;
+    const pctx: CanvasRenderingContext2D = maybePlate;
     const plateImg = pctx.createImageData(RW, RH);
 
     const traceL = new Float32Array(TRACE);

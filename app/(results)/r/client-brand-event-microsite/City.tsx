@@ -236,7 +236,11 @@ export default function City() {
         return;
       }
       setGhostFit(proposal.fit);
-      setBanner({ tone: "refuse", text: proposal.reason, suggestDay: proposal.suggestDay });
+      setBanner({
+        tone: "refuse",
+        text: proposal.reason,
+        suggestDay: proposal.type === "refuse" ? proposal.suggestDay : undefined,
+      });
       sound(true);
     },
     [buildings, clock, day, here, inQueue, sound, talks],

@@ -71,8 +71,9 @@ export default function Stage({
   readingRef.current = onReading;
 
   useEffect(() => {
-    const wrap = wrapRef.current;
-    if (!wrap) return;
+    const wrapEl = wrapRef.current;
+    if (!wrapEl) return;
+    const wrap: HTMLDivElement = wrapEl;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const renderer = new THREE.WebGLRenderer({

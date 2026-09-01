@@ -75,8 +75,9 @@ export default function Stage({
   const wrapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const wrap = wrapRef.current;
-    if (!wrap) return;
+    const wrapEl = wrapRef.current;
+    if (!wrapEl) return;
+    const wrap: HTMLDivElement = wrapEl;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const narrow = wrap.clientWidth < 540;

@@ -464,7 +464,7 @@ function commitDoc(): Doc {
         duration: 70,
         easing: "snap",
         gesture: "down",
-        voices: voiceSet({ lift: 0, scale: 0, well: 0, shade: 0, ink: 0, word: 0, mark: 0 }, ids),
+        voices: voiceSet({ lift: 0, well: 0, shade: 0, ink: 0, word: 0, mark: 0 }, ids),
       },
       {
         id: "e-rest-armed",

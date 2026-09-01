@@ -77,8 +77,9 @@ export default function Stage({
   const periodNow = useRef("dusk");
 
   useEffect(() => {
-    const wrap = wrapRef.current;
-    if (!wrap) return;
+    const wrapEl = wrapRef.current;
+    if (!wrapEl) return;
+    const wrap: HTMLDivElement = wrapEl;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) playingRef.current = false;

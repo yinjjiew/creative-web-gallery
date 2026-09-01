@@ -208,7 +208,7 @@ export default function Shelf() {
     ? `${jobs.length} ${jobs.length === 1 ? "job" : "jobs"} for Monday.`
     : "Nothing committed. A recommendation has to change what you would do Monday.";
 
-  const inspect = inspectId ? titleById(inspectId) : null;
+  const inspect = inspectId ? titleById(inspectId) ?? null : null;
   const sundayDone = offers.length === 0;
 
   return (

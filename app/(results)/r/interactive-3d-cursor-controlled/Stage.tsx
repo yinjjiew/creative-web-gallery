@@ -172,9 +172,11 @@ export default function Stage({
   const wrapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const wrap = wrapRef.current;
-    const page = pageRef.current;
-    if (!wrap || !page) return;
+    const wrapEl = wrapRef.current;
+    const pageEl = pageRef.current;
+    if (!wrapEl || !pageEl) return;
+    const wrap: HTMLDivElement = wrapEl;
+    const page: HTMLDivElement = pageEl;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const coarse = window.matchMedia("(pointer: coarse)").matches;
