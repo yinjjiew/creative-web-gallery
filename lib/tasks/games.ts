@@ -74,7 +74,7 @@ Sound must be synthesized. Water, bell buoys and hull knocks all reward parametr
       "Audio Design",
     ],
     resultRoute: "/r/games-puzzle",
-    status: "planned",
+    status: "complete",
     blurb:
       "A tidal puzzle on an engraved admiralty chart, where the same water that blocks your path is the water that floats you over the wall, on a cycle you can read but never change.",
     direction:

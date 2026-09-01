@@ -134,7 +134,7 @@ Write the diary yourself, and write it properly. Three hundred entries of genera
       "State & Data",
     ],
     resultRoute: "/r/personal-studio-digital-diary",
-    status: "planned",
+    status: "complete",
     blurb:
       "A year of one unchanging morning walk, read along the route as well as along the calendar, so recurrence becomes visible and the exceptions land.",
     direction:
@@ -200,7 +200,7 @@ Résumés are a genre with real conventions and hiring managers read them extrem
       "Export / Reusability",
     ],
     resultRoute: "/r/personal-studio-interactive-resume",
-    status: "planned",
+    status: "complete",
     blurb:
       "One honest career record readable from three angles — engineering, program management, operations — reordering emphasis without ever altering a claim, and printing cleanly.",
     direction:

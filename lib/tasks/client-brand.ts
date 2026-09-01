@@ -156,7 +156,7 @@ AVOID — Windswept models on clifftops. Heritage nostalgia and sepia. The word 
       "Interaction Design",
     ],
     resultRoute: "/r/client-brand-premium-showcase",
-    status: "planned",
+    status: "complete",
     blurb:
       "A coat sold on chain of custody rather than craft language: named flocks, one season's clip, the honest trade-off that each year's cloth differs, and repair for life.",
     direction:
@@ -232,7 +232,7 @@ AVOID — Doom framing without agency. Corporate sustainability aesthetics. Sepi
       "Interaction Design",
     ],
     resultRoute: "/r/client-brand-brand-storytelling",
-    status: "planned",
+    status: "complete",
     blurb:
       "A seed bank telling a real and mostly unknown extinction story — named varieties, last recorded dates — and converting it into the one act that reverses it: growing one.",
     direction:

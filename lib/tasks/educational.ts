@@ -140,7 +140,7 @@ Design for the scale honestly. A catastrophic case has more steps than can be sh
       "Visual Design / Taste",
     ],
     resultRoute: "/r/educational-algorithm-visualizer",
-    status: "planned",
+    status: "complete",
     blurb:
       "Watch a real backtracking regex engine try, fail and back up on your own pattern — and see the exact shape of the explosion that turns microseconds into centuries.",
     direction:

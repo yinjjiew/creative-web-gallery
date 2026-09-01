@@ -1,0 +1,1407 @@
+/*
+ * One document, three readings.
+ *
+ * The page is a sheet of paper with a wide left margin and a narrower right
+ * one. The record — her claims — occupies the measure in the middle and is the
+ * only thing set in the reading face at reading size. The left margin holds the
+ * apparatus (dates, claim ids, relevance marks) and the right margin holds her
+ * framing, in italic. A reader can therefore see, without being told, which
+ * text is the record and which text is somebody's opinion about it.
+ *
+ * One accent, an oxide red, used the way a pencil is used on a printed
+ * document: relevance marks, the pinned claims, focus rings. Nothing else is
+ * coloured.
+ */
+
+.page {
+  --paper: #f4f4f1;
+  --sunk: #eae8e2;
+  --ink: #191b1c;
+  --ink-soft: #3c4143;
+  --muted: #5c6265;
+  --faint: #8b9093;
+  --rule: #d5d4ce;
+  --rule-soft: #e4e3dd;
+  --mark: #8c3a1e;
+  --mark-soft: #c9a493;
+
+  --rail: 5.5rem;
+  --text: 34rem;
+  --note: 13rem;
+  --gap: 1.75rem;
+  --sheet: calc(var(--rail) + var(--text) + var(--note) + var(--gap) * 2);
+
+  min-height: 100dvh;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--fit-serif), Iowan Old Style, Georgia, serif;
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+.page *::selection {
+  background: #e2d4cc;
+}
+
+.page :focus-visible {
+  outline: 2px solid var(--mark);
+  outline-offset: 3px;
+}
+
+/* ------------------------------------------------------------------ *
+ * The shared row grid. Every band on the page — masthead, section head,
+ * role head, claim — uses the same three columns, so the margins line up
+ * down the whole document without a single shared container.
+ * ------------------------------------------------------------------ */
+
+.row {
+  display: grid;
+  grid-template-columns: var(--rail) minmax(0, var(--text)) var(--note);
+  column-gap: var(--gap);
+  align-items: start;
+}
+
+.gutter {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.3rem;
+  padding-top: 0.32rem;
+  font-family: var(--fit-mono), ui-monospace, SFMono-Regular, monospace;
+  font-size: 0.66rem;
+  line-height: 1.4;
+  color: var(--faint);
+  text-align: right;
+}
+
+.body {
+  min-width: 0;
+}
+
+/* ------------------------------------------------------------------ *
+ * Sticky control bar
+ * ------------------------------------------------------------------ */
+
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+}
+
+.barInner {
+  width: min(100% - 3rem, var(--sheet));
+  margin: 0 auto;
+  padding: 0.65rem 0 0.4rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+}
+
+.readings {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.1rem;
+}
+
+.barLabel,
+.actions {
+  font-family: var(--fit-mono), ui-monospace, monospace;
+}
+
+.barLabel {
+  font-size: 0.62rem;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-right: 0.65rem;
+}
+
+.tab {
+  appearance: none;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-family: var(--fit-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  padding: 0.3rem 0.6rem 0.34rem;
+  box-shadow: inset 0 -2px 0 transparent;
+  transition: color 120ms ease, box-shadow 120ms ease;
+}
+
+.tab:hover {
+  color: var(--ink);
+}
+
+.tab[aria-pressed="true"] {
+  color: var(--ink);
+  font-weight: 500;
+  box-shadow: inset 0 -2px 0 var(--mark);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.action {
+  appearance: none;
+  cursor: pointer;
+  background: none;
+  border: 1px solid var(--rule);
+  color: var(--muted);
+  font-family: var(--fit-mono), ui-monospace, monospace;
+  font-size: 0.68rem;
+  padding: 0.26rem 0.55rem 0.3rem;
+  transition: border-color 120ms ease, color 120ms ease, background 120ms ease;
+}
+
+.action:hover {
+  color: var(--ink);
+  border-color: var(--mark-soft);
+}
+
+.action[aria-pressed="true"] {
+  color: var(--ink);
+  background: var(--sunk);
+  border-color: var(--mark-soft);
+}
+
+/* The ledger: what this reading did to the record, counted. */
+
+.ledger {
+  width: min(100% - 3rem, var(--sheet));
+  margin: 0 auto;
+}
+
+.ledgerLine {
+  cursor: pointer;
+  list-style: none;
+  padding: 0 0 0.5rem 1rem;
+  position: relative;
+  font-family: var(--fit-mono), ui-monospace, monospace;
+  font-size: 0.68rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.ledgerLine::-webkit-details-marker {
+  display: none;
+}
+
+.ledgerLine::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: var(--mark);
+  transition: transform 140ms ease;
+  display: inline-block;
+}
+
+.ledger[open] .ledgerLine::before {
+  transform: rotate(90deg);
+}
+
+.ledgerSame {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.ledgerCounts {
+  color: var(--faint);
+}
+
+.ledgerBody {
+  max-width: calc(var(--text) + 4rem);
+  /* Set to the document's measure, so the explanation reads as part of the
+     same column of prose rather than as chrome floating above it. */
+  padding: 0.2rem 0 1rem calc(var(--rail) + var(--gap));
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.ledgerBody p {
+  margin: 0 0 0.6rem;
+}
+
+.checksum {
+  font-family: var(--fit-mono), ui-monospace, monospace;
+  font-size: 0.7rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.checksum b {
+  color: var(--mark);
+  font-weight: 500;
+}
+
+/* ------------------------------------------------------------------ *
+ * The sheet
+ * ------------------------------------------------------------------ */
+
+.sheet {
+  width: min(100% - 3rem, var(--sheet));
+  margin: 0 auto;
+  padding: 2.6rem 0 4rem;
+}
+
+.masthead {
+  padding-bottom: 1.6rem;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 2rem;
+}
+
+.kicker {
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.name {
+  margin: 0;
+  font-weight: 400;
+  font-size: clamp(2.1rem, 5.4vw, 2.9rem);
+  line-height: 1.02;
+  letter-spacing: -0.021em;
+}
+
+.line {
+  margin: 0.55rem 0 0;
+  font-family: var(--fit-mono), ui-monospace, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
+.headline {
+  margin: 1.1rem 0 0;
+  font-size: 1.14rem;
+  line-height: 1.5;
+  max-width: 30rem;
+  color: var(--ink);
+}
+
+.contact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+  padding-top: 0.5rem;
+  font-family: var(--fit-mono), ui-monospace, monospace;
+  font-size: 0.7rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+/* Her framing, at the top of a reading. */
+
+.readingNote {
+  margin-bottom: 2.2rem;
+}
+
+.noteLabel {
+  display: block;
+  margin: 0 0 0.35rem;
+  font-family: var(--fit-mono), ui-monospace, monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--mark);
+  font-style: normal;
+}
+
+.noteLabelSoft {
+  display: block;
+  margin-top: 0.2rem;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  font-size: 0.66rem;
+  color: var(--faint);
+}
+
+/* Apparatus, not her voice: the record's empty margin, explained once. */
+.hint {
+  font-family: var(--fit-mono), ui-monospace, monospace;
+  font-size: 0.63rem;
+  line-height: 1.65;
+  color: var(--faint);
+  border-left: 1px solid var(--rule);
+  padding-left: 0.75rem;
+  margin-top: 0.4rem;
+}
+
+.noteText {
+  margin: 0;
+  font-style: italic;
+  font-size: 1.02rem;
+  line-height: 1.6;
+  color: #4b5053;
+  border-left: 1px solid var(--mark-soft);
+  padding-left: 0.9rem;
+}
+
+.note {
+  font-style: italic;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: var(--muted);
+  border-left: 1px solid var(--mark-soft);
+  padding-left: 0.75rem;
+  margin-top: 0.4rem;
+}
+
+/* Sections */
+
+.section {
+  margin-bottom: 2.4rem;
+}
+
+.sectionRow {
+  margin-bottom: 1.1rem;
+}
+
+.sectionMark {
+  letter-spacing: 0.1em;
+}
+
+.sectionHead {
+  margin: 0;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--ink);
+  font-family: var(--fit-mono), ui-monospace, monospace;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.19em;
+  text-transform: uppercase;
+}
+
+/* Roles */
+
+.role {
+  margin-bottom: 2.1rem;
+}
+
+.span {
+  color: var(--muted);
+}
+
+.org {
+  margin: 0;
+  font-size: 1.32rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.012em;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.65rem;
+}
+
+.place {
+  font-family: var(--fit-mono), ui-monospace, monospace;
+  font-size: 0.64rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.what {
+  margin: 0.35rem 0 0.7rem;
+  font-size: 0.94rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.stints {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  border-top: 1px solid var(--rule-soft);
+}
+
+.stints li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.32rem 0;
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.stintTitle {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.stintDates {
+  font-family: var(--fit-mono), ui-monospace, monospace;
+  font-size: 0.68rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* Claims */
+
+.claims {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.claim {
+  padding-bottom: 0.95rem;
+}
+
+.markButton {
+  appearance: none;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.28rem;
+  font: inherit;
+  color: var(--faint);
+}
+
+.markButton:hover .markId {
+  color: var(--mark);
+}
+
+.markId {
+  letter-spacing: 0.06em;
+  transition: color 120ms ease;
+}
+
+.bars {
+  display: flex;
+  gap: 2px;
+}
+
+.bars i {
+  display: block;
+  width: 5px;
+  height: 5px;
+}
+
+.barOn {
+  background: var(--mark);
+}
+
+.barOff {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--mark-soft);
+}
+
+.flat {
+  display: block;
+  width: 17px;
+  height: 1px;
+  background: var(--rule);
+  margin-top: 3px;
+}
+
+.claimText {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.w3 .claimText {
+  font-size: 1.14rem;
+  line-height: 1.52;
+}
+
+.w1 .claimText {
+  font-size: 0.885rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.w3 {
+  padding-bottom: 1.15rem;
+}
+
+.w1 {
+  padding-bottom: 0.7rem;
+}
+
+.detail {
+  margin: 0.45rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  border-left: 1px solid var(--rule);
+  padding-left: 0.85rem;
+}
+
+.detailFolded {
+  display: none;
+}
+
+.foldButton {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0.3rem 0 0;
+  cursor: pointer;
+  font-family: var(--fit-mono), ui-monospace, monospace;
+  font-size: 0.64rem;
+  letter-spacing: 0.03em;
+  color: var(--faint);
+  border-bottom: 1px dotted var(--rule);
+}
+
+.foldButton:hover {
+  color: var(--mark);
+  border-bottom-color: var(--mark-soft);
+}
+
+.pinned .body {
+  margin-left: -1rem;
+  padding: 0.55rem 0 0.6rem 1rem;
+  border-left: 2px solid var(--mark);
+  background: var(--sunk);
+}
+
+.pinNote {
+  margin: 0 0 0.3rem;
+  font-family: var(--fit-mono), ui-monospace, monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--mark);
+}
+
+/* Claim inspector */
+
+.inspect {
+  margin-top: 0.7rem;
+  padding: 0.6rem 0.85rem 0.7rem;
+  background: var(--sunk);
+  font-family: var(--fit-mono), ui-monospace, monospace;
+  font-size: 0.66rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.inspectHead {
+  margin: 0 0 0.4rem;
+  color: var(--ink);
+}
+
+.inspectList {
+  list-style: none;
+  margin: 0 0 0.45rem;
+  padding: 0;
+}
+
+.inspectList li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.1rem 0;
+}
+
+.inspectLens {
+  width: 6.5rem;
+  color: var(--ink-soft);
+}
+
+.inspectWord {
+  color: var(--faint);
+}
+
+.inspectFoot {
+  margin: 0;
+  font-family: var(--fit-serif), Georgia, serif;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+/* Skills */
+
+.skills {
+  margin: 0 0 0.7rem;
+  font-size: 0.97rem;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.skills.w1 {
+  font-size: 0.885rem;
+  color: var(--muted);
+}
+
+.skills.w3 {
+  font-size: 1.05rem;
+}
+
+.skillLabel {
+  font-family: var(--fit-mono), ui-monospace, monospace;
+  font-size: 0.63rem;
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-right: 0.6rem;
+}
+
+/* Plain text view */
+
+.plain {
+  margin-bottom: 2.5rem;
+}
+
+.plainNote {
+  margin: 0.5rem 0 0.9rem;
+  font-size: 0.96rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.plainActions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.7rem;
+}
+
+.plainCaption {
+  margin: 0 0 1.4rem;
+  font-family: var(--fit-mono), ui-monospace, monospace;
+  font-size: 0.63rem;
+  line-height: 1.6;
+  color: var(--faint);
+}
+
+.pre {
+  margin: 0;
+  padding: 1.6rem 1.4rem;
+  background: #fbfbf9;
+  border: 1px solid var(--rule);
+  overflow-x: auto;
+  font-family: var(--fit-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  line-height: 1.62;
+  color: var(--ink);
+  /* Hard-wrapped at 76 columns already. Letting the browser re-wrap it would
+     shred the thing it is for, so it scrolls sideways on a narrow screen
+     instead. */
+  white-space: pre;
+  tab-size: 2;
+}
+
+/* Audit */
+
+.audit {
+  margin: 3rem 0 0;
+  border-top: 1px solid var(--ink);
+  padding-top: 0.7rem;
+}
+
+.auditSummary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.7rem;
+  font-family: var(--fit-mono), ui-monospace, monospace;
+  font-size: 0.67rem;
+  line-height: 1.55;
+  color: var(--muted);
+  padding-bottom: 0.4rem;
+}
+
+.auditSummary::-webkit-details-marker {
+  display: none;
+}
+
+.auditWord {
+  color: var(--mark);
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+}
+
+.auditWord::before {
+  content: "▸ ";
+}
+
+.audit[open] .auditWord::before {
+  content: "▾ ";
+}
+
+.auditBody {
+  padding: 1.2rem 0 0;
+}
+
+.auditIntro {
+  max-width: 44rem;
+  margin: 0 0 1.3rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.auditIntro b {
+  font-family: var(--fit-mono), ui-monospace, monospace;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--mark);
+}
+
+.auditHead {
+  margin: 2.4rem 0 0.7rem;
+  font-family: var(--fit-mono), ui-monospace, monospace;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.19em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 0.4rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.table th,
+.table td {
+  vertical-align: top;
+  padding: 0.42rem 0.6rem 0.42rem 0;
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.thId,
+.thClaim,
+.thLens {
+  font-family: var(--fit-mono), ui-monospace, monospace;
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--faint);
+  border-bottom: 1px solid var(--ink) !important;
+}
+
+.thLens {
+  width: 4.6rem;
+  text-align: center;
+}
+
+.thOn {
+  color: var(--mark);
+}
+
+.groupHead {
+  font-family: var(--fit-mono), ui-monospace, monospace;
+  font-size: 0.63rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--mark);
+  padding-top: 1.3rem !important;
+  border-bottom: 1px solid var(--rule) !important;
+}
+
+.tdId {
+  font-family: var(--fit-mono), ui-monospace, monospace;
+  font-size: 0.66rem;
+  color: var(--faint);
+  width: 2.6rem;
+  padding-top: 0.55rem !important;
+}
+
+.tdClaim {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.tdPin {
+  font-family: var(--fit-mono), ui-monospace, monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--mark);
+}
+
+.tdW {
+  font-family: var(--fit-mono), ui-monospace, monospace;
+  font-size: 0.63rem;
+  letter-spacing: 0.08em;
+  color: var(--faint);
+  text-align: center;
+  padding-top: 0.5rem !important;
+}
+
+.tdOn {
+  color: var(--ink);
+  background: var(--sunk);
+}
+
+.pinnedRow .tdClaim {
+  color: var(--ink);
+}
+
+.notes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.6rem;
+}
+
+.noteCard {
+  border-top: 2px solid var(--rule);
+  padding-top: 0.7rem;
+}
+
+.noteOn {
+  border-top-color: var(--mark);
+}
+
+.noteCardHead {
+  margin: 0 0 0.5rem;
+  font-family: var(--fit-mono), ui-monospace, monospace;
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.noteTarget {
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: var(--faint);
+}
+
+.noteBody {
+  margin: 0 0 0.7rem;
+  font-style: italic;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.noteRoles {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.noteRoles div {
+  margin-bottom: 0.45rem;
+}
+
+.noteRoles dt {
+  font-family: var(--fit-mono), ui-monospace, monospace;
+  font-size: 0.59rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.noteRoles dd {
+  margin: 0.1rem 0 0;
+  font-style: italic;
+  color: var(--muted);
+}
+
+/* Colophon */
+
+.colophon {
+  margin-top: 3.2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+}
+
+.provenance {
+  margin: 0 0 0.6rem;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 32rem;
+}
+
+.back {
+  font-family: var(--fit-mono), ui-monospace, monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.05em;
+  color: var(--faint);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 1px;
+}
+
+.back:hover {
+  color: var(--mark);
+  border-bottom-color: var(--mark-soft);
+}
+
+.printFoot {
+  display: none;
+}
+
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ------------------------------------------------------------------ *
+ * Narrower: the right margin goes first, since her framing can sit
+ * inline without being confused for the record as long as it keeps the
+ * italic, the rule and the label.
+ * ------------------------------------------------------------------ */
+
+@media screen and (max-width: 1120px) {
+  .page {
+    --sheet: calc(var(--rail) + var(--text) + var(--gap));
+  }
+
+  .row {
+    grid-template-columns: var(--rail) minmax(0, 1fr);
+  }
+
+  .note,
+  .hint {
+    grid-column: 2;
+    margin-top: 0.9rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .contact {
+    grid-column: 2;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.2rem 1.2rem;
+    padding-top: 1rem;
+  }
+
+  .notes {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.3rem;
+  }
+}
+
+/* Phone: one column, and the apparatus becomes a line above the claim. */
+
+/*
+ * Scoped to `screen` deliberately. A Letter page with 16mm margins is about
+ * 695 CSS pixels wide, so an unscoped phone breakpoint would fire on paper and
+ * the printed résumé would silently become the phone layout.
+ */
+@media screen and (max-width: 720px) {
+  .page {
+    font-size: 15.5px;
+    --rail: 0;
+    --gap: 0;
+  }
+
+  .sheet,
+  .barInner,
+  .ledger {
+    width: min(100% - 2rem, 34rem);
+  }
+
+  .sheet {
+    padding-top: 1.8rem;
+  }
+
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .gutter {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    padding-top: 0;
+    padding-bottom: 0.25rem;
+    text-align: left;
+  }
+
+  .markButton {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.15rem 0;
+  }
+
+  .contact,
+  .note,
+  .hint {
+    grid-column: 1;
+  }
+
+  .barInner {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .readings {
+    margin-left: -0.6rem;
+  }
+
+  .barLabel {
+    display: none;
+  }
+
+  .name {
+    font-size: 2rem;
+  }
+
+  .headline {
+    font-size: 1.06rem;
+  }
+
+  .pinned .body {
+    margin-left: 0;
+    padding-left: 0.8rem;
+  }
+
+  /* A five-column table in 358 pixels gives one word per line. Each claim
+     becomes a block instead, with its three weights on a line underneath. */
+  .table,
+  .table tbody,
+  .table tr,
+  .table th,
+  .table td {
+    display: block;
+    width: auto;
+  }
+
+  .table thead {
+    display: none;
+  }
+
+  .table tr {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--rule-soft);
+  }
+
+  .table th,
+  .table td {
+    border: 0 !important;
+    padding: 0 !important;
+  }
+
+  .tdId {
+    display: inline-block;
+    margin-right: 0.5rem;
+  }
+
+  .tdClaim {
+    display: inline;
+    font-size: 0.84rem;
+  }
+
+  .tdW {
+    display: inline-block;
+    margin: 0.4rem 0.9rem 0 0;
+    font-size: 0.6rem;
+    text-align: left;
+    background: none;
+  }
+
+  .tdW::before {
+    content: attr(data-lens) " ";
+    color: var(--faint);
+  }
+
+  .tdOn {
+    color: var(--mark);
+  }
+
+  .groupHead {
+    padding: 1.2rem 0 0.3rem !important;
+    border-bottom: 1px solid var(--rule) !important;
+  }
+
+  /* The counts are a mouthful on one phone line; they arrive with the rest of
+     the explanation when the ledger is opened. */
+  .ledgerCounts {
+    display: none;
+  }
+
+  .ledger[open] .ledgerCounts {
+    display: block;
+    margin-top: 0.3rem;
+  }
+
+  .ledgerBody {
+    padding-left: 0;
+  }
+
+  .pre {
+    padding: 1rem 0.9rem;
+    font-size: 0.66rem;
+  }
+
+  .stints li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page *,
+  .page *::before,
+  .page *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * Print.
+ *
+ * Not a fallback. A recruiter prints this, so the printed sheet is the
+ * complete record: every folded detail is unfolded, the apparatus and
+ * the audit come off, and a footer states which reading this is and
+ * that the other two contain the same claims. Nothing on paper depends
+ * on which buttons happened to be pressed on screen.
+ * ------------------------------------------------------------------ */
+
+@page {
+  margin: 15mm 16mm;
+}
+
+@media print {
+  .page {
+    --paper: #fff;
+    --ink: #000;
+    --ink-soft: #1c1c1c;
+    --muted: #333;
+    --faint: #555;
+    --rule: #999;
+    --rule-soft: #ccc;
+    --mark: #000;
+    --mark-soft: #999;
+    --sunk: #fff;
+    --rail: 4.4rem;
+    --note: 0;
+    --gap: 0.9rem;
+    font-size: 9.9pt;
+    background: #fff;
+  }
+
+  .gutter {
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    padding-top: 0.2rem;
+    font-size: 7.4pt;
+  }
+
+  .stints li {
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 0.18rem 0;
+  }
+
+  .noteLabelSoft {
+    display: none;
+  }
+
+  .bar,
+  .audit,
+  .back,
+  .foldButton,
+  .bars,
+  .flat,
+  .inspect,
+  .pinNote,
+  .hint,
+  .plainActions,
+  .plainCaption {
+    display: none !important;
+  }
+
+  .sheet {
+    width: 100%;
+    padding: 0;
+  }
+
+  .row {
+    grid-template-columns: var(--rail) minmax(0, 1fr);
+  }
+
+  .contact {
+    grid-column: 2;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.1rem 1.1rem;
+    padding-top: 0.5rem;
+    font-size: 8.4pt;
+  }
+
+  .markButton {
+    color: #888;
+  }
+
+  /* Everything the screen folded away is on the paper. */
+  .detailFolded {
+    display: block;
+  }
+
+  .name {
+    font-size: 21pt;
+  }
+
+  .headline {
+    font-size: 11pt;
+    max-width: none;
+  }
+
+  .masthead {
+    padding-bottom: 0.6rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .headline {
+    margin-top: 0.7rem;
+  }
+
+  .claimText,
+  .w3 .claimText,
+  .w1 .claimText {
+    font-size: 9.9pt;
+    line-height: 1.36;
+    color: #000;
+  }
+
+  .detail,
+  .skills,
+  .skills.w1,
+  .skills.w3 {
+    font-size: 9pt;
+    line-height: 1.33;
+    color: #1c1c1c;
+  }
+
+  .detail {
+    margin-top: 0.22rem;
+    padding-left: 0.7rem;
+  }
+
+  .claim,
+  .w3,
+  .w1 {
+    padding-bottom: 0.34rem;
+    break-inside: avoid;
+  }
+
+  .skills {
+    margin-bottom: 0.34rem;
+  }
+
+  .what {
+    margin: 0.2rem 0 0.4rem;
+    font-size: 9pt;
+  }
+
+  .stints {
+    margin-bottom: 0.55rem;
+  }
+
+  .role {
+    margin-bottom: 0.85rem;
+  }
+
+  .role > header,
+  .sectionRow,
+  .masthead {
+    break-after: avoid;
+    break-inside: avoid;
+  }
+
+  .section {
+    margin-bottom: 0.95rem;
+  }
+
+  .sectionRow {
+    margin-bottom: 0.6rem;
+  }
+
+  .note {
+    grid-column: 2;
+    margin: 0.2rem 0 0.5rem;
+    font-size: 8.6pt;
+    border-left: 1px solid #999;
+  }
+
+  .noteText {
+    font-size: 9.3pt;
+    line-height: 1.4;
+  }
+
+  .readingNote {
+    margin-bottom: 0.9rem;
+  }
+
+  .pinned .body {
+    background: none;
+    border-left: 2px solid #000;
+    margin-left: -0.7rem;
+    padding: 0 0 0 0.7rem;
+  }
+
+  .colophon {
+    margin-top: 0.7rem;
+    padding-top: 0.4rem;
+  }
+
+  .provenance {
+    font-size: 8pt;
+    color: #444;
+  }
+
+  .printFoot {
+    display: block;
+    margin: 1.4rem 0 0;
+    padding-top: 0.5rem;
+    border-top: 1px solid #999;
+    font-family: var(--fit-mono), ui-monospace, monospace;
+    font-size: 7.8pt;
+    line-height: 1.5;
+    color: #333;
+    break-inside: avoid;
+  }
+
+  .pre {
+    border: 0;
+    padding: 0;
+    background: none;
+    font-size: 8pt;
+  }
+}

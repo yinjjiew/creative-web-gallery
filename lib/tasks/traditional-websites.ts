@@ -107,7 +107,7 @@ Avoid a centred column of grey text on white with a giant sans-serif headline, a
       "Robustness / Product Polish",
     ],
     resultRoute: "/r/traditional-websites-editorial",
-    status: "planned",
+    status: "complete",
     blurb:
       "A reported publication about infrastructure, with genuinely distinct article formats under one identity and typography built to survive nine thousand words.",
     direction:

@@ -40,7 +40,7 @@ Do not design a generic board with columns. That pattern hides dependency and le
       "Robustness / Product Polish",
     ],
     resultRoute: "/r/practical-apps-project-management",
-    status: "planned",
+    status: "complete",
     blurb:
       "Five weeks to an immovable opening night: software that answers what is about to become unrecoverable, tracking real dependencies and lead times instead of columns.",
     direction:
@@ -74,7 +74,7 @@ Do not design a dashboard of spending-by-category pie charts. That is the thing 
       "Robustness / Product Polish",
     ],
     resultRoute: "/r/practical-apps-personal-finance",
-    status: "planned",
+    status: "complete",
     blurb:
       "Finance software for lumpy freelance income: invoices as dated probable promises, tax accruing continuously, and one forward-looking answer — can I pay rent in March?",
     direction:
@@ -302,7 +302,7 @@ Do not design a grading dashboard for administrators. This is a tool for the per
       "Narrative / Communication",
     ],
     resultRoute: "/r/practical-apps-professional-tool",
-    status: "planned",
+    status: "complete",
     blurb:
       "A hundred and twenty-four essays, four minutes each: the tool fights marker drift, makes reused comments specific, and keeps her reasoning auditable at moderation.",
     direction:

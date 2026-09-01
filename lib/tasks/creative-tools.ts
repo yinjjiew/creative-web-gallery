@@ -144,7 +144,7 @@ Do not build a canvas with draggable text boxes.`,
       "Interaction Design",
     ],
     resultRoute: "/r/creative-tools-poster-maker",
-    status: "planned",
+    status: "complete",
     blurb:
       "A poster composer built on switchable editorial grid systems, with real image treatments — duotone, halftone, threshold — and true-resolution export per destination format.",
     direction:

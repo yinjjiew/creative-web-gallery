@@ -1,0 +1,1056 @@
+/*
+ * Paper, ink, and one hairline. The subject is quiet and a bit sad and the page
+ * is built not to argue with it: no cards, no panels, no shadows, nothing that
+ * moves unless a reader moved it.
+ *
+ * The only colour in the piece is the time of year, applied at two or three
+ * pixels at a time, and it is never the sole carrier of anything — the date is
+ * always printed next to it.
+ */
+
+.page {
+  --paper: #ece9e2;
+  --paper-deep: #e4e0d6;
+  --ink: #1d1b18;
+  --ink-2: #494540;
+  --ink-3: #7c766b;
+  --rule: #c9c2b4;
+  --rule-soft: #dbd6ca;
+  --focus: #29414d;
+
+  --text: var(--face-text), Georgia, "Times New Roman", serif;
+  --label: var(--face-label), ui-sans-serif, system-ui, sans-serif;
+
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--text);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.page *,
+.page *::before,
+.page *::after {
+  box-sizing: border-box;
+}
+
+.page :focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+.hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.shell {
+  max-width: 74rem;
+  margin: 0 auto;
+  padding: 3.25rem 2rem 4rem;
+}
+
+/* ── masthead ─────────────────────────────────────────────────────────────── */
+
+.masthead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem 2rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--ink);
+}
+
+.title h1 {
+  margin: 0;
+  font-family: var(--text);
+  font-size: 1.9rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1;
+}
+
+.title p {
+  margin: 0.5rem 0 0;
+  font-family: var(--label);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-3);
+  max-width: 26rem;
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.35rem;
+}
+
+.tab {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0 0 0.2rem;
+  margin: 0;
+  cursor: pointer;
+  font-family: var(--label);
+  font-size: 0.74rem;
+  letter-spacing: 0.05em;
+  color: var(--ink-3);
+  border-bottom: 1px solid transparent;
+}
+
+.tab:hover {
+  color: var(--ink);
+}
+
+.tabOn {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+/* ── the route rail ───────────────────────────────────────────────────────── */
+
+.body {
+  display: grid;
+  grid-template-columns: 15rem minmax(0, 1fr);
+  gap: 3.5rem;
+  align-items: start;
+}
+
+.rail {
+  position: sticky;
+  top: 1.5rem;
+  padding-top: 1.75rem;
+}
+
+.railHead {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0 0 0.35rem;
+  margin: 0 0 0.6rem;
+  cursor: pointer;
+  font-family: var(--label);
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--ink-3);
+  border-bottom: 1px solid var(--rule);
+  width: 100%;
+  text-align: left;
+}
+
+.railHead:hover,
+.railHeadOn {
+  color: var(--ink);
+}
+
+.railList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.railItem {
+  appearance: none;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1.75rem minmax(0, 1fr);
+  align-items: baseline;
+  gap: 0 0.5rem;
+  padding: 0.34rem 0;
+  text-align: left;
+  color: var(--ink-2);
+}
+
+.railMinute {
+  font-family: var(--label);
+  font-size: 0.62rem;
+  color: var(--ink-3);
+  letter-spacing: 0.02em;
+  text-align: right;
+}
+
+.railName {
+  font-family: var(--text);
+  font-size: 0.98rem;
+  line-height: 1.2;
+}
+
+.railBar {
+  grid-column: 2;
+  display: block;
+  height: 1px;
+  background: var(--rule-soft);
+  margin-top: 0.3rem;
+}
+
+.railBar > span {
+  display: block;
+  height: 1px;
+  background: var(--ink-3);
+}
+
+.railItem:hover {
+  color: var(--ink);
+}
+
+.railItemOn {
+  color: var(--ink);
+}
+
+.railItemOn .railName {
+  font-weight: 500;
+  font-style: italic;
+}
+
+.railItemOn .railBar > span {
+  background: var(--ink);
+  height: 2px;
+}
+
+.railItemToday .railName::after {
+  content: "·";
+  margin-left: 0.35em;
+  color: var(--ink);
+}
+
+.railFoot {
+  margin: 1.25rem 0 0;
+  font-family: var(--label);
+  font-size: 0.66rem;
+  line-height: 1.6;
+  color: var(--ink-3);
+  border-top: 1px solid var(--rule-soft);
+  padding-top: 0.75rem;
+}
+
+/* ── reading pane ─────────────────────────────────────────────────────────── */
+
+.reading {
+  min-width: 0;
+  padding-top: 1.5rem;
+}
+
+.reading:focus {
+  outline: none;
+}
+
+.pane {
+  min-width: 0;
+}
+
+.frontMatter {
+  max-width: 36rem;
+}
+
+.lede {
+  margin: 0;
+  font-size: 1.32rem;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.frontNote {
+  margin: 1.1rem 0 0;
+  font-size: 1.02rem;
+  line-height: 1.62;
+  color: var(--ink-2);
+  max-width: 34rem;
+}
+
+/* ── the walk, as nine places ─────────────────────────────────────────────── */
+
+/*
+ * One month ruler for all nine strips below it. They share an axis, so nine
+ * repeated sets of labels would be nine times the noise for no extra reading.
+ */
+.ruler {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  margin: 2.75rem 0 0.35rem;
+}
+
+.rulerLabel {
+  font-family: var(--label);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+
+.rulerMonths {
+  position: relative;
+  flex: 1 1 auto;
+  height: 0.95rem;
+}
+
+.stations {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.stationBlock {
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--rule-soft);
+}
+
+.stationBlock:first-child {
+  border-top: 1px solid var(--ink);
+}
+
+.stationHead {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+.minute {
+  font-family: var(--label);
+  font-size: 0.68rem;
+  color: var(--ink-3);
+  min-width: 1.9rem;
+}
+
+.minuteMark {
+  margin-left: 0.05em;
+}
+
+.stationName {
+  margin: 0;
+  font-size: 1.32rem;
+  font-weight: 500;
+  line-height: 1.15;
+}
+
+.stationOpen {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  font: inherit;
+  color: var(--ink);
+  border-bottom: 1px solid var(--rule);
+}
+
+.stationOpen:hover {
+  border-bottom-color: var(--ink);
+}
+
+.stationCount {
+  margin-left: auto;
+  font-family: var(--label);
+  font-size: 0.66rem;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+
+.standing {
+  margin: 0.4rem 0 0;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+  font-style: italic;
+  max-width: 32rem;
+}
+
+.quoted {
+  margin: 1rem 0 0;
+  padding: 0 0 0 1.1rem;
+  border-left: 1px solid var(--rule);
+  max-width: 33rem;
+}
+
+.quoted p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.62;
+}
+
+.quoted cite {
+  display: block;
+  margin-top: 0.4rem;
+  font-family: var(--label);
+  font-size: 0.65rem;
+  font-style: normal;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+}
+
+.overviewTail {
+  margin: 2rem 0 0;
+  font-family: var(--label);
+  font-size: 0.7rem;
+  color: var(--ink-3);
+}
+
+/* ── year strip ───────────────────────────────────────────────────────────── */
+
+.stripWrap {
+  position: relative;
+  margin-top: 1rem;
+}
+
+.strip {
+  position: relative;
+  height: 1.85rem;
+}
+
+.stripRule {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--rule);
+}
+
+.mark {
+  position: absolute;
+  bottom: 0;
+  width: 2px;
+  height: 58%;
+  background: var(--ink-3);
+}
+
+.markHit {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0;
+  margin: 0 0 0 -5px;
+  position: absolute;
+  bottom: 0;
+  width: 10px;
+  height: 1.85rem;
+  cursor: pointer;
+}
+
+.markHit .mark {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.markHit:hover .mark {
+  height: 100%;
+  width: 3px;
+}
+
+.markHitOn .mark {
+  height: 100%;
+  width: 3px;
+}
+
+.markHitOn::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 1px;
+  background: var(--ink);
+}
+
+.stripMonths {
+  position: relative;
+  height: 1.1rem;
+  margin-top: 0.3rem;
+}
+
+.stripMonth {
+  position: absolute;
+  top: 0;
+  font-family: var(--label);
+  font-size: 0.6rem;
+  letter-spacing: 0.05em;
+  color: var(--ink-3);
+  transform: translateX(1px);
+}
+
+/* ── one place, a year of it ──────────────────────────────────────────────── */
+
+.placeHead {
+  border-top: 1px solid var(--ink);
+  padding-top: 1.1rem;
+}
+
+.placeMinute {
+  font-family: var(--label);
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: var(--ink-3);
+}
+
+.placeName {
+  margin: 0.45rem 0 0;
+  font-size: 2.1rem;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.05;
+}
+
+.placeStats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.1rem;
+  margin: 0.9rem 0 0;
+  font-family: var(--label);
+  font-size: 0.68rem;
+  color: var(--ink-3);
+}
+
+.placeStats > span + span::before {
+  content: "";
+  display: inline-block;
+  width: 0.6rem;
+  height: 1px;
+  background: var(--rule);
+  vertical-align: middle;
+  margin-right: 0.6rem;
+}
+
+.placeStrip {
+  margin: 1.1rem 0 2rem;
+}
+
+.entries {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.entry {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  gap: 0 1.5rem;
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--rule-soft);
+}
+
+.entryOn {
+  background: var(--paper-deep);
+  box-shadow: -1.5rem 0 0 var(--paper-deep), 1.5rem 0 0 var(--paper-deep);
+}
+
+.entryMargin {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.3rem;
+  padding-top: 0.35rem;
+}
+
+.seasonMark {
+  display: block;
+  width: 0.85rem;
+  height: 2px;
+  background: var(--ink-3);
+}
+
+.dateLink,
+.placeLink {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  font-family: var(--label);
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+  color: var(--ink-2);
+  text-align: left;
+}
+
+.placeLink {
+  font-size: 0.64rem;
+  color: var(--ink-3);
+  font-style: italic;
+}
+
+.dateLink:hover,
+.placeLink:hover {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.entryText {
+  margin: 0;
+  font-size: 1.11rem;
+  line-height: 1.63;
+  max-width: 34rem;
+  hyphens: none;
+}
+
+/* ── one morning ──────────────────────────────────────────────────────────── */
+
+.calendar {
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--rule-soft);
+  padding: 1.1rem 0 0.9rem;
+  overflow-x: auto;
+}
+
+.calMonth {
+  display: grid;
+  grid-template-columns: 2.1rem minmax(0, 1fr);
+  align-items: end;
+  gap: 0.4rem;
+}
+
+.calLabel {
+  font-family: var(--label);
+  font-size: 0.6rem;
+  letter-spacing: 0.05em;
+  color: var(--ink-3);
+  padding-bottom: 0.25rem;
+}
+
+.calDays {
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+}
+
+.calDay,
+.calGap {
+  flex: 0 0 auto;
+  width: 11px;
+  height: 1.15rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.calDay {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.calGap {
+  position: relative;
+}
+
+.calGap::after {
+  content: "";
+  width: 1px;
+  height: 2px;
+  background: var(--rule);
+}
+
+.calBar {
+  display: block;
+  width: 3px;
+  background: var(--ink-3);
+}
+
+.calDay:hover .calBar {
+  width: 5px;
+}
+
+.calDayOn .calBar {
+  width: 5px;
+  outline: 1px solid var(--ink);
+  outline-offset: 1px;
+}
+
+.calKey {
+  margin: 0.85rem 0 0;
+  font-family: var(--label);
+  font-size: 0.65rem;
+  line-height: 1.55;
+  color: var(--ink-3);
+  max-width: 30rem;
+}
+
+.morningHead {
+  margin-top: 2rem;
+}
+
+.morningNav {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.1rem;
+}
+
+.step {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  font-family: var(--label);
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+  color: var(--ink-3);
+}
+
+.step:hover:not(:disabled) {
+  color: var(--ink);
+}
+
+.step:disabled {
+  color: var(--rule);
+  cursor: default;
+}
+
+.morningDate {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 0;
+  font-size: 1.95rem;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.05;
+}
+
+.morningStats {
+  margin: 0.7rem 0 0;
+  font-family: var(--label);
+  font-size: 0.68rem;
+  color: var(--ink-3);
+}
+
+.walkRows {
+  list-style: none;
+  margin: 1.75rem 0 0;
+  padding: 0;
+}
+
+.walkRow {
+  display: grid;
+  grid-template-columns: 9rem minmax(0, 1fr);
+  gap: 0 1.5rem;
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--rule-soft);
+}
+
+.walkRowHead {
+  display: flex;
+  gap: 0.45rem;
+  align-items: baseline;
+  padding-top: 0.3rem;
+}
+
+.walkMinute {
+  font-family: var(--label);
+  font-size: 0.6rem;
+  color: var(--ink-3);
+  min-width: 1.4rem;
+}
+
+.walkPlace {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  font-family: var(--text);
+  font-size: 0.95rem;
+  color: var(--ink-2);
+  text-align: left;
+  line-height: 1.25;
+}
+
+.walkPlace:hover {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.walkRowQuiet .walkPlace {
+  color: var(--ink-3);
+}
+
+.walkNotes > * + * {
+  margin-top: 0.6rem;
+}
+
+.walkNothing {
+  margin: 0;
+  color: var(--rule);
+  font-size: 1rem;
+  line-height: 1.63;
+}
+
+.morningTail {
+  margin: 2rem 0 0;
+  font-family: var(--label);
+  font-size: 0.68rem;
+  color: var(--ink-3);
+}
+
+/* ── what recurs ──────────────────────────────────────────────────────────── */
+
+.motifList {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.35rem;
+  margin: 1.75rem 0 2.25rem;
+  padding: 0.9rem 0 0;
+  border-top: 1px solid var(--rule-soft);
+}
+
+.motifChip {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  font-family: var(--text);
+  font-size: 1rem;
+  color: var(--ink-3);
+  border-bottom: 1px solid transparent;
+}
+
+.motifChip:hover {
+  color: var(--ink);
+}
+
+.motifChipOn {
+  color: var(--ink);
+  font-style: italic;
+  border-bottom-color: var(--ink);
+}
+
+.motifCount {
+  font-family: var(--label);
+  font-size: 0.62rem;
+  font-style: normal;
+  color: var(--ink-3);
+}
+
+.motifHead {
+  border-top: 1px solid var(--ink);
+  padding-top: 1.1rem;
+}
+
+.motifName {
+  margin: 0;
+  font-size: 1.95rem;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.05;
+}
+
+/* ── colophon ─────────────────────────────────────────────────────────────── */
+
+.colophon {
+  margin-top: 4.5rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1.25rem 2.5rem;
+  align-items: start;
+}
+
+.colophon p {
+  margin: 0;
+  font-family: var(--label);
+  font-size: 0.68rem;
+  line-height: 1.7;
+  color: var(--ink-3);
+}
+
+.colophon strong {
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.brief a {
+  color: var(--ink-3);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 1px;
+}
+
+.brief a:hover {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+/* ── narrow ───────────────────────────────────────────────────────────────── */
+
+@media (max-width: 62rem) {
+  .shell {
+    padding: 2rem 1.15rem 3rem;
+  }
+
+  .masthead {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+
+  .tabs {
+    gap: 1.1rem;
+  }
+
+  .body {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .rail {
+    position: static;
+    padding: 0.9rem 0 1.1rem;
+    border-bottom: 1px solid var(--rule-soft);
+    margin-bottom: 0.5rem;
+  }
+
+  .railHead {
+    width: auto;
+    border-bottom: 0;
+    margin-bottom: 0.35rem;
+    padding-bottom: 0;
+  }
+
+  .railList {
+    display: flex;
+    gap: 0.15rem 1.15rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 0.35rem;
+    margin-right: -1.15rem;
+  }
+
+  .railList::-webkit-scrollbar {
+    display: none;
+  }
+
+  .railList > li {
+    flex: 0 0 auto;
+  }
+
+  .railItem {
+    grid-template-columns: auto;
+    gap: 0;
+    padding: 0.3rem 0;
+    min-height: 2.4rem;
+  }
+
+  .railMinute {
+    text-align: left;
+    display: block;
+  }
+
+  .railName {
+    white-space: nowrap;
+    font-size: 0.95rem;
+  }
+
+  .railBar {
+    grid-column: 1;
+    margin-top: 0.25rem;
+    width: 100%;
+  }
+
+  .railFoot {
+    display: none;
+  }
+
+  .reading {
+    padding-top: 1.25rem;
+  }
+
+  .lede {
+    font-size: 1.18rem;
+  }
+
+  .entry {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.4rem;
+  }
+
+  .entryMargin {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.55rem;
+    padding-top: 0;
+  }
+
+  .entryOn {
+    box-shadow: -1.15rem 0 0 var(--paper-deep), 1.15rem 0 0 var(--paper-deep);
+  }
+
+  .entryText {
+    font-size: 1.06rem;
+  }
+
+  .placeName,
+  .morningDate,
+  .motifName {
+    font-size: 1.6rem;
+  }
+
+  .walkRow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.3rem;
+  }
+
+  .calDay,
+  .calGap {
+    width: 9px;
+  }
+
+  .calMonth {
+    grid-template-columns: 1.9rem minmax(0, 1fr);
+  }
+
+  .markHit {
+    width: 14px;
+    margin-left: -7px;
+  }
+
+  .stripMonth {
+    font-size: 0.55rem;
+  }
+
+  .colophon {
+    margin-top: 3rem;
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page * {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+}
