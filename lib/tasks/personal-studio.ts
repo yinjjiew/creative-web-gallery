@@ -265,7 +265,7 @@ Avoid the two clichés of this genre: a force-directed graph as the front door, 
       "Visual Design / Taste",
     ],
     resultRoute: "/r/personal-studio-knowledge-garden",
-    status: "planned",
+    status: "complete",
     blurb:
       "A public notebook where a note's maturity is typographically legible, tended notes look tended, and neglected ones admit it instead of posing as conclusions.",
     direction:

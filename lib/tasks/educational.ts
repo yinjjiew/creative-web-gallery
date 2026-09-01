@@ -76,7 +76,7 @@ Avoid presenting this as a game with a score. The reward here is comprehension, 
       "Visual Design / Taste",
     ],
     resultRoute: "/r/educational-science-simulation",
-    status: "planned",
+    status: "complete",
     blurb:
       "A rendezvous simulator built around orbital mechanics' best paradox: thrust toward your target and you fall behind. Learners fail the intuitive way, then find the real rule.",
     direction:

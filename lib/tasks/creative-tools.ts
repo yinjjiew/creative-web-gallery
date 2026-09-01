@@ -173,7 +173,7 @@ The trap to avoid is a row of sliders bound to font-variation-settings with a li
       "Creative Concept",
     ],
     resultRoute: "/r/creative-tools-typography-playground",
-    status: "planned",
+    status: "complete",
     blurb:
       "A kinetic type composer where variable-font axes are driven per character by editable curves over time, cursor proximity or scroll, exporting runnable CSS and Web Animations code.",
     direction:

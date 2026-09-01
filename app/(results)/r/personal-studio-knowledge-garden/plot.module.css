@@ -1,0 +1,714 @@
+/*
+ * Plot paper, iron-gall, and the one cinnamon of plane bark. No cards, no
+ * panels, no graph. Maturity is a type size, a posture, and a colour of ink —
+ * not a badge.
+ *
+ * Survey-linen rather than cream diary: cooler, slightly green in the grey,
+ * the colour of a folded plan that has been in a drawer.
+ */
+
+.page {
+  --paper: #e4e1d4;
+  --paper-2: #d8d3c3;
+  --ink: #1a1712;
+  --ink-2: #3c372f;
+  --ink-3: #6a6356;
+  --ink-left: #4a453c;
+  --cinnamon: #7a432c;
+  --rule: #c3bba8;
+  --rule-soft: #d4cebd;
+  --focus: #7a432c;
+  --serif: var(--face-serif), "Source Serif 4", "Iowan Old Style", Georgia, serif;
+  --sans: var(--face-sans), "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.page *,
+.page *::before,
+.page *::after {
+  box-sizing: border-box;
+}
+
+.page :focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.skip {
+  position: absolute;
+  left: 0.75rem;
+  top: 0.75rem;
+  z-index: 2;
+  padding: 0.35rem 0.6rem;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  text-decoration: none;
+  transform: translateY(-150%);
+}
+
+.skip:focus {
+  transform: none;
+}
+
+.shell {
+  max-width: 78rem;
+  margin: 0 auto;
+  padding: 2.75rem 1.75rem 4rem;
+}
+
+/* ── masthead ─────────────────────────────────────────────────────────────── */
+
+.mast {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(16rem, 0.9fr);
+  gap: 2rem 3rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--ink);
+  margin-bottom: 1.75rem;
+}
+
+.word {
+  margin: 0 0 0.2rem;
+  font-family: var(--serif);
+  font-size: 2.35rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.who {
+  margin: 0 0 0.85rem;
+  font-family: var(--sans);
+  font-size: 0.86rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: var(--ink-2);
+}
+
+.stand {
+  margin: 0;
+  max-width: 38rem;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.tools {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  justify-content: flex-end;
+}
+
+.views {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.1rem;
+}
+
+.view {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  min-height: 2.5rem;
+  padding: 0.35rem 0;
+  border: 0;
+  background: none;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  color: var(--ink-3);
+  cursor: pointer;
+}
+
+.view::before {
+  content: "";
+  width: 0.7rem;
+  height: 0.7rem;
+  border: 1px solid var(--ink);
+  border-radius: 50%;
+  background: transparent;
+}
+
+.viewOn {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.viewOn::before {
+  background: var(--ink);
+  box-shadow: inset 0 0 0 2px var(--paper);
+}
+
+.key {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.key li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  align-items: baseline;
+}
+
+.keyItem {
+  text-decoration: none;
+  line-height: 1.25;
+}
+
+.keyHint {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* ── maturity as type ─────────────────────────────────────────────────────── */
+
+.t_established {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-weight: 600;
+  font-style: normal;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+
+.t_growing {
+  font-family: var(--serif);
+  font-size: 1.02rem;
+  font-weight: 400;
+  font-style: normal;
+  color: var(--ink-2);
+}
+
+.t_seedling {
+  font-family: var(--serif);
+  font-size: 0.9rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--ink-2);
+}
+
+.t_left {
+  font-family: var(--serif);
+  font-size: 0.92rem;
+  font-weight: 400;
+  font-style: normal;
+  color: var(--ink-3);
+}
+
+/* ── beds / the plot ──────────────────────────────────────────────────────── */
+
+.frame {
+  display: grid;
+  grid-template-columns: minmax(15rem, 22rem) minmax(0, 1fr);
+  gap: 2.5rem 3rem;
+  align-items: start;
+}
+
+.plotToggle {
+  display: none;
+  width: 100%;
+  margin: 0 0 0.85rem;
+  padding: 0.55rem 0;
+  border: 0;
+  border-bottom: 1px solid var(--rule);
+  background: none;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: left;
+  cursor: pointer;
+}
+
+.beds {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  position: sticky;
+  top: 1rem;
+  max-height: calc(100vh - 2rem);
+  overflow: auto;
+  padding-right: 0.35rem;
+}
+
+.bedName {
+  margin: 0 0 0.2rem;
+  font-family: var(--sans);
+  font-size: 0.64rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cinnamon);
+}
+
+.bedAbout {
+  margin: 0 0 0.55rem;
+  font-size: 0.88rem;
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--ink-3);
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.6rem;
+  align-items: baseline;
+  padding: 0.32rem 0 0.32rem 0.65rem;
+  margin-left: -0.65rem;
+  text-decoration: none;
+  border-left: 2px solid transparent;
+}
+
+.itemTitle {
+  min-width: 0;
+}
+
+.itemSpan {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.itemOn {
+  border-left-color: var(--ink);
+}
+
+.itemKin {
+  border-left-color: var(--cinnamon);
+}
+
+.item:hover .itemTitle,
+.item:focus-visible .itemTitle {
+  color: var(--cinnamon);
+}
+
+/* ── the note ─────────────────────────────────────────────────────────────── */
+
+.reading {
+  min-width: 0;
+  max-width: 42rem;
+  padding-bottom: 2rem;
+}
+
+.kicker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.45rem;
+  margin: 0 0 0.45rem;
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.title {
+  margin: 0 0 0.5rem;
+  line-height: 1.15;
+  letter-spacing: -0.022em;
+}
+
+.r_established .title {
+  font-size: 2.15rem;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.r_growing .title {
+  font-size: 1.75rem;
+  font-weight: 500;
+  font-style: normal;
+  color: var(--ink-2);
+}
+
+.r_seedling .title {
+  font-size: 1.45rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--ink-2);
+}
+
+.r_left .title {
+  font-size: 1.65rem;
+  font-weight: 400;
+  font-style: normal;
+  color: var(--ink-left);
+}
+
+.leftMark,
+.seedMark {
+  margin: 0 0 1.1rem;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  color: var(--ink-3);
+}
+
+.leftMark {
+  padding-bottom: 0.7rem;
+  border-bottom: 1px dashed var(--rule);
+}
+
+.trail {
+  margin: 0 0 1.25rem;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--ink-3);
+}
+
+.trailLabel {
+  display: inline;
+  margin-right: 0.45rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.64rem;
+  font-weight: 500;
+}
+
+.prose {
+  margin: 1.15rem 0 0;
+}
+
+.graf {
+  display: grid;
+  grid-template-columns: 3.1rem minmax(0, 1fr);
+  gap: 0.85rem;
+  margin: 0 0 1.15rem;
+}
+
+.when {
+  padding-top: 0.2rem;
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.whenBlank {
+  display: block;
+}
+
+.grafText {
+  min-width: 0;
+}
+
+.r_established .grafText {
+  font-size: 1.16rem;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.55;
+  color: var(--ink);
+  font-variation-settings: "opsz" 18;
+}
+
+.r_growing .grafText {
+  font-size: 1.08rem;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.58;
+  color: var(--ink-2);
+  font-variation-settings: "opsz" 14;
+}
+
+.r_seedling .grafText {
+  font-size: 1.02rem;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.62;
+  color: var(--ink-2);
+  max-width: 36rem;
+  font-variation-settings: "opsz" 48;
+}
+
+.r_left .grafText {
+  font-size: 1.06rem;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.58;
+  color: var(--ink-left);
+  font-variation-settings: "opsz" 14;
+}
+
+/* ── in-text links take the type of where they lead ───────────────────────── */
+
+.wik {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--cinnamon) 70%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  border: 0;
+  padding: 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+.wik:hover,
+.wik:focus-visible {
+  color: var(--cinnamon);
+  text-decoration-color: var(--cinnamon);
+}
+
+.wik_established {
+  font-style: normal;
+  font-weight: 500;
+}
+
+.wik_growing {
+  font-style: normal;
+  font-weight: 400;
+}
+
+.wik_seedling {
+  font-style: italic;
+  font-weight: 300;
+}
+
+.wik_left {
+  font-style: normal;
+  font-weight: 400;
+  text-decoration-style: dashed;
+  color: var(--ink-left);
+}
+
+.noteFoot {
+  margin-top: 2rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--rule);
+}
+
+.stance {
+  margin: 0 0 1.1rem;
+  padding: 0 0 1.1rem;
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.stance p,
+.related p {
+  margin: 0 0 0.45rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.stance p:last-child,
+.related p:last-child {
+  margin-bottom: 0;
+}
+
+.stanceLabel,
+.relLabel {
+  display: block;
+  margin-bottom: 0.15rem;
+  font-family: var(--sans);
+  font-size: 0.64rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cinnamon);
+}
+
+.stanceMeta {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  color: var(--ink-3);
+}
+
+.related {
+  margin: 0 0 1.1rem;
+}
+
+.tended {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  color: var(--ink-3);
+}
+
+/* ── colophon ─────────────────────────────────────────────────────────────── */
+
+.colo {
+  margin-top: 3.5rem;
+  padding-top: 1.15rem;
+  border-top: 1px solid var(--ink);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1.25rem 2.5rem;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.colo p {
+  margin: 0;
+}
+
+.colo strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.brief {
+  grid-column: 1 / -1;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+}
+
+.brief a {
+  color: var(--ink-3);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+}
+
+.brief a:hover,
+.brief a:focus-visible {
+  color: var(--cinnamon);
+  border-bottom-color: var(--cinnamon);
+}
+
+/* ── phone ────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 52rem) {
+  .shell {
+    padding: 1.5rem 1.1rem 3rem;
+  }
+
+  .mast {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.35rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .word {
+    font-size: 1.85rem;
+  }
+
+  .who {
+    font-size: 0.8rem;
+  }
+
+  .stand {
+    font-size: 0.98rem;
+  }
+
+  .key {
+    display: none;
+  }
+
+  .frame {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
+  }
+
+  .plotToggle {
+    display: block;
+  }
+
+  .beds {
+    position: static;
+    gap: 1.2rem;
+    padding-bottom: 0.5rem;
+    max-height: min(70vh, 32rem);
+    overflow: auto;
+  }
+
+  .bedsShut {
+    display: none;
+  }
+
+  .r_established .title {
+    font-size: 1.7rem;
+  }
+
+  .r_growing .title {
+    font-size: 1.45rem;
+  }
+
+  .r_seedling .title,
+  .r_left .title {
+    font-size: 1.3rem;
+  }
+
+  .graf {
+    grid-template-columns: 2.4rem minmax(0, 1fr);
+    gap: 0.55rem;
+  }
+
+  .r_established .grafText {
+    font-size: 1.08rem;
+  }
+
+  .colo {
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: 2.5rem;
+  }
+
+  .item {
+    padding: 0.45rem 0 0.45rem 0.65rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page * {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  .page {
+    background: white;
+    color: black;
+  }
+
+  .plotToggle,
+  .views,
+  .skip,
+  .brief {
+    display: none;
+  }
+
+  .beds {
+    position: static;
+  }
+
+  .frame {
+    display: block;
+  }
+}

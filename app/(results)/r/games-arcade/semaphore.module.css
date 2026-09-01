@@ -1,0 +1,398 @@
+/*
+ * Oak, maroon enamel, cream lettering, brass. The same four colours the
+ * canvas uses, so the plates and the picture are lit by the same lamp.
+ */
+
+.root {
+  min-height: 100dvh;
+  background: #1c1410;
+}
+
+.wrap {
+  --oak: #1c1410;
+  --cream: #ead6b0;
+  --maroon: #7a1f1c;
+  --brass: #c9a35a;
+  --iron: #12100e;
+  --dim: rgba(234, 214, 176, 0.7);
+  --faint: rgba(234, 214, 176, 0.5);
+
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: var(--oak);
+  color: var(--cream);
+  font-family: var(--notice), "Times New Roman", serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  touch-action: none;
+}
+
+/* ── running plates ──────────────────────────────────────────────────────── */
+
+.hud {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.hud[data-quiet="true"] {
+  opacity: 0;
+}
+
+.scorePlate,
+.dutyPlate {
+  position: absolute;
+  top: clamp(10px, 2vh, 22px);
+  pointer-events: none;
+}
+
+.scorePlate {
+  left: clamp(12px, 2.4vw, 32px);
+}
+
+.dutyPlate {
+  right: clamp(12px, 2.4vw, 32px);
+  text-align: right;
+}
+
+.tick {
+  font-family: var(--enamel), Impact, sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.score {
+  font-family: var(--enamel), Impact, sans-serif;
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 800;
+  line-height: 0.85;
+  color: var(--cream);
+  text-shadow: 0 1px 0 #3a1810;
+}
+
+.duty {
+  font-family: var(--enamel), Impact, sans-serif;
+  font-size: clamp(22px, 3.4vw, 34px);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  color: var(--brass);
+}
+
+.sub {
+  margin-top: 0.25em;
+  font-size: 12px;
+  color: var(--dim);
+}
+
+/* ── train describer ─────────────────────────────────────────────────────── */
+
+.describer {
+  position: absolute;
+  left: 50%;
+  top: clamp(10px, 2vh, 20px);
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  max-width: min(560px, calc(100vw - 200px));
+  flex-wrap: wrap;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.slip {
+  min-width: 148px;
+  padding: 6px 10px 7px;
+  background: #d8c49a;
+  color: #2a1c12;
+  box-shadow:
+    0 1px 0 #f0e2c0 inset,
+    0 2px 0 #8a7350,
+    0 4px 10px rgba(0, 0, 0, 0.35);
+  font-size: 12px;
+  line-height: 1.25;
+}
+
+.slipHead {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--enamel), Impact, sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+}
+
+.slipMeta {
+  font-style: italic;
+  color: #5a4030;
+}
+
+.idea {
+  position: absolute;
+  left: 50%;
+  top: clamp(86px, 14vh, 130px);
+  transform: translateX(-50%);
+  max-width: min(420px, 86vw);
+  text-align: center;
+  font-style: italic;
+  font-size: clamp(14px, 2.2vw, 17px);
+  color: var(--cream);
+  text-shadow: 0 1px 8px #1c1410;
+  pointer-events: none;
+}
+
+.lockNote {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(168px, 26vh, 230px);
+  transform: translateX(-50%);
+  max-width: min(400px, 88vw);
+  text-align: center;
+  font-size: 13px;
+  color: #e8b060;
+  text-shadow: 0 1px 6px #1c1410;
+  pointer-events: none;
+}
+
+/* ── enamel notices ──────────────────────────────────────────────────────── */
+
+.notice {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  transform: translate(-50%, -54%);
+  width: min(440px, calc(100vw - 36px));
+  padding: 22px 26px 20px;
+  background:
+    linear-gradient(180deg, #8a2a24 0%, #6a1b18 40%, #541412 100%);
+  color: var(--cream);
+  border: 3px solid #c9a35a;
+  box-shadow:
+    0 0 0 1px #4a2a10,
+    0 18px 40px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 220, 160, 0.18);
+  text-align: center;
+  pointer-events: auto;
+  z-index: 3;
+}
+
+.notice[data-dead="true"] {
+  top: 42%;
+}
+
+.kicker {
+  font-family: var(--enamel), Impact, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: #e0b86a;
+  margin: 0 0 6px;
+}
+
+.title {
+  font-family: var(--enamel), Impact, sans-serif;
+  font-size: clamp(42px, 8vw, 68px);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  line-height: 0.88;
+  margin: 0 0 4px;
+}
+
+.where {
+  font-family: var(--enamel), Impact, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #e0b86a;
+  margin: 0 0 14px;
+}
+
+.lede {
+  margin: 0 0 8px;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.lede em {
+  font-style: italic;
+}
+
+.rules {
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: #f0d8b4;
+}
+
+.rules li + li {
+  margin-top: 0.4em;
+}
+
+.hint {
+  margin: 14px 0 0;
+  font-size: 12px;
+  color: #e0b86a;
+}
+
+.hint kbd {
+  font-family: var(--enamel), Impact, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  padding: 1px 5px;
+  border: 1px solid #c9a35a;
+  color: var(--cream);
+}
+
+.bigNum {
+  font-family: var(--enamel), Impact, sans-serif;
+  font-size: clamp(56px, 10vw, 84px);
+  font-weight: 800;
+  line-height: 0.85;
+  margin: 8px 0 6px;
+}
+
+.again {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 8px 18px 9px;
+  border: 1px solid #c9a35a;
+  background: transparent;
+  color: var(--cream);
+  font-family: var(--enamel), Impact, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.again:hover,
+.again:focus-visible {
+  background: #c9a35a;
+  color: #4a1210;
+  outline: none;
+}
+
+.modelled {
+  margin: 12px 0 0;
+  font-size: 11px;
+  font-style: italic;
+  color: rgba(234, 214, 176, 0.62);
+}
+
+/* ── lever hit targets (invisible; canvas draws the handles) ─────────────── */
+
+.hits {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hit {
+  position: absolute;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+  border-radius: 50%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hit:focus-visible {
+  outline: 2px solid #c9a35a;
+  outline-offset: 3px;
+}
+
+/* ── quiet corner ────────────────────────────────────────────────────────── */
+
+.corner {
+  position: absolute;
+  left: clamp(8px, 1.4vw, 16px);
+  bottom: clamp(6px, 1.2vh, 12px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  z-index: 4;
+  pointer-events: auto;
+}
+
+.quiet {
+  font-family: var(--enamel), Impact, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--faint);
+  text-decoration: none;
+  background: none;
+  border: 0;
+  padding: 4px 0;
+  cursor: pointer;
+}
+
+.quiet:hover,
+.quiet:focus-visible {
+  color: var(--brass);
+  outline: none;
+}
+
+@media (max-width: 640px) {
+  .describer {
+    top: 108px;
+    bottom: auto;
+    max-width: calc(100vw - 16px);
+  }
+
+  .scorePlate,
+  .dutyPlate {
+    top: 8px;
+  }
+
+  .score {
+    font-size: 34px;
+  }
+
+  .duty {
+    font-size: 20px;
+  }
+
+  .lockNote {
+    bottom: clamp(200px, 36vh, 260px);
+  }
+
+  .notice {
+    top: 38%;
+    padding: 18px 18px 16px;
+  }
+
+  .idea {
+    top: 168px;
+    bottom: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .notice,
+  .idea,
+  .slip {
+    transition: none;
+  }
+}

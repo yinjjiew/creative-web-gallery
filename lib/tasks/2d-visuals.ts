@@ -37,7 +37,7 @@ Do not add colour to make it prettier. If the line is not good enough in black, 
       "Interaction Design",
     ],
     resultRoute: "/r/2d-visuals-generative-art",
-    status: "planned",
+    status: "complete",
     blurb:
       "Differential line growth: one closed curve that lengthens, resists itself and folds into coral-like convolution, drawn as a single plotter pen with tone made only of density.",
     direction:

@@ -142,7 +142,7 @@ Avoid a wall of auto-generated signatures with no prose, and avoid a marketing h
       "Robustness / Product Polish",
     ],
     resultRoute: "/r/traditional-websites-documentation",
-    status: "planned",
+    status: "complete",
     blurb:
       "Docs for a datetime library, serving the integrator, the 11pm debugger, the evaluator and the upgrader as the different documents they actually are.",
     direction:

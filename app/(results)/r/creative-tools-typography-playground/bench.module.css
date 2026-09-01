@@ -1,0 +1,644 @@
+/**
+ * A daylight proofing table. Cool concrete, black ink, one signal red —
+ * reserved for the playhead, the selected knot, and focus. Fraunces never
+ * appears in the chrome; Azeret Mono never appears in the line.
+ */
+
+.root,
+.shell,
+.booting {
+  --paper: #e4e2dc;
+  --card: #f3f1ea;
+  --ink: #171614;
+  --mute: #6a675e;
+  --hair: rgba(23, 22, 20, 0.16);
+  --hair-strong: rgba(23, 22, 20, 0.42);
+  --signal: #c81e1e;
+  --face: var(--kin-face), "Times New Roman", Times, serif;
+  --mono: var(--kin-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+
+.root {
+  min-height: 100dvh;
+  background: var(--paper);
+  color: var(--ink);
+  color-scheme: light;
+}
+
+.booting {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  background: var(--paper);
+  color: var(--mute);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.shell {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: minmax(220px, 26vw) 1fr;
+  grid-template-rows: auto 1fr auto auto auto auto;
+  grid-template-areas:
+    "mast mast"
+    "pieces stage"
+    "pieces score"
+    "notes rail"
+    "notes export";
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+
+.shell,
+.shell *,
+.shell *::before,
+.shell *::after {
+  box-sizing: border-box;
+}
+
+.shell button,
+.shell input {
+  font: inherit;
+  color: inherit;
+}
+
+.shell button {
+  margin: 0;
+  background: none;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+}
+
+.shell p,
+.shell dl,
+.shell dd,
+.shell fieldset {
+  margin: 0;
+}
+
+.shell fieldset {
+  border: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.mast {
+  grid-area: mast;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 18px 22px 16px;
+  border-bottom: 1px solid var(--hair);
+}
+
+.brand {
+  max-width: 62ch;
+}
+
+.mark {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin: 0 0 8px;
+}
+
+.lede {
+  color: var(--mute);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.brief {
+  color: var(--mute);
+  text-decoration: none;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 10px;
+  padding: 4px 0;
+  border-bottom: 1px solid transparent;
+  flex-shrink: 0;
+}
+
+.brief:hover,
+.brief:focus-visible {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+.brief:focus-visible,
+.shell button:focus-visible,
+.lineInput:focus-visible,
+.code:focus-visible,
+.well:focus-visible,
+.glyph:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 3px;
+}
+
+.pieces {
+  grid-area: pieces;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--hair);
+  padding: 8px 0;
+}
+
+.piece {
+  display: grid;
+  gap: 6px;
+  text-align: left;
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--hair);
+  color: var(--mute);
+}
+
+.piece:hover {
+  color: var(--ink);
+}
+
+.piece[aria-pressed="true"] {
+  color: var(--ink);
+  background: var(--card);
+}
+
+.piece[aria-pressed="true"] .pieceTitle::before {
+  content: "— ";
+  color: var(--signal);
+}
+
+.pieceTitle {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.pieceBlurb {
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--mute);
+}
+
+.piece[aria-pressed="true"] .pieceBlurb {
+  color: var(--ink);
+}
+
+.stage {
+  grid-area: stage;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 28px 36px 8px;
+  min-height: 280px;
+  background: var(--card);
+}
+
+.line {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  touch-action: none;
+  min-height: 1.1em;
+  cursor: default;
+}
+
+.glyph {
+  font-family: var(--face);
+  font-optical-sizing: none;
+  font-weight: 320;
+  font-size: clamp(52px, 11vw, 128px);
+  line-height: 0.9;
+  letter-spacing: -0.034em;
+  display: block;
+  white-space: pre;
+  color: var(--ink);
+}
+
+.lineField {
+  display: block;
+  margin-top: 22px;
+}
+
+.lineInput {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid var(--hair-strong);
+  background: transparent;
+  padding: 6px 0;
+  letter-spacing: 0.04em;
+  border-radius: 0;
+}
+
+.lineInput:focus {
+  border-bottom-color: var(--ink);
+  outline: none;
+}
+
+.lineInput:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 3px;
+}
+
+.hint {
+  margin-top: 10px;
+  color: var(--mute);
+  font-size: 11px;
+}
+
+.score {
+  grid-area: score;
+  padding: 8px 20px 12px;
+  border-top: 1px solid var(--hair);
+  background: var(--card);
+}
+
+.scoreHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding: 0 4px 8px;
+}
+
+.formula {
+  font-size: 12px;
+  letter-spacing: 0.01em;
+}
+
+.readout {
+  color: var(--signal);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.plotRow {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0;
+  min-height: 220px;
+}
+
+.plotFrame {
+  position: relative;
+  min-width: 0;
+}
+
+.plot {
+  width: 100%;
+  height: 220px;
+  display: block;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.grid {
+  stroke: var(--hair);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.curve {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.6;
+  vector-effect: non-scaling-stroke;
+}
+
+.head {
+  stroke: var(--signal);
+  stroke-width: 1.25;
+  vector-effect: non-scaling-stroke;
+  pointer-events: none;
+}
+
+.axisHi,
+.axisLo,
+.axisX {
+  fill: var(--mute);
+  font-size: 10px;
+  font-family: var(--mono);
+}
+
+.bead {
+  fill: var(--signal);
+  font-size: 14px;
+  font-family: var(--face);
+  text-anchor: middle;
+  dominant-baseline: middle;
+  pointer-events: none;
+}
+
+.knotLayer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.knot {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+  cursor: grab;
+  touch-action: none;
+}
+
+.knot::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  border: 1px solid var(--ink);
+  background: var(--card);
+  transform: translate(-50%, -50%);
+}
+
+.knot[aria-pressed="true"]::after,
+.knot:focus-visible::after {
+  background: var(--signal);
+  border-color: var(--signal);
+}
+
+.well {
+  width: 56px;
+  height: 220px;
+  overflow-y: auto;
+  border-left: 1px solid var(--hair);
+  background: var(--paper);
+}
+
+.wellInner {
+  height: 420%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px 8px;
+  color: var(--mute);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+}
+
+.rail {
+  grid-area: rail;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 28px;
+  padding: 16px 22px;
+  border-top: 1px solid var(--hair);
+}
+
+.set {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  align-items: center;
+}
+
+.set legend {
+  padding: 0;
+  margin: 0 10px 0 0;
+  color: var(--mute);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 10px;
+  float: left;
+  width: auto;
+}
+
+.chip {
+  padding: 5px 8px;
+  border: 1px solid var(--hair-strong);
+  letter-spacing: 0.04em;
+  background: transparent;
+}
+
+.chip[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+.chip:hover:not([aria-pressed="true"]) {
+  border-color: var(--ink);
+}
+
+.textBtn {
+  padding: 5px 2px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 10px;
+  color: var(--mute);
+  border-bottom: 1px solid transparent;
+}
+
+.textBtn:hover,
+.textBtn:focus-visible {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+.notes {
+  grid-area: notes;
+  padding: 16px 22px 24px;
+  border-top: 1px solid var(--hair);
+  border-right: 1px solid var(--hair);
+  color: var(--mute);
+}
+
+.note {
+  margin-bottom: 14px;
+}
+
+.note dt {
+  color: var(--ink);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.note dt span {
+  color: var(--mute);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.note dd {
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.export {
+  grid-area: export;
+  padding: 0 22px 28px;
+  border-top: 1px solid var(--hair);
+}
+
+.exportToggle {
+  padding: 14px 0;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 11px;
+  border-bottom: 1px solid var(--hair);
+  width: 100%;
+  text-align: left;
+}
+
+.exportToggle:hover {
+  color: var(--signal);
+}
+
+.sheet {
+  padding: 14px 0 0;
+  max-width: 72ch;
+}
+
+.sheet p {
+  color: var(--mute);
+  margin-bottom: 12px;
+  line-height: 1.55;
+}
+
+.sheet code {
+  font-family: inherit;
+  color: var(--ink);
+}
+
+.exportRow {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.code {
+  margin: 0;
+  padding: 12px;
+  background: var(--ink);
+  color: var(--card);
+  font-family: var(--mono);
+  font-size: 10px;
+  line-height: 1.45;
+  overflow: auto;
+  max-height: 240px;
+  white-space: pre-wrap;
+}
+
+.live {
+  min-height: 1.4em;
+  margin-top: 8px;
+  color: var(--ink);
+}
+
+@media (max-width: 860px) {
+  .shell {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto auto auto auto;
+    grid-template-areas:
+      "mast"
+      "stage"
+      "score"
+      "rail"
+      "pieces"
+      "notes"
+      "export";
+  }
+
+  .mast {
+    padding: 14px 16px 12px;
+    gap: 12px;
+  }
+
+  .pieces {
+    flex-direction: row;
+    overflow-x: auto;
+    border-right: 0;
+    border-top: 1px solid var(--hair);
+    padding: 0;
+  }
+
+  .piece {
+    min-width: 220px;
+    border-bottom: 0;
+    border-right: 1px solid var(--hair);
+  }
+
+  .stage {
+    min-height: 220px;
+    padding: 22px 16px 8px;
+  }
+
+  .glyph {
+    font-size: clamp(42px, 12vw, 72px);
+  }
+
+  .score {
+    padding: 8px 12px 12px;
+  }
+
+  .plot {
+    height: 200px;
+  }
+
+  .plotRow {
+    min-height: 200px;
+  }
+
+  .well {
+    height: 200px;
+    width: 44px;
+  }
+
+  .rail,
+  .notes,
+  .export {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .notes {
+    border-right: 0;
+  }
+
+  .knot::after {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glyph {
+    transition: none;
+  }
+}

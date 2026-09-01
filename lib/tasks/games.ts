@@ -40,7 +40,7 @@ Visual identity matters as much as mechanics. This is enamel, brass, cast iron, 
       "Robustness / Product Polish",
     ],
     resultRoute: "/r/games-arcade",
-    status: "planned",
+    status: "complete",
     blurb:
       "A Victorian signal box under escalating traffic: set and lock routes with a mechanical lever frame where interlocking forbids the combinations that would kill someone.",
     direction:
