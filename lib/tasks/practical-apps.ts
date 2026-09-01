@@ -107,7 +107,7 @@ Do not design a sales CRM with deal stages and a forecast. Her business is memor
       "Robustness / Product Polish",
     ],
     resultRoute: "/r/practical-apps-crm",
-    status: "planned",
+    status: "complete",
     blurb:
       "A literary agent's memory rather than a pipeline: what do I know about this editor and what happened last time — with rejections treated as intelligence and clocks that matter.",
     direction:

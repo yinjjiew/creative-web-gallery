@@ -141,7 +141,7 @@ Look at real light on real water. Avoid cartoon vector flatness and avoid a mobi
       "Visual Design / Taste",
     ],
     resultRoute: "/r/games-casual",
-    status: "planned",
+    status: "complete",
     blurb:
       "Stone skipping with honest physics: angle, spin and velocity decide whether it bites or sinks, and the whole game is the pleasure of each touch on the water.",
     direction:

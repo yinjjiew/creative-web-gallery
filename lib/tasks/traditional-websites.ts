@@ -74,7 +74,7 @@ Avoid a gradient hero with a floating dashboard screenshot, invented testimonial
       "Robustness / Product Polish",
     ],
     resultRoute: "/r/traditional-websites-saas-website",
-    status: "planned",
+    status: "complete",
     blurb:
       "Restaurant payroll sold to a sceptic who did it by hand last Sunday: specific about tip pooling and late rota changes, honest about price, aspirational about nothing.",
     direction:

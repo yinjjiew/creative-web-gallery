@@ -173,7 +173,7 @@ Handle the microphone honestly: ask clearly, process everything on the device, t
       "Robustness / Product Polish",
     ],
     resultRoute: "/r/educational-language-learning",
-    status: "planned",
+    status: "complete",
     blurb:
       "Say it and see it: real-time pitch tracking draws your tone contour against the target, with feedback that names what to fix rather than scoring you out of a hundred.",
     direction:

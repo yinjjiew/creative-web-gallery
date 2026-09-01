@@ -1,0 +1,483 @@
+/* Tone — a copybook for pitch.
+   Paper, ink, cinnabar. Not a language-app palette. */
+
+.root {
+  --paper: #f3ead6;
+  --panel: #f7f0e2;
+  --ink: #1b1612;
+  --muted: #6a6156;
+  --rule: #c9bba0;
+  --staff: #d2c4a6;
+  --target: #3a4638;
+  --you: #b11b14;
+  --you-wash: rgba(177, 27, 20, 0.08);
+  --ok: #2c4a34;
+  --ok-wash: rgba(44, 74, 52, 0.1);
+  --measure: 38rem;
+
+  position: relative;
+  min-height: 100vh;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-text), "Iowan Old Style", Georgia, serif;
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  padding: 1.25rem 1.1rem 4rem;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.root *,
+.root *::before,
+.root *::after {
+  box-sizing: border-box;
+}
+
+.root :focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.escape {
+  position: absolute;
+  top: 0.85rem;
+  right: 1rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.escape:hover {
+  color: var(--ink);
+}
+
+.mast {
+  max-width: var(--measure);
+  margin: 2.2rem auto 0;
+  padding-bottom: 1.4rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.kicker {
+  margin: 0 0 0.55rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.title {
+  margin: 0 0 0.7rem;
+  font-size: clamp(2.4rem, 8vw, 3.6rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+}
+
+.lead {
+  margin: 0;
+  color: var(--ink);
+  max-width: 36rem;
+}
+
+.honesty {
+  max-width: var(--measure);
+  margin: 1.4rem auto 0;
+}
+
+.honesty p {
+  margin: 0 0 0.85rem;
+}
+
+.paths {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.path,
+.pathOn,
+.btn,
+.hold,
+.holdOn,
+.step,
+.railBtn,
+.railOn,
+.v,
+.vOn,
+.handle,
+.handleOn {
+  font-family: inherit;
+  font-size: 0.92rem;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--rule);
+  border-radius: 0;
+  padding: 0.45rem 0.75rem;
+  cursor: pointer;
+  appearance: none;
+}
+
+.pathOn,
+.railOn,
+.vOn,
+.handleOn,
+.holdOn {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+.btn:disabled,
+.step:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.aside {
+  margin: 0.75rem 0 0;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
+.rail {
+  max-width: var(--measure);
+  margin: 1.6rem auto 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.railBtn,
+.railOn {
+  font-size: 0.84rem;
+  padding: 0.35rem 0.6rem;
+}
+
+.num {
+  display: inline-block;
+  min-width: 0.9rem;
+  margin-right: 0.35rem;
+  color: var(--you);
+  font-style: italic;
+}
+
+.railOn .num {
+  color: #f0c7c2;
+}
+
+.dek {
+  max-width: var(--measure);
+  margin: 0.85rem auto 0;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.card {
+  max-width: var(--measure);
+  margin: 1.1rem auto 0;
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  padding: 1.1rem 1rem 1.2rem;
+}
+
+.word {
+  text-align: center;
+  padding: 0.2rem 0 0.4rem;
+}
+
+.han {
+  margin: 0;
+  font-family: var(--font-han), "Noto Serif CJK SC", "Songti SC", serif;
+  font-size: clamp(3.2rem, 16vw, 5.4rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: 0.06em;
+}
+
+.py {
+  margin: 0.15rem 0 0.5rem;
+  font-size: 1.05rem;
+}
+
+.spoken {
+  font-style: italic;
+}
+
+.under {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.86rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.chips {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem 0.8rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.chips b {
+  font-family: var(--font-han), serif;
+  font-weight: 500;
+  color: var(--ink);
+  margin-right: 0.2rem;
+}
+
+.note {
+  margin: 0.8rem 0 0.9rem;
+  font-size: 0.98rem;
+}
+
+.staffWrap {
+  width: 100%;
+  height: min(42vw, 220px);
+  min-height: 168px;
+  border: 1px solid var(--rule);
+  background: var(--panel);
+  touch-action: none;
+  font-family: inherit;
+}
+
+.staff {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.legend {
+  display: flex;
+  gap: 1rem;
+  margin: 0.4rem 0 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.legT::before,
+.legY::before {
+  content: "";
+  display: inline-block;
+  width: 1.1rem;
+  height: 0;
+  border-top: 1.5px dashed var(--target);
+  margin-right: 0.4rem;
+  vertical-align: middle;
+}
+
+.legY::before {
+  border-top: 2px solid var(--you);
+  border-style: solid;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0.85rem;
+}
+
+.voices {
+  display: flex;
+  border: 1px solid var(--rule);
+}
+
+.v,
+.vOn {
+  border: 0;
+  padding: 0.38rem 0.55rem;
+  font-size: 0.8rem;
+}
+
+.hold,
+.holdOn {
+  min-width: 6.5rem;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+
+.hint {
+  margin: 0;
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--muted);
+}
+
+.voiceNote {
+  margin: 0.7rem 0 0;
+  font-size: 0.86rem;
+  color: var(--muted);
+}
+
+.fb,
+.fbOk,
+.fbInfo {
+  margin: 0.9rem 0 0;
+  padding: 0.75rem 0.85rem;
+  background: var(--you-wash);
+  border-left: 3px solid var(--you);
+  overflow-wrap: anywhere;
+}
+
+.fbInfo {
+  background: transparent;
+  border-left-color: var(--rule);
+}
+
+.fbOk {
+  background: var(--ok-wash);
+  border-left-color: var(--ok);
+}
+
+.fb p,
+.fbOk p,
+.fbInfo p {
+  margin: 0;
+}
+
+.fb p + p,
+.fbOk p + p {
+  margin-top: 0.45rem;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-top: 1.1rem;
+}
+
+.pos {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+.handles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.55rem;
+}
+
+.handle,
+.handleOn {
+  min-width: 3.2rem;
+  font-size: 0.78rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+}
+
+.essay {
+  max-width: var(--measure);
+  margin: 2rem auto 0;
+}
+
+.essay h2 {
+  margin: 0 0 0.55rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.essay p {
+  margin: 0 0 0.85rem;
+}
+
+.quiet {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.foot {
+  max-width: var(--measure);
+  margin: 2.2rem auto 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.footH {
+  margin: 0 0 0.45rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.foot ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.foot li + li {
+  margin-top: 0.3rem;
+}
+
+.keys {
+  margin: 0.8rem 0 0;
+}
+
+@media (max-width: 430px) {
+  .root {
+    font-size: 16px;
+    padding: 1rem 0.85rem 3.2rem;
+  }
+
+  .card {
+    padding: 0.85rem 0.7rem 1rem;
+  }
+
+  .han {
+    letter-spacing: 0.02em;
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .voices {
+    justify-content: space-between;
+  }
+
+  .v,
+  .vOn {
+    flex: 1;
+  }
+
+  .stepper {
+    flex-wrap: wrap;
+  }
+
+  .staffWrap {
+    height: 180px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root * {
+    transition: none !important;
+  }
+}

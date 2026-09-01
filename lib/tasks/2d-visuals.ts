@@ -130,7 +130,7 @@ The paper deserves as much attention as the ink. Its texture is what the ink is 
       "Creative Concept",
     ],
     resultRoute: "/r/2d-visuals-drawing-toy",
-    status: "planned",
+    status: "complete",
     blurb:
       "Sumi ink on damp paper, simulated on the GPU: strokes wick into fibre, bloom where the sheet is already wet, and dry into a darker rim minutes after the gesture ended.",
     direction:

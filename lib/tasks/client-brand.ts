@@ -81,7 +81,7 @@ AVOID — Guilt. Sirens and emergency framing. Stock photography of smiling nurs
       "Layout & Typography",
     ],
     resultRoute: "/r/client-brand-marketing-campaign",
-    status: "planned",
+    status: "complete",
     blurb:
       "A donation campaign that treats inertia rather than attitude as the barrier: total specificity about the hour it takes, the needle included, and a bring-someone mechanic.",
     direction:
