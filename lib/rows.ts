@@ -25,6 +25,7 @@ export function toRow(task: Task): IndexRow {
     blurb: task.blurb,
     abilities: task.abilityTags,
     status: task.status,
+    resultRoute: task.resultRoute,
     haystack: [
       task.title,
       task.typicalTask,

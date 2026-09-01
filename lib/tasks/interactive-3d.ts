@@ -65,7 +65,7 @@ Avoid the low-poly pastel island that has become a default. Let the place feel l
       "Robustness / Product Polish",
     ],
     resultRoute: "/r/interactive-3d-explorable-world",
-    status: "planned",
+    status: "complete",
     blurb:
       "A knowable miniature: one lighthouse island with a real day cycle, weather, a rotating beam that genuinely sweeps the sea, and small events that only occur at certain hours.",
     direction:
@@ -94,7 +94,7 @@ Avoid work floating in a dark void, and avoid a cursor-lagging blurred circle.`,
       "Narrative / Communication",
     ],
     resultRoute: "/r/interactive-3d-portfolio",
-    status: "planned",
+    status: "complete",
     blurb:
       "Print work in an architect's plan chest: pull a drawer, lift a piece to the light table, and see it at true relative scale with paper stock and weight legible.",
     direction:
@@ -123,7 +123,7 @@ Getting the feel right is most of this task: the camera must not be nauseating, 
       "Robustness / Product Polish",
     ],
     resultRoute: "/r/interactive-3d-cursor-controlled",
-    status: "planned",
+    status: "complete",
     blurb:
       "A scatter of suspended fragments that resolves into a legible image from exactly one viewpoint, with the cursor steering the camera and the near-miss doing the guiding.",
     direction:
@@ -154,7 +154,7 @@ Avoid pinned sections that merely crossfade, and avoid a progress bar standing i
       "Interaction Design",
     ],
     resultRoute: "/r/interactive-3d-scroll-controlled",
-    status: "planned",
+    status: "complete",
     blurb:
       "A continuous descent through a geological core where scroll is depth and depth is time, with a logarithmic scale the piece admits to and uses as its argument.",
     direction:
@@ -184,7 +184,7 @@ Build a real fallback for a visitor who declines or has no camera. It should be 
       "Narrative / Communication",
     ],
     resultRoute: "/r/interactive-3d-webcam-responsive",
-    status: "planned",
+    status: "complete",
     blurb:
       "A shy creature that tracks where you are and how fast you moved, flinches from sudden motion, grows bolder with patience, and remembers across a session. All processing on-device.",
     direction:
@@ -213,7 +213,7 @@ Restraint is the mode. No captions explaining what a visitor should feel, no mus
       "Interaction Design",
     ],
     resultRoute: "/r/interactive-3d-storytelling",
-    status: "planned",
+    status: "complete",
     blurb:
       "One corner of one room, held still from 1962 to 2024, while objects arrive and vanish and the light changes. The story is inferred entirely from what is present.",
     direction:
@@ -242,7 +242,7 @@ Silence is an acceptable choice here. If you add sound, it must be synthesized a
       "Robustness / Product Polish",
     ],
     resultRoute: "/r/interactive-3d-physics",
-    status: "planned",
+    status: "complete",
     blurb:
       "A hanging mobile simulated as coupled nested pendulums: disturb any leaf and the impulse travels the armature, redistributes and decays over a minute back to balance.",
     direction:
@@ -271,7 +271,7 @@ Legibility beats spectacle. Thousands of glowing points are easy and useless; th
       "Visual Design / Taste",
     ],
     resultRoute: "/r/interactive-3d-data-visualization",
-    status: "planned",
+    status: "complete",
     blurb:
       "Earthquake hypocentres beneath a trench, where rotating from map view to section view makes the descending plate appear — structure that only exists in the third dimension.",
     direction:

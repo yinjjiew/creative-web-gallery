@@ -207,7 +207,7 @@ Avoid a page of embedded widgets with paragraphs between them. The chapter is th
       "Data Visualization",
     ],
     resultRoute: "/r/educational-interactive-textbook",
-    status: "planned",
+    status: "complete",
     blurb:
       "A full chapter on why arches stand: manipulable statics figures woven into real prose, ending where it should — a hanging chain, inverted, solving the whole problem.",
     direction:
@@ -240,7 +240,7 @@ Do not gamify it with streaks and points. Extrinsic reward would compete with th
       "Layout & Typography",
     ],
     resultRoute: "/r/educational-quiz",
-    status: "planned",
+    status: "complete",
     blurb:
       "Every wrong answer maps to a documented misconception, then confronts it with the simulation where your prediction visibly fails — because being told you're wrong changes nothing.",
     direction:
@@ -272,7 +272,7 @@ The reader should leave with a genuinely better model, including of why this is 
       "Layout & Typography",
     ],
     resultRoute: "/r/educational-data-explainer",
-    status: "planned",
+    status: "complete",
     blurb:
       "Build your own generation mix against a real demand curve and try to survive the worst hours of the year — where annual percentages stop meaning anything.",
     direction:

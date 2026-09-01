@@ -104,6 +104,13 @@ asks for export, implement export. If it asks for persistence, persist. If it
 asks for camera input, take camera input and write a real fallback. Nothing may
 be faked, stubbed, or replaced by a note explaining what would happen.
 
+**The first gesture must change the page.** A brochure, a static article, or a
+settings panel that could be a PDF has failed this gallery. The visitor should
+be able to do something in the first two seconds that the page answers — light,
+weight, a throw, a constraint lighting up, a field rearranging. Interaction is
+the work, not a flourish on top of copy. Pointer, touch, keyboard, and (where
+the brief asks) voice or camera all count. Hover-only theatre does not.
+
 **No shared design.** Each result brings its own fonts, palette, spacing and
 motion. Sharing framework, routing, utilities and build config is expected;
 sharing a navbar, a hero, a card, a font pairing or a colour scheme is not. Two
@@ -147,7 +154,8 @@ cursor.
 
 More visual effects is not better taste. Restrained, editorial, quiet, minimal,
 monochrome and typography-driven are all available and frequently stronger. Each
-result picks the visual language its own subject deserves.
+result picks the visual language its own subject deserves. Quiet is allowed;
+inert is not. If the only motion is a CSS fade on a card, start again.
 
 Some results should be simple. One screen, one object, one interaction, one idea
 is a legitimate and often better answer than maximum feature count. The standard

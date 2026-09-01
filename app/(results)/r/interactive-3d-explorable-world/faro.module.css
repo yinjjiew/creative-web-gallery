@@ -1,0 +1,288 @@
+/*
+ * Chart paper around a wet rock. The page chrome is a hydrographic title block,
+ * not a product header: a serif name, a mono position, a clock you can put a
+ * finger on. Night inverts the ink so the lamp is allowed to be the brightest
+ * thing.
+ */
+
+.page {
+  --ink: #1c201e;
+  --ink-2: #3a423e;
+  --ink-3: #6a7068;
+  --paper: #c9c2b4;
+  --glass: rgba(201, 194, 180, 0.78);
+  --rule: rgba(28, 32, 30, 0.16);
+  --rust: #7a3a28;
+  --focus: #7a3a28;
+
+  position: relative;
+  min-height: 100dvh;
+  height: 100dvh;
+  overflow: hidden;
+  color: var(--ink);
+  background: #8a8680;
+  font-family: var(--font-display), "Times New Roman", serif;
+  font-size: 15px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.page[data-period="dusk"] {
+  --ink: #211814;
+  --glass: rgba(92, 68, 56, 0.42);
+}
+
+.page[data-period="night"] {
+  --ink: #ddd4c6;
+  --ink-2: #b8b0a2;
+  --ink-3: #8a8478;
+  --glass: rgba(10, 12, 16, 0.55);
+  --rule: rgba(221, 212, 198, 0.14);
+  --focus: #d4a090;
+}
+
+.page *,
+.page *::before,
+.page *::after {
+  box-sizing: border-box;
+}
+
+.stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  touch-action: none;
+  cursor: grab;
+  outline: none;
+}
+
+.stage:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--focus);
+}
+
+.stage[data-grab="orbit"] {
+  cursor: grabbing;
+}
+
+.stage canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.placeholder {
+  position: absolute;
+  inset: 0;
+  background: #6a6864;
+}
+
+.hud {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(12px, 2.4vw, 28px);
+}
+
+.hud > * {
+  pointer-events: auto;
+}
+
+.top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand {
+  margin: 0;
+  max-width: 28rem;
+}
+
+.word {
+  margin: 0;
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 560;
+  letter-spacing: 0.08em;
+  line-height: 0.95;
+}
+
+.where {
+  margin: 6px 0 0;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+.note {
+  margin: 10px 0 0;
+  max-width: 22rem;
+  font-size: 13.5px;
+  color: var(--ink-2);
+}
+
+.task {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.task:hover,
+.task:focus-visible {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+  outline: none;
+}
+
+.bottom {
+  display: grid;
+  gap: 10px;
+  max-width: 720px;
+}
+
+.caption {
+  margin: 0;
+  min-height: 1.3em;
+  font-size: 15px;
+  font-style: italic;
+}
+
+.clockRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 10px 12px;
+  background: var(--glass);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--rule);
+}
+
+.clock {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  min-width: 4.4em;
+}
+
+.period {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.rail {
+  flex: 1 1 180px;
+  min-width: 140px;
+  height: 28px;
+  margin: 0;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.rail:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.rail::-webkit-slider-runnable-track {
+  height: 2px;
+  background: var(--ink);
+  opacity: 0.45;
+}
+
+.rail::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  margin-top: -6px;
+  border-radius: 50%;
+  background: var(--rust);
+  border: 2px solid var(--ink);
+}
+
+.rail::-moz-range-track {
+  height: 2px;
+  background: var(--ink);
+  opacity: 0.45;
+  border: none;
+}
+
+.rail::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--rust);
+  border: 2px solid var(--ink);
+}
+
+.btns {
+  display: flex;
+  gap: 6px;
+}
+
+.btn {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--rule);
+  padding: 6px 9px;
+  cursor: pointer;
+}
+
+.btn:hover,
+.btn[aria-pressed="true"] {
+  border-color: var(--ink);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.keys {
+  margin: 0;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--ink-3);
+}
+
+@media (max-width: 640px) {
+  .note {
+    display: none;
+  }
+
+  .word {
+    font-size: 26px;
+  }
+
+  .clockRow {
+    padding: 8px 10px;
+  }
+
+  .keys {
+    display: none;
+  }
+
+  .caption {
+    font-size: 14px;
+  }
+}

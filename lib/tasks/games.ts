@@ -175,7 +175,7 @@ Choose a visual language with real atmosphere — a specific place, specific wea
       "Audio Design",
     ],
     resultRoute: "/r/games-platformer",
-    status: "planned",
+    status: "complete",
     blurb:
       "A precision platformer where each death drops a solid stone. Repeated failure builds a cairn that reshapes the jump — self-balancing difficulty that can also wall you in.",
     direction:
@@ -209,7 +209,7 @@ Sound synthesized, and restrained — this should be tense, not loud.`,
       "Physics / Simulation",
     ],
     resultRoute: "/r/games-strategy",
-    status: "planned",
+    status: "complete",
     blurb:
       "Hold a river delta against a flood with too few crews and too little stone. The water needs no intelligence to beat you — it just finds the weakest point automatically.",
     direction:
@@ -245,7 +245,7 @@ Sound, if present, must be synthesized and should be almost nothing.`,
       "Functional Logic",
     ],
     resultRoute: "/r/games-simulation",
-    status: "planned",
+    status: "complete",
     blurb:
       "Tend a jar of yeast and lactic bacteria competing over days. Temperature and feeding shift the balance, and the loaf is an honest consequence of how you kept the culture.",
     direction:
@@ -312,7 +312,7 @@ Sound synthesized. Be honest with the player about what a link contains and that
       "Robustness / Product Polish",
     ],
     resultRoute: "/r/games-multiplayer",
-    status: "planned",
+    status: "complete",
     blurb:
       "A downhill time trial whose entire run compresses into a shareable link. Your friend opens it and races your ghost, and beating it mints the rematch — no server anywhere.",
     direction:

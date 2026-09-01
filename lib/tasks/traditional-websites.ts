@@ -207,7 +207,7 @@ Avoid a map of nineteen hundred identical pins as the primary interface, and avo
       "Data Visualization",
     ],
     resultRoute: "/r/traditional-websites-directory",
-    status: "planned",
+    status: "complete",
     blurb:
       "Nineteen hundred outdoor swimming spots where the data is uneven and the stakes are drowning: provenance visible, hazards unmissable, and absence never mistaken for safety.",
     direction:
@@ -240,7 +240,7 @@ Avoid a hero photograph of a diverse group smiling, a homepage dominated by a do
       "Interaction Design",
     ],
     resultRoute: "/r/traditional-websites-nonprofit",
-    status: "planned",
+    status: "complete",
     blurb:
       "A legal advice clinic whose primary user has fourteen days to leave their home: triage first, deadlines unmissable, and nothing allowed between a frightened person and a phone number.",
     direction:
@@ -274,7 +274,7 @@ Avoid a lifestyle hero image, an infinite grid of near-identical thumbnails, and
       "Robustness / Product Polish",
     ],
     resultRoute: "/r/traditional-websites-ecommerce",
-    status: "planned",
+    status: "complete",
     blurb:
       "Four thousand fixings that look identical and aren't, serving both a tradesperson who wants a box in thirty seconds and someone who doesn't know the word for the part they broke.",
     direction:

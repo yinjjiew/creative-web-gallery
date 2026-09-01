@@ -94,13 +94,19 @@
 
 .bar {
   display: flex;
-  height: 0.6rem;
+  height: 0.85rem;
   background: var(--paper-sunk);
   border: 1px solid var(--rule);
+  overflow: hidden;
+}
+
+.row:hover .bar {
+  height: 1.15rem;
 }
 
 .segment {
   min-width: 0;
+  transition: flex-grow 240ms ease;
 }
 
 .detail {

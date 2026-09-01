@@ -141,7 +141,7 @@ Do not design a calendar with drag-and-drop events. A calendar cannot express th
       "Layout & Typography",
     ],
     resultRoute: "/r/practical-apps-scheduling",
-    status: "planned",
+    status: "complete",
     blurb:
       "Sixty-one pupils across six school timetables he doesn't control: hard and soft constraints made explicit, so a January timetable change shows exactly what it broke.",
     direction:
@@ -173,7 +173,7 @@ Nothing may fabricate a reading. If the software suggests anything, its suggesti
       "Robustness / Product Polish",
     ],
     resultRoute: "/r/practical-apps-document-processing",
-    status: "planned",
+    status: "complete",
     blurb:
       "Transcription software where uncertainty is data: partial readings, confidence per field, linkage back to the image region, and revision history a later scholar can evaluate.",
     direction:
@@ -205,7 +205,7 @@ Do not design a dashboard of revenue charts. He can already see that revenue is 
       "Robustness / Product Polish",
     ],
     resultRoute: "/r/practical-apps-analytics",
-    status: "planned",
+    status: "complete",
     blurb:
       "Analytics that end in decisions, not charts: which of these two hundred slow titles go back, whether poetry earns its metre, and which books only ever sell face-out.",
     direction:
@@ -238,7 +238,7 @@ Do not design a node-graph automation builder. Nobody here will ever configure a
       "Layout & Typography",
     ],
     resultRoute: "/r/practical-apps-workflow-automation",
-    status: "planned",
+    status: "complete",
     blurb:
       "Automation aimed at dropped handoffs rather than data: every due step has an owner, a volunteer knows their next action in fifteen seconds, and nothing waits on one person's memory.",
     direction:
@@ -270,7 +270,7 @@ Nothing may invent safety data. If a hazard classification or a compatibility ru
       "Educational Correctness",
     ],
     resultRoute: "/r/practical-apps-inventory",
-    status: "planned",
+    status: "complete",
     blurb:
       "A teaching lab stockroom where compatibility and capacity are enforced rather than advised, demand comes from the timetable, and the audit trail survives a regulator years later.",
     direction:

@@ -1,0 +1,387 @@
+/*
+ * A levee-board sheet on putty paper. Not Admiralty buff, not a game HUD.
+ * Cool grey-green ground, iron ink, one vermillion for the next overtop.
+ */
+
+.root {
+  min-height: 100dvh;
+  background: #c6c2b6;
+}
+
+.sheet {
+  --paper: #c6c2b6;
+  --paper-deep: #b3afa3;
+  --ink: #1a1814;
+  --ink-soft: rgba(26, 24, 20, 0.72);
+  --ink-faint: rgba(26, 24, 20, 0.44);
+  --water: #2c4250;
+  --water-deep: #1a2c38;
+  --field: #b4ad96;
+  --town: #6b2e26;
+  --warn: #9a2e1e;
+  --hold: #3c4a32;
+  --line: rgba(26, 24, 20, 0.22);
+
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  display: grid;
+  grid-template-areas:
+    "mast"
+    "teach"
+    "stage"
+    "read"
+    "rail";
+  grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+  grid-template-columns: 1fr;
+  background:
+    radial-gradient(900px 520px at 8% -8%, rgba(255, 252, 244, 0.35), transparent 54%),
+    radial-gradient(800px 480px at 110% 108%, rgba(40, 36, 28, 0.1), transparent 50%),
+    var(--paper);
+  color: var(--ink);
+  font-family: var(--label), "Source Sans 3", ui-sans-serif, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  overscroll-behavior: none;
+}
+
+.sheet::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.16;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.5'/></svg>");
+  mix-blend-mode: multiply;
+}
+
+.mast {
+  grid-area: mast;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px 16px;
+  padding: 12px 16px 4px;
+}
+
+.brand {
+  min-width: 0;
+}
+
+.kicker {
+  margin: 0;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--display), "Times New Roman", serif;
+  font-size: clamp(30px, 7vw, 46px);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 0.88;
+}
+
+.parish {
+  margin: 2px 0 0;
+  font-family: var(--display), "Times New Roman", serif;
+  font-style: italic;
+  font-size: clamp(15px, 3.2vw, 20px);
+  color: var(--ink-soft);
+}
+
+.meta {
+  text-align: right;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  line-height: 1.45;
+  font-variant-numeric: tabular-nums;
+}
+
+.teach {
+  grid-area: teach;
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  padding: 2px 16px 8px;
+  max-width: 42em;
+  font-family: var(--display), "Times New Roman", serif;
+  font-style: italic;
+  font-size: clamp(13px, 2.5vw, 17px);
+  line-height: 1.3;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 879px) {
+  .teach {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+}
+
+.stage {
+  grid-area: stage;
+  position: relative;
+  z-index: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+}
+
+.chart {
+  width: min(100%, 78vh, 640px);
+  height: auto;
+  max-height: 100%;
+  touch-action: manipulation;
+  display: block;
+}
+
+.read {
+  grid-area: read;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px 16px;
+  padding: 6px 16px 4px;
+  font-size: 12px;
+  line-height: 1.35;
+  color: var(--ink-soft);
+}
+
+.read strong {
+  font-family: var(--display), "Times New Roman", serif;
+  font-weight: 500;
+  font-style: italic;
+  color: var(--ink);
+  font-size: 15px;
+}
+
+.read[data-warn="true"] strong {
+  color: var(--warn);
+}
+
+.rail {
+  grid-area: rail;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 10px;
+  padding: 6px 12px 14px;
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.stats b {
+  color: var(--ink);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.pads {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.btn,
+.link,
+.quiet {
+  appearance: none;
+  font-family: var(--label), ui-sans-serif, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  padding: 9px 11px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:hover,
+.link:hover {
+  border-color: var(--ink);
+  background: rgba(26, 24, 20, 0.05);
+}
+
+.btn:focus-visible,
+.link:focus-visible,
+.quiet:focus-visible,
+.chart:focus-visible {
+  outline: 2px solid var(--warn);
+  outline-offset: 2px;
+}
+
+.btn[disabled] {
+  opacity: 0.36;
+  cursor: default;
+}
+
+.btn[data-hot="true"] {
+  border-color: var(--warn);
+  color: var(--warn);
+}
+
+.quiet {
+  border: 0;
+  padding: 6px 2px;
+  color: var(--ink-faint);
+}
+
+.quiet:hover {
+  color: var(--ink);
+}
+
+.corners {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stamp {
+  position: absolute;
+  right: 14px;
+  bottom: 92px;
+  z-index: 3;
+  pointer-events: none;
+  text-align: right;
+  max-width: 16em;
+}
+
+.stamp strong {
+  display: block;
+  font-family: var(--display), "Times New Roman", serif;
+  font-size: clamp(22px, 5vw, 34px);
+  font-weight: 500;
+  font-style: italic;
+  color: var(--warn);
+  letter-spacing: 0.02em;
+}
+
+.stamp span {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.live {
+  position: fixed;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.keys {
+  display: none;
+}
+
+.side {
+  grid-area: side;
+  display: none;
+  position: relative;
+  z-index: 2;
+  flex-direction: column;
+  gap: 12px;
+  padding: 8px 16px 8px 4px;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
+@media (min-width: 880px) {
+  .sheet {
+    grid-template-areas:
+      "mast mast"
+      "teach side"
+      "stage side"
+      "read side"
+      "rail rail";
+    grid-template-columns: minmax(0, 1fr) 228px;
+    grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+  }
+
+  .side {
+    display: flex;
+  }
+
+  .keys {
+    display: block;
+    margin: 14px 0 0;
+    padding: 0;
+    font-size: 11px;
+    line-height: 1.55;
+    color: var(--ink-faint);
+    letter-spacing: 0.02em;
+  }
+
+  .stamp {
+    right: 244px;
+  }
+}
+
+.side h2 {
+  margin: 0 0 4px;
+  font-family: var(--display), "Times New Roman", serif;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: italic;
+  color: var(--ink);
+}
+
+.side p {
+  margin: 0;
+}
+
+.legend {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.legend li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 3px 0;
+  border-bottom: 1px solid rgba(26, 24, 20, 0.1);
+}
+
+.legend b {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.note {
+  font-size: 11px;
+  color: var(--ink-faint);
+}

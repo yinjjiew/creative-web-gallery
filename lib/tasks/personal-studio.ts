@@ -38,7 +38,7 @@ No autoplay. Someone arriving at a site that starts making noise will leave.`,
       "State & Data",
     ],
     resultRoute: "/r/personal-studio-personal-portfolio",
-    status: "planned",
+    status: "complete",
     blurb:
       "A field recordist's eleven-year archive, navigable by place, season and hour of the day, built so continuous listening never fights the interface.",
     direction:
@@ -69,7 +69,7 @@ Avoid project cards in a three-column grid, and avoid a case-study template with
       "Interaction Design",
     ],
     resultRoute: "/r/personal-studio-designer-portfolio",
-    status: "planned",
+    status: "complete",
     blurb:
       "Fourteen years of a developer's work as a dense chronological log — technique notes beside major projects, weighted honestly, built to be read rather than sold from.",
     direction:
@@ -102,7 +102,7 @@ Avoid a full-bleed hero video and a logo wall.`,
       "Interaction Design",
     ],
     resultRoute: "/r/personal-studio-studio-site",
-    status: "planned",
+    status: "complete",
     blurb:
       "An industrial design studio that sells its judgement by showing what it rejected: the foam models, the killed ideas, the failed test — the argument competitors can't copy.",
     direction:
@@ -168,7 +168,7 @@ The visual language should be restrained enough that the writing carries it.`,
       "Creative Concept",
     ],
     resultRoute: "/r/personal-studio-travel-story",
-    status: "planned",
+    status: "complete",
     blurb:
       "Forty-one days down a river from spring to estuary, told along the one axis that organises everything: distance downstream, as the water widens and the story darkens.",
     direction:
@@ -232,7 +232,7 @@ Do not build a force-directed graph of floating nodes. It is the reflexive answe
       "Narrative / Communication",
     ],
     resultRoute: "/r/personal-studio-project-archive",
-    status: "planned",
+    status: "complete",
     blurb:
       "Thirty years of an artist's work indexed by recurring preoccupation rather than date, so a 1998 print and a 2019 sculpture can be seen as two attempts at one problem.",
     direction:

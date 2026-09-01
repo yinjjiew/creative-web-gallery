@@ -68,7 +68,7 @@ Performance matters. Tens of thousands of particles at a steady frame rate is pa
       "Robustness / Product Polish",
     ],
     resultRoute: "/r/2d-visuals-particle-playground",
-    status: "planned",
+    status: "complete",
     blurb:
       "Iron filings on paper over magnets you can drag: tens of thousands of particles doing honest field superposition, drawing real field lines that crowd where the field is strong.",
     direction:
@@ -192,7 +192,7 @@ Touch has to work as well as the pointer. Dragging fabric is exactly the gesture
       "Robustness / Product Polish",
     ],
     resultRoute: "/r/2d-visuals-soft-body",
-    status: "planned",
+    status: "complete",
     blurb:
       "A hanging length of heavy silk on a constraint-solved mass-spring mesh: grab it, pin it, cut it. Folds form, travel and settle, with light in the folds doing the describing.",
     direction:
@@ -224,7 +224,7 @@ Latency is the whole game. A voice visual that lags is not a mirror, it is a rec
       "Robustness / Product Polish",
     ],
     resultRoute: "/r/2d-visuals-audio-reactive",
-    status: "planned",
+    status: "complete",
     blurb:
       "Sing a vowel and watch it land in real formant space: honest LPC analysis maps your vocal tract's resonances, so sliding between vowels draws a continuous path you can see.",
     direction:
@@ -255,7 +255,7 @@ Handle an uploaded image responsibly: everything stays on the device, nothing is
       "Robustness / Product Polish",
     ],
     resultRoute: "/r/2d-visuals-image-transformation",
-    status: "planned",
+    status: "complete",
     blurb:
       "Your photograph rewoven as cloth: real weave structures and a limited yarn palette resolve tone through interlacing alone, and zooming in shows individually correct threads.",
     direction:

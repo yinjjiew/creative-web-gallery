@@ -1,0 +1,652 @@
+/**
+ * A lamp-lit score desk. Oxide ground, bone plate, copper reserved for the
+ * live slur and focus. Instrument Serif speaks only on stations and the mast.
+ * Geist Mono rules the score.
+ */
+
+.root,
+.shell,
+.booting {
+  --void: #101410;
+  --desk: #171b16;
+  --bone: #e2d8c6;
+  --ink: #121410;
+  --mute: #8e8778;
+  --hair: rgba(226, 216, 198, 0.14);
+  --hair-strong: rgba(226, 216, 198, 0.38);
+  --copper: #e25a28;
+  --patina: #7a8a68;
+  --serif: var(--sc-serif), "Iowan Old Style", Palatino, serif;
+  --mono: var(--sc-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+
+.root {
+  min-height: 100dvh;
+  background: var(--void);
+  color: var(--bone);
+  color-scheme: dark;
+}
+
+.booting {
+  min-height: 36dvh;
+  display: grid;
+  place-items: center;
+  color: var(--mute);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.shell {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: minmax(240px, 32vw) 1fr;
+  grid-template-rows: auto auto 1fr auto auto;
+  grid-template-areas:
+    "mast mast"
+    "plate map"
+    "plate score"
+    "export export";
+  background:
+    radial-gradient(80% 50% at 10% 0%, rgba(226, 90, 40, 0.06), transparent 50%),
+    var(--void);
+  color: var(--bone);
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+
+.shell,
+.shell *,
+.shell *::before,
+.shell *::after {
+  box-sizing: border-box;
+}
+
+.shell button,
+.shell input {
+  font: inherit;
+  color: inherit;
+}
+
+.shell button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.shell p,
+.shell h1,
+.shell pre {
+  margin: 0;
+}
+
+.mast {
+  grid-area: mast;
+  display: grid;
+  gap: 10px;
+  padding: 22px 28px 18px;
+  border-bottom: 1px solid var(--hair);
+}
+
+.mastRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand {
+  font-family: var(--serif);
+  font-size: clamp(28px, 3.4vw, 42px);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.task {
+  color: var(--mute);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.task:hover,
+.task:focus-visible {
+  color: var(--copper);
+}
+
+.task:focus-visible {
+  outline: 1px solid var(--copper);
+  outline-offset: 3px;
+}
+
+.lede {
+  max-width: 72ch;
+  color: var(--mute);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.kicker {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+.plate {
+  grid-area: plate;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 22px 24px 28px;
+  border-right: 1px solid var(--hair);
+}
+
+.well {
+  display: grid;
+  place-items: center;
+  min-height: 240px;
+  padding: 40px 20px;
+  background: var(--bone);
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px rgba(18, 20, 16, 0.08);
+}
+
+.proofFace {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-style: italic;
+  letter-spacing: 0.08em;
+}
+
+.prompt {
+  color: var(--mute);
+  max-width: 36ch;
+}
+
+.plates {
+  display: grid;
+  gap: 8px;
+}
+
+.plateBtn {
+  display: grid;
+  gap: 2px;
+  padding: 10px 0;
+  text-align: left;
+  border-top: 1px solid var(--hair);
+}
+
+.plateBtn strong {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.plateBtn span {
+  color: var(--mute);
+  font-size: 11px;
+}
+
+.plateOn strong {
+  color: var(--copper);
+}
+
+.wait,
+.waitNote {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--mute);
+  font-size: 11px;
+}
+
+.wait input {
+  accent-color: var(--copper);
+}
+
+.reply,
+.durRow,
+.bindRow,
+.exportTabs,
+.exportActs,
+.mapActs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+}
+
+.tick,
+.textBtn,
+.durGrip {
+  padding: 4px 2px;
+  color: var(--mute);
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+}
+
+.tick:hover,
+.textBtn:hover,
+.durGrip:hover,
+.tickOn,
+.textOn {
+  color: var(--bone);
+}
+
+.tickOn,
+.textOn {
+  box-shadow: inset 0 -1px 0 var(--copper);
+}
+
+.tick:focus-visible,
+.textBtn:focus-visible,
+.durGrip:focus-visible,
+.plateBtn:focus-visible,
+.ease:focus-visible,
+.ink:focus-visible,
+.voiceBar:focus-visible,
+.nameInput:focus-visible,
+.poseName input:focus-visible,
+.code:focus-visible {
+  outline: 1px solid var(--copper);
+  outline-offset: 3px;
+}
+
+.map {
+  grid-area: map;
+  display: grid;
+  gap: 8px;
+  padding: 18px 24px 8px;
+  min-width: 0;
+}
+
+.mapHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.mapHint,
+.railHint,
+.exportNote {
+  color: var(--mute);
+  font-size: 11px;
+  max-width: 64ch;
+}
+
+.nameRow {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.nameInput,
+.poseName input {
+  width: 12rem;
+  padding: 6px 0;
+  border: 0;
+  border-bottom: 1px solid var(--hair-strong);
+  background: transparent;
+  border-radius: 0;
+}
+
+.graph {
+  width: 100%;
+  height: auto;
+  max-height: 220px;
+  display: block;
+  outline: none;
+}
+
+.slur {
+  fill: none;
+  stroke: rgba(226, 216, 198, 0.55);
+  stroke-width: 1.6;
+  pointer-events: none;
+}
+
+.slurMs {
+  fill: var(--mute);
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  pointer-events: none;
+}
+
+.slurMsOn {
+  fill: var(--copper);
+}
+
+.slurOn {
+  stroke: var(--copper);
+  stroke-width: 2.2;
+}
+
+.slurFire {
+  stroke: var(--copper);
+  stroke-dasharray: 6 4;
+  animation: dash 0.6s linear infinite;
+}
+
+.slurHit {
+  fill: none;
+  stroke: transparent;
+  stroke-width: 18;
+  cursor: pointer;
+}
+
+.arrow {
+  fill: var(--hair-strong);
+}
+
+.slurOn + .arrow,
+.slurFire ~ defs .arrow {
+  fill: var(--copper);
+}
+
+.station {
+  cursor: pointer;
+}
+
+.stationName {
+  fill: var(--mute);
+  font-family: var(--serif);
+  font-size: 11px;
+  font-style: italic;
+}
+
+.stationLive .stationName,
+.stationOn .stationName {
+  fill: var(--bone);
+}
+
+.stationDot {
+  stroke: none;
+}
+
+.stationRing {
+  fill: none;
+  stroke: var(--hair-strong);
+  stroke-width: 1;
+}
+
+.stationLive .stationRing,
+.stationOn .stationRing {
+  stroke: var(--copper);
+}
+
+.stationWire .stationRing {
+  stroke: var(--patina);
+  stroke-dasharray: 3 2;
+}
+
+.score,
+.pose {
+  grid-area: score;
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  padding: 8px 24px 20px;
+  background:
+    linear-gradient(var(--desk), var(--desk)) padding-box,
+    transparent;
+}
+
+.scoreHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px 16px;
+}
+
+.phrase {
+  font-family: var(--serif);
+  font-size: 22px;
+  letter-spacing: -0.02em;
+}
+
+.phrase em {
+  font-style: italic;
+}
+
+.phraseMeta {
+  color: var(--mute);
+}
+
+.easeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ease {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  width: 56px;
+  padding: 6px 0;
+  color: var(--mute);
+}
+
+.ease svg {
+  width: 48px;
+  height: 28px;
+  display: block;
+}
+
+.ease path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+}
+
+.easeOn {
+  color: var(--copper);
+}
+
+.railWrap {
+  display: grid;
+  gap: 8px;
+}
+
+.rail {
+  position: relative;
+  display: grid;
+  gap: 6px;
+  padding: 8px 0 4px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent calc(100% / 8 - 1px),
+    var(--hair) calc(100% / 8 - 1px),
+    var(--hair) calc(100% / 8)
+  );
+}
+
+.voice {
+  display: grid;
+  grid-template-columns: 52px 1fr 36px;
+  gap: 8px;
+  align-items: center;
+}
+
+.voiceName,
+.voiceMs {
+  color: var(--mute);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.voiceTrack {
+  position: relative;
+  height: 22px;
+}
+
+.voiceBar {
+  position: absolute;
+  top: 3px;
+  height: 16px;
+  background: var(--bone);
+  border-radius: 1px;
+  cursor: grab;
+  touch-action: none;
+  box-shadow: 0 0 0 1px rgba(18, 20, 16, 0.35);
+}
+
+.voiceBar:active {
+  cursor: grabbing;
+  background: var(--copper);
+}
+
+.playhead {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--copper);
+  pointer-events: none;
+}
+
+.bindRow {
+  padding-top: 4px;
+}
+
+.bindLab {
+  color: var(--mute);
+  margin-right: 4px;
+}
+
+.poseName {
+  display: grid;
+  gap: 6px;
+  color: var(--mute);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.inks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ink {
+  width: 22px;
+  height: 22px;
+  border-radius: 1px;
+  box-shadow: inset 0 0 0 1px rgba(226, 216, 198, 0.3);
+}
+
+.inkOn {
+  box-shadow: inset 0 0 0 1px var(--bone), 0 0 0 1px var(--copper);
+}
+
+.export {
+  grid-area: export;
+  display: grid;
+  gap: 10px;
+  padding: 16px 24px 28px;
+  border-top: 1px solid var(--hair);
+  min-width: 0;
+}
+
+.exportHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px 16px;
+}
+
+.code {
+  max-height: 220px;
+  overflow: auto;
+  padding: 14px 16px;
+  background: var(--desk);
+  color: var(--bone);
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.5;
+  white-space: pre;
+  border: 1px solid var(--hair);
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slurFire {
+    animation: none;
+    stroke-dasharray: none;
+  }
+}
+
+@media (max-width: 840px) {
+  .shell {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "mast"
+      "plate"
+      "map"
+      "score"
+      "export";
+  }
+
+  .lede {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .plate {
+    border-right: 0;
+    border-bottom: 1px solid var(--hair);
+    padding-top: 14px;
+    padding-bottom: 16px;
+    gap: 10px;
+  }
+
+  .well {
+    min-height: 120px;
+    padding: 22px 16px;
+  }
+
+  .prompt {
+    display: none;
+  }
+
+  .graph {
+    max-height: 200px;
+  }
+
+  .mast,
+  .plate,
+  .map,
+  .score,
+  .pose,
+  .export {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .voice {
+    grid-template-columns: 44px 1fr 32px;
+  }
+}

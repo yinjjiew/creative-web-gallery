@@ -1,0 +1,336 @@
+/*
+ * A core-repository monograph. Manila paper against concrete dust.
+ * Hematite for emphasis — the colour of banded iron, not of a brand.
+ * Notes are specimen labels, square and thin-ruled, parked at their depth.
+ */
+
+.page {
+  --ink: #1f1b16;
+  --ink-2: #4a433a;
+  --ink-3: #7a7268;
+  --paper: #efe8dc;
+  --sheet: #e7dfd2;
+  --rule: #c4baac;
+  --hematite: #6b2e1f;
+  --focus: #6b2e1f;
+  --dust: #cfc7bb;
+  --glass: rgba(239, 232, 220, 0.92);
+
+  min-height: 100dvh;
+  color: var(--ink);
+  background: var(--dust);
+  font-family: var(--font-serif), "Times New Roman", serif;
+  font-size: 16px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  color-scheme: light;
+  overscroll-behavior-y: none;
+}
+
+.page *,
+.page *::before,
+.page *::after {
+  box-sizing: border-box;
+}
+
+.page :focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.page ::selection {
+  background: #6b2e1f;
+  color: #efe8dc;
+}
+
+.stage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.fill {
+  position: absolute;
+  inset: 0;
+}
+
+.stage canvas,
+.fill canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.placeholder {
+  position: absolute;
+  inset: 0;
+  background: var(--dust);
+}
+
+.fallback {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.fallback canvas {
+  width: 100%;
+  height: 220%;
+  object-fit: cover;
+  object-position: top;
+}
+
+.well {
+  --reading: 24vh;
+  position: relative;
+  z-index: 1;
+  height: 1100vh;
+}
+
+.note,
+.intro,
+.coda {
+  position: absolute;
+  left: 1.25rem;
+  width: min(32rem, 40vw);
+  padding: 1.05rem 1.15rem 1.15rem;
+  background: var(--glass);
+  border: 1px solid var(--rule);
+  color: var(--ink);
+}
+
+.intro {
+  top: var(--reading);
+}
+
+.note,
+.coda {
+  top: calc(var(--t) * (100% - 100vh) + var(--reading));
+}
+
+.kicker {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.title {
+  margin: 0 0 0.55rem;
+  font-size: 1.45rem;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.lede {
+  margin: 0 0 0.7rem;
+  color: var(--ink-2);
+}
+
+.lede:last-child,
+.body:last-child {
+  margin-bottom: 0;
+}
+
+.body {
+  margin: 0;
+  color: var(--ink-2);
+}
+
+.kind {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--hematite);
+}
+
+.note[data-active="true"] {
+  border-color: var(--ink);
+  box-shadow: inset 3px 0 0 var(--hematite);
+}
+
+.contents {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.7rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.contents button {
+  appearance: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--ink-2);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  cursor: pointer;
+}
+
+.contents button:hover {
+  color: var(--hematite);
+}
+
+.provenance {
+  margin: 0.9rem 0 0;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--ink-3);
+}
+
+.hud {
+  position: fixed;
+  z-index: 2;
+  pointer-events: none;
+  inset: 0;
+}
+
+.word {
+  position: absolute;
+  top: max(0.8rem, env(safe-area-inset-top));
+  left: 1.25rem;
+  margin: 0;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.task {
+  pointer-events: auto;
+  position: absolute;
+  top: max(0.75rem, env(safe-area-inset-top));
+  right: max(1rem, env(safe-area-inset-right));
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--ink-2);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+}
+
+.task:hover {
+  color: var(--hematite);
+  border-color: var(--hematite);
+}
+
+.instrument {
+  position: absolute;
+  left: 1.25rem;
+  bottom: max(0.85rem, env(safe-area-inset-bottom));
+  display: grid;
+  gap: 0.15rem 1.4rem;
+  grid-template-columns: auto auto;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  background: var(--glass);
+  border: 1px solid var(--rule);
+  padding: 0.55rem 0.75rem 0.6rem;
+  pointer-events: none;
+}
+
+.instrument dt {
+  margin: 0;
+  color: var(--ink-3);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 9px;
+}
+
+.instrument dd {
+  margin: 0;
+}
+
+.scale {
+  position: absolute;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(0.85rem, env(safe-area-inset-bottom));
+  width: min(16rem, 42vw);
+  margin: 0;
+  padding: 0.55rem 0.7rem;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 11px;
+  line-height: 1.35;
+  color: var(--ink-2);
+  background: var(--glass);
+  border: 1px solid var(--rule);
+}
+
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 720px) {
+  .well {
+    --reading: 36vh;
+  }
+
+  .note,
+  .intro,
+  .coda {
+    left: 0.7rem;
+    width: calc(100vw - 1.4rem);
+    padding: 0.75rem 0.85rem 0.85rem;
+  }
+
+  .title {
+    font-size: 1.2rem;
+  }
+
+  .lede,
+  .body {
+    font-size: 14px;
+  }
+
+  .provenance {
+    display: none;
+  }
+
+  .instrument {
+    grid-template-columns: 1fr;
+    left: 0.7rem;
+    right: auto;
+    max-width: calc(100vw - 1.4rem);
+  }
+
+  .scale {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .note,
+  .intro,
+  .coda {
+    transition: none;
+  }
+}

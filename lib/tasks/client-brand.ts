@@ -118,7 +118,7 @@ AVOID — Cartoon sleep imagery. Sheep. Anyone in white linen in a sunbeam. A pa
       "Visual Design / Taste",
     ],
     resultRoute: "/r/client-brand-interactive-ad",
-    status: "planned",
+    status: "complete",
     blurb:
       "An advertisement whose interaction is the proof: disturb one side of the bed as hard as you like and watch the other side refuse to move.",
     direction:
@@ -194,7 +194,7 @@ AVOID — A filterable list, which is what exists and does not work. A map with 
       "Brand Interpretation",
     ],
     resultRoute: "/r/client-brand-event-microsite",
-    status: "planned",
+    status: "complete",
     blurb:
       "A hundred and eighty buildings, one weekend, and the real problem solved: building a route that respects opening hours, travel time and queues, usable in the rain on a phone.",
     direction:
@@ -270,7 +270,7 @@ AVOID — Wes Anderson pastiche, which is the reflexive answer for trains and ha
       "Information Architecture",
     ],
     resultRoute: "/r/client-brand-immersive-commercial",
-    status: "planned",
+    status: "complete",
     blurb:
       "A night train sold on the only comparison that flatters it — an evening here, a morning there, versus a flight plus a hotel — with the logistics as carefully made as the romance.",
     direction:

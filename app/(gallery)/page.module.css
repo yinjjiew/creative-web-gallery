@@ -7,9 +7,29 @@
 }
 
 .title {
+  --hx: 28%;
   font-size: clamp(2.25rem, 6.2vw, 4rem);
   line-height: 1.02;
   max-width: 22em;
+  font-variation-settings: "opsz" 48;
+  color: var(--ink);
+  cursor: crosshair;
+}
+
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .title {
+    background: linear-gradient(
+      105deg,
+      var(--ink) 0%,
+      var(--ink) calc(var(--hx) - 8%),
+      var(--signal) var(--hx),
+      var(--ink) calc(var(--hx) + 8%),
+      var(--ink) 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
 }
 
 .title em {

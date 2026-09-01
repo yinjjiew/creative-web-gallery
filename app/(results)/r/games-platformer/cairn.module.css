@@ -1,0 +1,290 @@
+/*
+ * A guidebook margin at last light, not a game HUD.
+ * The canvas holds the weather; the type only names the ridge.
+ */
+
+.root {
+  height: 100dvh;
+  overflow: hidden;
+  background: #1c1a17;
+}
+
+.wrap {
+  --ink: #1c1a17;
+  --bone: #e6d8c2;
+  --dim: rgba(230, 216, 194, 0.74);
+  --faint: rgba(230, 216, 194, 0.52);
+  --line: rgba(230, 216, 194, 0.2);
+  --wet: #8a7a62;
+
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: var(--ink);
+  color: var(--bone);
+  font-family: var(--label), ui-sans-serif, system-ui, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  overscroll-behavior: none;
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+
+.hud {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.top {
+  position: absolute;
+  top: clamp(12px, 2.2vh, 26px);
+  left: clamp(14px, 2.8vw, 34px);
+  right: clamp(14px, 2.8vw, 34px);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.place {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15em;
+}
+
+.name {
+  margin: 0;
+  font-family: var(--display), "Palatino Linotype", Palatino, serif;
+  font-weight: 500;
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+
+.ridge {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.counts {
+  display: flex;
+  gap: 1.4em;
+  text-align: right;
+}
+
+.counts dl {
+  margin: 0;
+}
+
+.counts dt {
+  margin: 0;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.counts dd {
+  margin: 0.12em 0 0;
+  font-family: var(--display), Palatino, serif;
+  font-size: clamp(22px, 3.2vw, 30px);
+  line-height: 0.9;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.lede {
+  position: absolute;
+  left: clamp(14px, 2.8vw, 34px);
+  top: clamp(68px, 10vh, 92px);
+  margin: 0;
+  max-width: 22rem;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--dim);
+  transition: opacity 0.6s ease;
+}
+
+.lede[data-gone="true"] {
+  opacity: 0;
+}
+
+.note {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(108px, 18vh, 168px);
+  transform: translateX(-50%);
+  margin: 0;
+  max-width: 20rem;
+  text-align: center;
+  font-family: var(--display), Palatino, serif;
+  font-style: italic;
+  font-size: clamp(16px, 2.4vw, 20px);
+  line-height: 1.35;
+  color: var(--bone);
+}
+
+.pads {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: none;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 12px calc(12px + env(safe-area-inset-bottom, 0px));
+  pointer-events: none;
+  z-index: 3;
+}
+
+.steer,
+.jump {
+  display: flex;
+  gap: 8px;
+  pointer-events: auto;
+}
+
+.pad {
+  width: 64px;
+  height: 64px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--line);
+  background: rgba(28, 26, 23, 0.45);
+  color: var(--bone);
+  font: inherit;
+  font-size: 18px;
+  letter-spacing: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  touch-action: none;
+}
+
+.jump .pad {
+  width: 78px;
+  height: 78px;
+  font-family: var(--display), Palatino, serif;
+  font-style: italic;
+  font-size: 16px;
+}
+
+.pad[data-held="true"] {
+  background: rgba(230, 216, 194, 0.18);
+  border-color: var(--dim);
+}
+
+.pad:focus-visible {
+  outline: 1px solid var(--bone);
+  outline-offset: 3px;
+}
+
+.corner {
+  position: absolute;
+  right: clamp(14px, 2.8vw, 34px);
+  bottom: clamp(12px, 2vh, 22px);
+  display: flex;
+  gap: 1.2em;
+  align-items: baseline;
+  pointer-events: auto;
+  z-index: 4;
+}
+
+.keys {
+  position: absolute;
+  left: clamp(14px, 2.8vw, 34px);
+  bottom: clamp(12px, 2vh, 22px);
+  margin: 0;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--faint);
+  pointer-events: none;
+}
+
+.quiet {
+  padding: 0;
+  font: inherit;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--faint);
+  background: none;
+  border: 0;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.quiet:hover {
+  color: var(--bone);
+}
+
+.live {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.wrap :focus-visible {
+  outline: 1px solid var(--bone);
+  outline-offset: 3px;
+}
+
+.model {
+  position: absolute;
+  left: clamp(14px, 2.8vw, 34px);
+  bottom: clamp(28px, 4.4vh, 44px);
+  margin: 0;
+  max-width: 26rem;
+  font-size: 10px;
+  line-height: 1.45;
+  color: var(--faint);
+  pointer-events: none;
+}
+
+@media (hover: none), (max-width: 720px) {
+  .pads {
+    display: flex;
+  }
+
+  .keys {
+    display: none;
+  }
+
+  .lede {
+    max-width: 16rem;
+    font-size: 12px;
+  }
+
+  .note {
+    bottom: clamp(148px, 24vh, 210px);
+  }
+
+  .model {
+    display: none;
+  }
+
+  .corner {
+    bottom: calc(92px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lede {
+    transition: none;
+  }
+}

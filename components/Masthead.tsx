@@ -2,7 +2,13 @@ import Link from "next/link";
 
 import styles from "./Masthead.module.css";
 
-export function Masthead() {
+export function Masthead({
+  complete,
+  total,
+}: {
+  complete: number;
+  total: number;
+}) {
   return (
     <header className={styles.bar}>
       <a href="#main" className={`${styles.skip} mono`}>
@@ -16,6 +22,9 @@ export function Masthead() {
           <Link href="/">Index</Link>
           <Link href="/abilities">Abilities</Link>
           <Link href="/progress">Progress</Link>
+          <Link href="/progress" className={styles.live}>
+            {complete}/{total} live
+          </Link>
         </nav>
       </div>
     </header>

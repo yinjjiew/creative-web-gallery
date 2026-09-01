@@ -1,0 +1,281 @@
+.page {
+  --pitch: #2a221c;
+  --beam: #1c1814;
+  --ticket: #e8dcc6;
+  --ticket-ink: #2c241c;
+  --ticket-mute: #6d6254;
+  --brass: #8f7348;
+  --focus: #2c241c;
+  --hair: #c9b89a;
+
+  box-sizing: border-box;
+  position: relative;
+  min-height: 100dvh;
+  overflow: hidden;
+  overscroll-behavior: none;
+  background: var(--pitch);
+  color: var(--ticket);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.page *,
+.page *::before,
+.page *::after {
+  box-sizing: inherit;
+}
+
+.canvas,
+.pending {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: grab;
+}
+
+.canvas:active {
+  cursor: grabbing;
+}
+
+.pending {
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #1a1713 0 7px,
+      #161310 7px 8px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      #1a1713 0 7px,
+      #161310 7px 8px
+    );
+}
+
+.canvas:focus {
+  outline: none;
+}
+
+.canvas:focus-visible {
+  outline: 2px solid var(--hair);
+  outline-offset: -10px;
+}
+
+.ticket {
+  position: absolute;
+  z-index: 2;
+  left: 16px;
+  bottom: 16px;
+  width: min(34rem, calc(100vw - 32px));
+  padding: 14px 16px 12px;
+  background: var(--ticket);
+  color: var(--ticket-ink);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+}
+
+.mast {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.lede {
+  margin: 0 0 10px;
+  color: var(--ticket-mute);
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+
+.lede em {
+  font-style: italic;
+  color: var(--ticket-ink);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0 0 8px;
+}
+
+.row[aria-label] {
+  margin-bottom: 8px;
+}
+
+.chip,
+.file,
+.step {
+  appearance: none;
+  margin: 0;
+  padding: 5px 8px;
+  border: 1px solid #b7a88e;
+  background: #f3ead8;
+  color: var(--ticket-ink);
+  font: inherit;
+  font-size: 12px;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.chip[aria-pressed="true"],
+.step:active {
+  background: var(--ticket-ink);
+  border-color: var(--ticket-ink);
+  color: var(--ticket);
+}
+
+.chip:focus-visible,
+.file:focus-visible,
+.step:focus-visible,
+.link:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.yarns {
+  display: inline-flex;
+  gap: 2px;
+  margin-right: 6px;
+  vertical-align: -2px;
+}
+
+.yarn {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+.draft {
+  display: inline-grid;
+  grid-template-columns: repeat(4, 3px);
+  gap: 1px;
+  margin-right: 6px;
+  vertical-align: -2px;
+}
+
+.draft i {
+  width: 3px;
+  height: 3px;
+  background: #c9bba4;
+}
+
+.on {
+  background: var(--ticket-ink) !important;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  margin: 8px 0 0;
+  color: var(--ticket-mute);
+  font-size: 11.5px;
+}
+
+.meta strong {
+  color: var(--ticket-ink);
+  font-weight: 600;
+}
+
+.hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.link {
+  color: var(--brass);
+  font-size: 12px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.note {
+  position: absolute;
+  z-index: 2;
+  top: 16px;
+  right: 16px;
+  max-width: 16rem;
+  margin: 0;
+  color: #d8cbb0;
+  font-size: 11.5px;
+  font-style: italic;
+  text-align: right;
+  pointer-events: none;
+}
+
+.live {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+@media (max-width: 640px) {
+  .ticket {
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    width: auto;
+    padding: 10px 10px 8px;
+    max-height: 46vh;
+    overflow: auto;
+  }
+
+  .lede {
+    display: none;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+
+  .note {
+    top: 8px;
+    right: 10px;
+    left: 10px;
+    max-width: none;
+    text-align: left;
+    font-size: 11px;
+  }
+
+  .chip,
+  .file,
+  .step {
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+
+  .meta {
+    font-size: 11px;
+  }
+}

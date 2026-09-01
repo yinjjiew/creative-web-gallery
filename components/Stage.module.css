@@ -1,0 +1,145 @@
+.stage {
+  padding: clamp(2rem, 5vw, 3.5rem) 0 0;
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6rem 1.5rem;
+  padding-bottom: 0.85rem;
+}
+
+.title {
+  font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+}
+
+.note {
+  color: var(--faint);
+}
+
+.rail {
+  list-style: none;
+  margin: 0;
+  padding: 0.25rem 0 0.5rem;
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 1rem;
+}
+
+.rail::-webkit-scrollbar {
+  height: 4px;
+}
+
+.rail::-webkit-scrollbar-thumb {
+  background: var(--rule-strong);
+}
+
+.plate {
+  --tx: 0;
+  --ty: 0;
+  --lx: 70%;
+  --ly: 20%;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: min(16.5rem, 72vw);
+  height: 11.5rem;
+  padding: 0.9rem 1rem 0.85rem;
+  scroll-snap-align: start;
+  isolation: isolate;
+  overflow: hidden;
+  color: var(--paper);
+  background: var(--ink);
+  transform: perspective(720px) rotateX(calc(var(--ty) * 1deg))
+    rotateY(calc(var(--tx) * 1deg));
+  transform-style: preserve-3d;
+  transition: transform 80ms linear;
+}
+
+.plate::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      140% 90% at var(--lx) var(--ly),
+      rgba(255, 244, 220, 0.22),
+      transparent 55%
+    ),
+    repeating-linear-gradient(
+      135deg,
+      transparent 0 11px,
+      rgba(246, 244, 239, 0.04) 11px 12px
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.plate::after {
+  content: attr(data-n);
+  position: absolute;
+  top: 0.55rem;
+  right: 0.7rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  color: rgba(246, 244, 239, 0.35);
+  z-index: 1;
+}
+
+.num,
+.name,
+.kind,
+.go {
+  position: relative;
+  z-index: 1;
+}
+
+.num {
+  color: rgba(246, 244, 239, 0.45);
+  margin-bottom: auto;
+}
+
+.name {
+  font-size: 1.45rem;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+.kind {
+  color: rgba(246, 244, 239, 0.62);
+  font-size: 0.82rem;
+  padding: 0.35rem 0 0.55rem;
+}
+
+.go {
+  color: #e6c4b4;
+}
+
+.plate:hover .go,
+.plate:focus-visible .go {
+  color: #f3d2b8;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .plate {
+    transform: none;
+    transition: none;
+  }
+}
+
+@media (max-width: 40rem) {
+  .plate {
+    width: min(14.5rem, 78vw);
+    height: 10.5rem;
+  }
+}

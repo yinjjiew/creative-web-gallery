@@ -1,0 +1,233 @@
+/*
+ * A nineteenth-century scientific plate: rag paper, iron, engraved ink.
+ * Chrome sits in the margins as lettering, never as a toolbar.
+ */
+
+.page {
+  --paper: #e2d8c4;
+  --ink: #1a1612;
+  --mute: #5c5348;
+  --hair: #2a241c;
+
+  box-sizing: border-box;
+  position: relative;
+  height: 100dvh;
+  overflow: hidden;
+  overscroll-behavior: none;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.35;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.page *,
+.page *::before,
+.page *::after {
+  box-sizing: inherit;
+}
+
+.page :focus-visible {
+  outline: 1px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.host,
+.stage,
+.pending,
+.fallback {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.pending {
+  background: var(--paper);
+}
+
+.stage {
+  touch-action: none;
+  cursor: grab;
+}
+
+.stage:active {
+  cursor: grabbing;
+}
+
+.stage:focus {
+  outline: none;
+}
+
+.stage:focus-visible {
+  outline: 1px solid var(--ink);
+  outline-offset: -10px;
+}
+
+.failed {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 2rem;
+  max-width: 28rem;
+  margin-inline: auto;
+  text-align: center;
+  font-style: italic;
+}
+
+.head,
+.foot {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 28px;
+  padding: 0 clamp(14px, 2.4vw, 34px);
+  pointer-events: none;
+}
+
+.head {
+  top: 0;
+  padding-top: clamp(12px, 1.7vw, 22px);
+}
+
+.foot {
+  bottom: 0;
+  padding-bottom: clamp(12px, 1.7vw, 22px);
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.title {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+}
+
+.deck {
+  margin: 0;
+  max-width: 22rem;
+  color: var(--mute);
+  font-size: 0.78rem;
+  font-style: italic;
+}
+
+.plateNo {
+  margin: 0;
+  font-size: 0.68rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+.caption {
+  margin: 0;
+  max-width: 36rem;
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--ink);
+}
+
+.rest {
+  color: var(--mute);
+}
+
+.tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.55rem 1.05rem;
+  pointer-events: auto;
+}
+
+.act {
+  appearance: none;
+  margin: 0;
+  padding: 0 0 1px;
+  border: none;
+  border-bottom: 1px solid transparent;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.82rem;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+}
+
+.act:hover,
+.act:focus-visible {
+  color: var(--ink);
+}
+
+.act[aria-pressed="true"] {
+  color: var(--ink);
+  font-style: normal;
+  border-bottom-color: var(--hair);
+}
+
+.link {
+  color: var(--mute);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.link:hover,
+.link:focus-visible {
+  color: var(--ink);
+  border-bottom-color: var(--hair);
+}
+
+.live {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 640px) {
+  .page {
+    font-size: 14px;
+  }
+
+  .deck,
+  .rest {
+    display: none;
+  }
+
+  .caption {
+    max-width: 18rem;
+    font-size: 0.78rem;
+  }
+
+  .tools {
+    gap: 0.5rem 0.95rem;
+  }
+
+  .act {
+    font-size: 0.88rem;
+  }
+}

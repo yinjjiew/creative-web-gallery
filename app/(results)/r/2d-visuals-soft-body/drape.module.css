@@ -1,0 +1,256 @@
+/*
+ * A draper's sample room after closing. Warm plaster, brass, ivory silk.
+ * Type sits on the wall like a card pinned beside the length — never a toolbar.
+ */
+
+.page {
+  --plaster: #241f1a;
+  --plaster-deep: #1a1612;
+  --ivory: #eadfcb;
+  --ivory-dim: #b7ab96;
+  --brass: #c4a05a;
+  --hair: #8a7d68;
+
+  box-sizing: border-box;
+  position: relative;
+  height: 100dvh;
+  overflow: hidden;
+  overscroll-behavior: none;
+  background: var(--plaster);
+  color: var(--ivory);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.35;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.page *,
+.page *::before,
+.page *::after {
+  box-sizing: inherit;
+}
+
+.page :focus-visible {
+  outline: 1px solid var(--ivory);
+  outline-offset: 3px;
+}
+
+.host,
+.stage,
+.pending,
+.failed {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.pending {
+  background: var(--plaster);
+}
+
+.failed {
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 2rem;
+  max-width: 28rem;
+  margin-inline: auto;
+  text-align: center;
+  color: var(--ivory-dim);
+  font-style: italic;
+}
+
+.stage {
+  touch-action: none;
+  cursor: grab;
+}
+
+.stage[data-mode="pin"] {
+  cursor: cell;
+}
+
+.stage[data-mode="cut"] {
+  cursor: crosshair;
+}
+
+.stage:active {
+  cursor: grabbing;
+}
+
+.stage[data-mode="pin"]:active,
+.stage[data-mode="cut"]:active {
+  cursor: inherit;
+}
+
+.stage:focus {
+  outline: none;
+}
+
+.stage:focus-visible {
+  outline: 1px solid var(--ivory);
+  outline-offset: -12px;
+}
+
+.head,
+.foot {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 28px;
+  padding: 0 clamp(16px, 2.6vw, 36px);
+  pointer-events: none;
+}
+
+.head {
+  top: 0;
+  padding-top: clamp(14px, 2vw, 26px);
+}
+
+.foot {
+  bottom: 0;
+  padding-bottom: clamp(14px, 2vw, 26px);
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+.deck {
+  margin: 0;
+  max-width: 22rem;
+  color: var(--ivory-dim);
+  font-size: 0.92rem;
+  font-style: italic;
+}
+
+.spec {
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ivory-dim);
+}
+
+.caption {
+  margin: 0;
+  max-width: 26rem;
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--ivory);
+}
+
+.rest {
+  color: var(--ivory-dim);
+}
+
+.tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.15rem;
+  pointer-events: auto;
+}
+
+.act {
+  appearance: none;
+  margin: 0;
+  padding: 0.45rem 0.7rem;
+  border: none;
+  background: none;
+  color: var(--ivory-dim);
+  font: inherit;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+
+.act:hover,
+.act:focus-visible {
+  color: var(--ivory);
+}
+
+.act[aria-pressed="true"] {
+  color: var(--ivory);
+  font-style: italic;
+  box-shadow: inset 0 -1px 0 var(--ivory);
+}
+
+.act[data-kind="do"] {
+  color: var(--ivory-dim);
+}
+
+.link {
+  pointer-events: auto;
+  color: var(--ivory-dim);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.link:hover,
+.link:focus-visible {
+  color: var(--ivory);
+  border-bottom-color: var(--hair);
+}
+
+.live {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 640px) {
+  .page {
+    font-size: 15px;
+  }
+
+  .deck {
+    display: none;
+  }
+
+  .caption {
+    max-width: 14rem;
+    font-size: 0.88rem;
+  }
+
+  .rest {
+    display: none;
+  }
+
+  .tools {
+    gap: 0.15rem;
+  }
+
+  .act {
+    padding: 0.55rem 0.62rem;
+    font-size: 1.02rem;
+  }
+}

@@ -18,6 +18,10 @@
   --rule: #dcd8ce;
   --rule-strong: #c2bcae;
   --signal: #a63d22;
+  --mx: 70vw;
+  --my: 18vh;
+  --nx: 0.7;
+  --ny: 0.18;
 
   --measure: 34rem;
   --gutter: clamp(1.25rem, 4vw, 3.5rem);
@@ -45,6 +49,30 @@ body {
   font-synthesis: none;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(
+      42rem 32rem at var(--mx) var(--my),
+      rgba(255, 250, 236, 0.72),
+      transparent 62%
+    ),
+    radial-gradient(
+      18rem 14rem at calc(var(--nx) * 100%) calc(var(--ny) * 70%),
+      rgba(166, 61, 34, 0.06),
+      transparent 70%
+    );
+}
+
+body > * {
+  position: relative;
+  z-index: 1;
 }
 
 h1,

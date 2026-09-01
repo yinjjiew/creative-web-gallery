@@ -1,3 +1,5 @@
+import { HeadTitle } from "@/components/HeadTitle";
+import { Stage } from "@/components/Stage";
 import { TaskIndex } from "@/components/TaskIndex";
 import { allGroups, allRows } from "@/lib/rows";
 import { SETTINGS } from "@/lib/settings";
@@ -15,14 +17,14 @@ export default function IndexPage() {
     <div className="shell">
       <section className={styles.intro}>
         <div>
-          <h1 className={styles.title}>
-            A catalogue of task prompts and <em>reference implementations</em> for
-            the creative web.
-          </h1>
+          <HeadTitle>
+            A catalogue of task prompts and <em>reference implementations</em>{" "}
+            for the creative web.
+          </HeadTitle>
           <p className={styles.lede}>
-            Nine application settings, each broken into its typical tasks. Every
-            typical task has one prompt written for it, a set of ability tags,
-            and one result built in answer to that prompt.
+            Move across the type — it opens under the lamp. Then enter a plate
+            on the floor. Nine settings, seventy-four typical tasks, each with
+            one prompt and one result you can use, not just read.
           </p>
         </div>
 
@@ -67,6 +69,8 @@ export default function IndexPage() {
           <span>Result</span>
         </div>
       </section>
+
+      <Stage rows={rows} />
 
       <TaskIndex rows={rows} groups={groups} abilities={abilities} />
     </div>

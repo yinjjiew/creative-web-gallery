@@ -23,6 +23,7 @@ export type IndexRow = {
   blurb: string;
   abilities: Ability[];
   status: TaskStatus;
+  resultRoute: string;
   haystack: string;
 };
 
@@ -183,33 +184,43 @@ export function TaskIndex({
             ) : null}
 
             <ul className={styles.rows} style={{ listStyle: "none", margin: 0, padding: 0 }}>
-              {groupRows.map((row) => (
-                <li key={row.id}>
-                  <Link href={`/tasks/${row.id}`} className={styles.row}>
-                    <span className={`${styles.num} mono`}>
-                      {String(row.number).padStart(3, "0")}
-                    </span>
-                    <span className={styles.headline}>
-                      <span className={styles.rowTitle}>{row.title}</span>
-                      <span className={styles.rowTypical}>{row.typicalTask}</span>
-                    </span>
-                    <span className={`${styles.rowStatus} mono`}>{row.status}</span>
-                    <span className={styles.blurb}>{row.blurb}</span>
-                    <span className={`${styles.rowTags} mono`}>
-                      {row.abilities.map((ability) => (
-                        <span
-                          key={ability}
-                          className={
-                            selected.includes(ability) ? styles.tagHit : undefined
-                          }
-                        >
-                          {ability}
-                        </span>
-                      ))}
-                    </span>
-                  </Link>
-                </li>
-              ))}
+              {groupRows.map((row) => {
+                const live = row.status === "complete";
+                return (
+                  <li key={row.id} className={live ? styles.live : undefined}>
+                    <Link href={`/tasks/${row.id}`} className={styles.row}>
+                      <span className={`${styles.num} mono`}>
+                        {String(row.number).padStart(3, "0")}
+                      </span>
+                      <span className={styles.headline}>
+                        <span className={styles.rowTitle}>{row.title}</span>
+                        <span className={styles.rowTypical}>{row.typicalTask}</span>
+                      </span>
+                      <span className={`${styles.rowStatus} mono`}>
+                        {row.status}
+                      </span>
+                      <span className={styles.blurb}>{row.blurb}</span>
+                      <span className={`${styles.rowTags} mono`}>
+                        {row.abilities.map((ability) => (
+                          <span
+                            key={ability}
+                            className={
+                              selected.includes(ability) ? styles.tagHit : undefined
+                            }
+                          >
+                            {ability}
+                          </span>
+                        ))}
+                      </span>
+                    </Link>
+                    {live ? (
+                      <a href={row.resultRoute} className={`${styles.enter} mono`}>
+                        Enter
+                      </a>
+                    ) : null}
+                  </li>
+                );
+              })}
             </ul>
           </section>
         );

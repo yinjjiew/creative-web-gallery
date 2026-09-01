@@ -53,7 +53,11 @@
   color: var(--muted);
   padding: 0.28rem 0.55rem;
   cursor: pointer;
-  transition: color 120ms ease, border-color 120ms ease, background 120ms ease;
+  transition:
+    color 140ms ease,
+    border-color 140ms ease,
+    background 140ms ease,
+    transform 140ms ease;
   font: inherit;
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: var(--step-mono);
@@ -64,6 +68,7 @@
 .chip:hover {
   color: var(--ink);
   border-color: var(--ink-soft);
+  transform: translateY(-1px);
 }
 
 .chipOn {
@@ -142,18 +147,51 @@
   border-top: 1px solid var(--rule-strong);
 }
 
+.rows > li {
+  position: relative;
+  border-bottom: 1px solid var(--rule);
+}
+
+.rows > li.live {
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--signal) 7%, transparent),
+    transparent 42%
+  );
+}
+
 .row {
   display: grid;
   grid-template-columns: 3.25rem minmax(0, 1fr) auto;
   gap: 0 1rem;
   align-items: baseline;
   padding: 0.85rem 0;
-  border-bottom: 1px solid var(--rule);
-  transition: background 120ms ease;
+  transition: background 160ms ease, transform 160ms ease;
 }
 
 .row:hover {
   background: var(--paper-sunk);
+  transform: translateX(4px);
+}
+
+.live .row {
+  padding-right: 4.4rem;
+}
+
+.enter {
+  position: absolute;
+  top: 0.85rem;
+  right: 0;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.28rem 0.55rem;
+  z-index: 1;
+  transition: background 140ms ease, transform 140ms ease;
+}
+
+.enter:hover {
+  background: var(--signal);
+  transform: translateX(2px);
 }
 
 .num {

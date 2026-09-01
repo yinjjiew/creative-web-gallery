@@ -1,0 +1,753 @@
+/*
+ * MDF, oiled oak, graphite. The page is a shop, not a brochure.
+ * No cards, no radius, no shadow, no gradient.
+ */
+
+.root {
+  --mdf: #d5cfc0;
+  --mdf-2: #c8c0ae;
+  --oak: #3f2e22;
+  --oak-2: #5a4332;
+  --foam: #e4c7a0;
+  --foam-2: #f0d7b4;
+  --ink: #1c1914;
+  --ink-2: #3a342c;
+  --ink-3: #6a6156;
+  --rule: #1c1914;
+  --focus: #1c1914;
+  --text: var(--face-text), Vollkorn, "Iowan Old Style", Georgia, serif;
+  --label: var(--face-label), "Red Hat Text", ui-sans-serif, system-ui, sans-serif;
+
+  background: var(--mdf);
+  color: var(--ink);
+  font-family: var(--text);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.root *,
+.root *::before,
+.root *::after {
+  box-sizing: border-box;
+}
+
+.root :focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.page {
+  min-height: 100vh;
+}
+
+.skip {
+  position: absolute;
+  left: 0.75rem;
+  top: 0.75rem;
+  z-index: 4;
+  padding: 0.3rem 0.55rem;
+  background: var(--ink);
+  color: var(--mdf);
+  font-family: var(--label);
+  font-size: 0.8rem;
+  text-decoration: none;
+  transform: translateY(-160%);
+}
+
+.skip:focus {
+  transform: none;
+}
+
+/* ── mast ──────────────────────────────────────────────────────────────── */
+
+.mast {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.25rem;
+  align-items: end;
+  padding: 0.85rem 1.5rem 0.75rem;
+  border-bottom: 1px solid var(--ink);
+  background: var(--mdf);
+}
+
+.word {
+  margin: 0;
+  font-family: var(--text);
+  font-size: 1.85rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.where {
+  margin: 0.35rem 0 0;
+  font-family: var(--label);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-2);
+}
+
+.jump {
+  display: flex;
+  gap: 1.25rem;
+  justify-self: end;
+  align-items: baseline;
+  font-family: var(--label);
+  font-size: 0.82rem;
+}
+
+.jump a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--ink);
+}
+
+.jump a:hover {
+  border-bottom-width: 2px;
+}
+
+.task {
+  color: inherit;
+  text-decoration: none;
+  opacity: 0.55;
+  border-bottom: none !important;
+}
+
+.task:hover,
+.task:focus-visible {
+  opacity: 1;
+}
+
+/* ── split ─────────────────────────────────────────────────────────────── */
+
+.shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem);
+  gap: 0;
+  align-items: start;
+}
+
+.main {
+  min-width: 0;
+  padding: 0.75rem 1.5rem 2.5rem;
+}
+
+.rail {
+  min-width: 0;
+  padding: 1.25rem 1.35rem 2.5rem;
+  border-left: 1px solid var(--ink);
+  background: var(--mdf-2);
+}
+
+/* ── projects ──────────────────────────────────────────────────────────── */
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  margin: 0 0 0.7rem;
+  border-bottom: 1px solid var(--ink);
+}
+
+.tab,
+.tabOn {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  padding: 0.45rem 0.9rem 0.55rem 0;
+  margin-right: 1.25rem;
+  color: var(--ink-3);
+  font-family: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.tabOn {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+.tab:hover,
+.tab:focus-visible {
+  color: var(--ink);
+}
+
+.tabName {
+  display: block;
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+
+.tabMeta {
+  display: block;
+  font-family: var(--label);
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  margin-top: 0.15rem;
+}
+
+/* ── brief ─────────────────────────────────────────────────────────────── */
+
+.tension {
+  margin: 0 0 0.7rem;
+  font-size: 1.2rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.tensionName {
+  font-weight: 600;
+  margin-right: 0.45rem;
+}
+
+.tensionMeta {
+  display: block;
+  font-family: var(--label);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  color: var(--ink-2);
+  margin: 0.15rem 0 0.35rem;
+}
+
+.brief {
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--mdf-2);
+}
+
+.pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 2rem;
+}
+
+.pair h2 {
+  margin: 0 0 0.3rem;
+  font-family: var(--label);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+.pair p {
+  margin: 0;
+  font-size: 1.02rem;
+  line-height: 1.4;
+}
+
+/* ── the bench ─────────────────────────────────────────────────────────── */
+
+.bench {
+  background: var(--oak);
+  color: var(--foam);
+  padding: 0.85rem 0.75rem 0.95rem;
+  margin: 0 -0.35rem;
+  border-top: 3px solid #2a1e16;
+}
+
+.bench :focus-visible {
+  outline-color: var(--foam);
+}
+
+.benchTop {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.35rem 1rem;
+  align-items: baseline;
+  padding: 0 0.35rem 0.55rem;
+}
+
+.benchTop h2 {
+  margin: 0;
+  font-family: var(--label);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--foam);
+}
+
+.benchTop p {
+  margin: 0;
+  font-family: var(--label);
+  font-size: 0.78rem;
+  color: var(--foam-2);
+}
+
+.forms {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(4.4rem, 1fr));
+  gap: 0.3rem;
+}
+
+.form,
+.formOn,
+.formSeen {
+  appearance: none;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.15rem;
+  margin: 0;
+  padding: 0.3rem 0.2rem 0.35rem;
+  border: 1px solid transparent;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-family: var(--label);
+  min-height: 7.6rem;
+}
+
+.form:hover,
+.form:focus-visible,
+.formSeen:hover,
+.formSeen:focus-visible {
+  background: var(--oak-2);
+}
+
+.formOn {
+  background: var(--oak-2);
+  border-color: var(--foam);
+}
+
+.formSeen {
+  opacity: 0.72;
+}
+
+.form :global(.mark),
+.formOn :global(.mark),
+.formSeen :global(.mark) {
+  display: block;
+  width: 100%;
+  height: 4.7rem;
+  stroke: var(--foam);
+  stroke-width: 1.35;
+  fill: var(--foam);
+  fill-opacity: 0.18;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+}
+
+.formN,
+.formName,
+.formStamp {
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.formName {
+  color: var(--foam-2);
+}
+
+.formStamp {
+  color: var(--foam);
+  font-weight: 600;
+}
+
+.formStampHidden {
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--oak-2);
+}
+
+/* ── verdict ───────────────────────────────────────────────────────────── */
+
+.verdict {
+  padding: 1rem 0 0.35rem;
+}
+
+.wait {
+  margin: 0;
+  font-size: 1.15rem;
+  line-height: 1.4;
+  max-width: 38rem;
+  font-style: italic;
+  color: var(--ink-2);
+}
+
+.kind {
+  margin: 0 0 0.35rem;
+  font-family: var(--label);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+.verdictTitle {
+  margin: 0 0 0.65rem;
+  font-size: 1.55rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.reason {
+  margin: 0 0 0.75rem;
+  font-size: 1.08rem;
+  line-height: 1.45;
+  max-width: 40rem;
+}
+
+.thinking {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+  line-height: 1.4;
+  max-width: 40rem;
+}
+
+.thinking span {
+  font-style: italic;
+}
+
+.cost,
+.next {
+  margin: 0;
+  font-family: var(--label);
+  font-size: 0.84rem;
+  line-height: 1.4;
+  color: var(--ink-2);
+  max-width: 40rem;
+}
+
+.record {
+  list-style: none;
+  margin: 0.85rem 0 0;
+  padding: 0.65rem 0 0;
+  border-top: 1px solid var(--mdf-2);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.1rem;
+  font-family: var(--label);
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+  color: var(--ink-2);
+}
+
+.record li span {
+  margin-left: 0.35rem;
+  color: var(--ink-3);
+}
+
+/* ── rail ──────────────────────────────────────────────────────────────── */
+
+.railKicker {
+  margin: 0 0 0.25rem;
+  font-family: var(--label);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.railLead {
+  margin: 0 0 1.25rem;
+  font-size: 0.98rem;
+  line-height: 1.35;
+}
+
+.block {
+  margin: 0 0 1.4rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--ink);
+}
+
+.block h2 {
+  margin: 0 0 0.45rem;
+  font-family: var(--label);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.block p {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.specName {
+  font-weight: 500;
+  font-size: 1.02rem !important;
+}
+
+.caps,
+.wont,
+.people {
+  list-style: none;
+  margin: 0 0 0.85rem;
+  padding: 0;
+}
+
+.caps li,
+.people li {
+  margin: 0 0 0.7rem;
+}
+
+.caps strong {
+  display: block;
+  font-weight: 500;
+  font-size: 0.98rem;
+}
+
+.caps span {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.92rem;
+  line-height: 1.35;
+  color: var(--ink-2);
+}
+
+.wont li {
+  font-size: 0.92rem;
+  line-height: 1.35;
+  padding-left: 0.8rem;
+  position: relative;
+  margin-bottom: 0.25rem;
+}
+
+.wont li::before {
+  content: "–";
+  position: absolute;
+  left: 0;
+}
+
+.who {
+  margin: 0 !important;
+  font-weight: 500;
+}
+
+.who span {
+  font-family: var(--label);
+  font-weight: 400;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  margin-left: 0.45rem;
+  color: var(--ink-2);
+}
+
+.killsFor {
+  font-style: italic;
+  font-size: 0.95rem !important;
+}
+
+.kills {
+  font-family: var(--label);
+  font-size: 0.78rem !important;
+  color: var(--ink-2);
+}
+
+/* ── write ─────────────────────────────────────────────────────────────── */
+
+.write {
+  padding: 1.5rem 1.5rem 2rem;
+  border-top: 1px solid var(--ink);
+}
+
+.writeHead {
+  display: grid;
+  grid-template-columns: 8rem minmax(0, 36rem);
+  gap: 0.5rem 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.writeHead h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.writeHead p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem 1rem;
+  max-width: 52rem;
+}
+
+.formGrid label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-family: var(--label);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+}
+
+.formGrid input,
+.formGrid textarea,
+.letter {
+  font-family: var(--text);
+  font-size: 1rem;
+  color: var(--ink);
+  background: var(--mdf);
+  border: 1px solid var(--ink);
+  border-radius: 0;
+  padding: 0.4rem 0.5rem;
+  width: 100%;
+}
+
+.formGrid textarea {
+  resize: vertical;
+  min-height: 4.5rem;
+}
+
+.wide,
+.letter,
+.actions {
+  grid-column: 1 / -1;
+}
+
+.letter {
+  margin: 0.25rem 0 0;
+  white-space: pre-wrap;
+  line-height: 1.45;
+  min-height: 10rem;
+  background: var(--mdf-2);
+}
+
+.actions button {
+  appearance: none;
+  font-family: var(--label);
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  background: var(--ink);
+  color: var(--mdf);
+  border: 1px solid var(--ink);
+  padding: 0.5rem 0.9rem;
+  cursor: pointer;
+}
+
+.actions button:hover,
+.actions button:focus-visible {
+  background: var(--oak);
+  border-color: var(--oak);
+}
+
+/* ── foot ──────────────────────────────────────────────────────────────── */
+
+.foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: baseline;
+  padding: 0.9rem 1.5rem 1.4rem;
+  border-top: 1px solid var(--ink);
+  font-family: var(--label);
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: var(--ink-2);
+}
+
+.foot p {
+  margin: 0;
+  max-width: 40rem;
+}
+
+/* ── motion ────────────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .skip,
+  .form,
+  .formOn,
+  .tab,
+  .tabOn,
+  .actions button {
+    transition: none;
+  }
+}
+
+/* ── phone ─────────────────────────────────────────────────────────────── */
+
+@media (max-width: 860px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+
+  .rail {
+    border-left: 0;
+    border-top: 1px solid var(--ink);
+  }
+
+  .pair {
+    grid-template-columns: 1fr;
+  }
+
+  .forms {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .form,
+  .formOn,
+  .formSeen {
+    min-height: 6.6rem;
+  }
+
+  .form :global(.mark),
+  .formOn :global(.mark),
+  .formSeen :global(.mark) {
+    height: 3.8rem;
+  }
+
+  .writeHead {
+    grid-template-columns: 1fr;
+  }
+
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .bench {
+    margin: 0 -1.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .mast,
+  .main,
+  .rail,
+  .write,
+  .foot {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .word {
+    font-size: 1.65rem;
+  }
+
+  .tension {
+    font-size: 1.08rem;
+  }
+
+  .forms {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .bench {
+    margin-left: -1rem;
+    margin-right: -1rem;
+  }
+}

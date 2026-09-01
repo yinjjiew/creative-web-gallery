@@ -31,7 +31,7 @@ Decide for yourself what a state is, how transitions are represented and edited,
       "Visual Design / Taste",
     ],
     resultRoute: "/r/creative-tools-ui-component-creator",
-    status: "planned",
+    status: "complete",
     blurb:
       "A component editor whose primary object is the transition between states, not the states themselves. Exports React and CSS that behave identically outside the tool.",
     direction:
@@ -60,7 +60,7 @@ You decide what dimensions of feel are worth exposing, how they are represented,
       "Robustness / Product Polish",
     ],
     resultRoute: "/r/creative-tools-button-generator",
-    status: "planned",
+    status: "complete",
     blurb:
       "A control designer where the editable material is press feel — travel, resistance, overshoot, settle and synthesized click — rather than fill and radius.",
     direction:
@@ -202,7 +202,7 @@ Do not produce yet another dark page with a glowing sphere on it.`,
       "Robustness / Product Polish",
     ],
     resultRoute: "/r/creative-tools-shader-generator",
-    status: "planned",
+    status: "complete",
     blurb:
       "Procedural materials as a stack of blended layers rather than a node graph, compiled live to real GLSL on the GPU, with the generated shader source as the export.",
     direction:
@@ -231,7 +231,7 @@ The export should be self-contained and framework-agnostic.`,
       "Visual Design / Taste",
     ],
     resultRoute: "/r/creative-tools-cursor-theme-creator",
-    status: "planned",
+    status: "complete",
     blurb:
       "A pointer-system designer covering shape, inertia, target magnetism, press and drag states, previewed against a realistic page and exported as dependency-free JS and CSS.",
     direction:

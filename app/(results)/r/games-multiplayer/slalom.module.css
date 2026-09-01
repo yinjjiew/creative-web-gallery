@@ -1,0 +1,382 @@
+/*
+ * Night club slalom, lit like a floodlit piste, typed like a race office.
+ * The canvas holds the mountain; the slip is a perforated timing ticket,
+ * not a HUD card.
+ */
+
+.root {
+  min-height: 100dvh;
+  background: #101412;
+}
+
+.wrap {
+  --night: #101412;
+  --snow: #d8d0c2;
+  --paper: #e8dfd0;
+  --ink: #1a1610;
+  --dim: rgba(232, 223, 208, 0.72);
+  --faint: rgba(232, 223, 208, 0.5);
+  --rule: rgba(26, 22, 16, 0.16);
+  --red: #c4452c;
+  --rust: #9a4a32;
+
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, #0c1012 0 26%, #5c5852 26%, #cfc6b6 100%);
+  color: var(--snow);
+  font-family: var(--tape), ui-monospace, monospace;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  overscroll-behavior: none;
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  touch-action: none;
+}
+
+/* ── clock ──────────────────────────────────────────────────────────────── */
+
+.hud {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.wrap[data-phase="ready"] .clock {
+  opacity: 0.35;
+}
+
+.clock {
+  position: absolute;
+  top: clamp(12px, 2.4vh, 22px);
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.time {
+  display: block;
+  font-size: clamp(28px, 6vw, 44px);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  color: var(--snow);
+  font-variant-numeric: tabular-nums;
+}
+
+.clockMeta {
+  display: block;
+  margin-top: 0.35em;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.split {
+  position: absolute;
+  top: clamp(64px, 11vh, 92px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--snow);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.split[data-on="true"] {
+  opacity: 1;
+}
+
+.split[data-kind="ahead"] {
+  color: #c8d4b8;
+}
+
+.split[data-kind="behind"] {
+  color: #e0b2a4;
+}
+
+/* ── race office slip ───────────────────────────────────────────────────── */
+
+.slip {
+  position: absolute;
+  pointer-events: auto;
+  background: var(--paper);
+  color: var(--ink);
+  width: min(340px, calc(100vw - 28px));
+  padding: 22px 22px 20px 26px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.42);
+  /* A torn ticket, not a rounded card. */
+  border-radius: 0;
+}
+
+.slip::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 10px;
+  background:
+    radial-gradient(circle at 0 8px, var(--night) 4px, transparent 4.2px) 0 0 / 10px 16px;
+}
+
+.readySlip {
+  top: clamp(14px, 3vh, 28px);
+  left: clamp(14px, 3vw, 28px);
+}
+
+.doneSlip {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-height: calc(100dvh - 32px);
+  overflow: auto;
+}
+
+.kicker {
+  font-family: var(--tape), ui-monospace, monospace;
+  font-size: 9px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(26, 22, 16, 0.5);
+  margin: 0 0 8px;
+}
+
+.who {
+  font-family: var(--letter), ui-serif, Georgia, serif;
+  font-size: clamp(22px, 4.4vw, 28px);
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.15;
+  margin: 0 0 6px;
+}
+
+.mark {
+  font-family: var(--tape), ui-monospace, monospace;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  margin: 0 0 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.prose {
+  font-family: var(--letter), ui-serif, Georgia, serif;
+  font-size: 15px;
+  line-height: 1.45;
+  margin: 0 0 12px;
+}
+
+.honest {
+  font-family: var(--tape), ui-monospace, monospace;
+  font-size: 10px;
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+  color: rgba(26, 22, 16, 0.55);
+  margin: 0 0 14px;
+}
+
+.bytes {
+  font-family: var(--tape), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: rgba(26, 22, 16, 0.45);
+  margin: -8px 0 14px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.name {
+  flex: 1 1 120px;
+  min-width: 0;
+  border: 0;
+  border-bottom: 1px solid rgba(26, 22, 16, 0.28);
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--letter), ui-serif, Georgia, serif;
+  font-size: 16px;
+  font-style: italic;
+  padding: 4px 0 5px;
+  border-radius: 0;
+}
+
+.name:focus {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.name::placeholder {
+  color: rgba(26, 22, 16, 0.35);
+}
+
+.act,
+.ghost {
+  appearance: none;
+  border: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--tape), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 10px 14px;
+  cursor: pointer;
+  border-radius: 0;
+}
+
+.ghost {
+  background: transparent;
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px rgba(26, 22, 16, 0.35);
+}
+
+.act:focus-visible,
+.ghost:focus-visible,
+.mute:focus-visible,
+.retry:focus-visible,
+.brief:focus-visible {
+  outline: 2px solid var(--snow);
+  outline-offset: 3px;
+}
+
+.act:focus-visible,
+.ghost:focus-visible {
+  outline-color: var(--ink);
+}
+
+.act:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* ── chrome ─────────────────────────────────────────────────────────────── */
+
+.mute,
+.retry,
+.brief {
+  position: absolute;
+  pointer-events: auto;
+  background: none;
+  border: 0;
+  color: var(--faint);
+  font-family: var(--tape), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 8px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.mute {
+  top: 8px;
+  right: 8px;
+}
+
+.retry {
+  bottom: 12px;
+  right: 10px;
+}
+
+.brief {
+  bottom: 12px;
+  left: 10px;
+}
+
+.brief:hover,
+.mute:hover,
+.retry:hover {
+  color: var(--snow);
+}
+
+.hint {
+  position: absolute;
+  bottom: clamp(36px, 8vh, 64px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--faint);
+  text-align: center;
+  pointer-events: none;
+  max-width: 90vw;
+}
+
+.pads {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  pointer-events: none;
+}
+
+.pad {
+  flex: 1;
+  pointer-events: auto;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  touch-action: none;
+}
+
+.pad[data-held="true"] {
+  background: linear-gradient(
+    to top,
+    rgba(232, 223, 208, 0.07),
+    transparent 42%
+  );
+}
+
+.live {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+@media (max-width: 520px) {
+  .readySlip {
+    top: 58px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+    padding: 16px 14px 14px 20px;
+  }
+
+  .readySlip .honest {
+    display: none;
+  }
+
+  .readySlip .prose {
+    font-size: 14px;
+  }
+
+  .doneSlip {
+    width: min(360px, calc(100vw - 20px));
+    padding: 18px 16px 16px 22px;
+  }
+
+  .hint {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .split {
+    transition: none;
+  }
+}

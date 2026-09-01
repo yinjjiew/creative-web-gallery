@@ -1,0 +1,618 @@
+/*
+ * A painted block wall and laminated kennel cards. The yellow tape is only
+ * for a due step that nobody in the building is holding. Green tape is a
+ * card in your hand. Nothing else gets a colour.
+ */
+
+.booting {
+  position: fixed;
+  inset: 0;
+  background: #2c332c;
+}
+
+.root {
+  --wall: #2c332c;
+  --wall-2: #3a4338;
+  --card: #f3efe3;
+  --card-edge: #c9c0a8;
+  --ink: #1b1914;
+  --ink-2: #3f3b32;
+  --ink-3: #6a6458;
+  --tape: #d4b63a;
+  --tape-ink: #2a2308;
+  --held: #2f5a40;
+  --held-wash: #dce8df;
+  --focus: #f3efe3;
+  --name: var(--in-name), "Iowan Old Style", Palatino, serif;
+  --board: var(--in-board), "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+
+  min-height: 100dvh;
+  margin: 0;
+  background-color: var(--wall);
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.028) 0 1px,
+    transparent 1px 42px
+  );
+  color: #e8e2d2;
+  font-family: var(--board);
+  font-size: 16px;
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+  color-scheme: dark;
+}
+
+.root *,
+.root *::before,
+.root *::after {
+  box-sizing: border-box;
+}
+
+.root button {
+  font: inherit;
+  color: inherit;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.root :focus {
+  outline: none;
+}
+
+.root :focus-visible {
+  outline: 3px solid var(--tape);
+  outline-offset: 3px;
+}
+
+.live {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ------------------------------------------------------------------ mast */
+
+.mast {
+  display: grid;
+  gap: 0.75rem 1.5rem;
+  padding: 1rem 1rem 0.75rem;
+  border-bottom: 1px solid rgba(232, 226, 210, 0.14);
+}
+
+.brand {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.65rem 1.1rem;
+}
+
+.mark {
+  margin: 0;
+  font-family: var(--name);
+  font-size: 1.65rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+.date {
+  margin: 0;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #c8c1ae;
+}
+
+.clock {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.morning,
+.reset {
+  min-height: 44px;
+  padding: 0 0.9rem;
+  border: 1px solid rgba(232, 226, 210, 0.35);
+  background: transparent;
+  color: #f3efe3;
+  cursor: pointer;
+}
+
+.morning {
+  background: var(--tape);
+  border-color: var(--tape);
+  color: var(--tape-ink);
+  font-weight: 600;
+}
+
+.reset {
+  color: #c8c1ae;
+}
+
+/* ----------------------------------------------------------- next action */
+
+.now {
+  padding: 0.85rem 1rem 0.15rem;
+  max-width: 44rem;
+}
+
+.nowKicker {
+  margin: 0 0 0.55rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--tape);
+}
+
+/* ---------------------------------------------------------------- shift */
+
+.shift {
+  padding: 0.9rem 1rem 1rem;
+  border-bottom: 1px solid rgba(232, 226, 210, 0.14);
+}
+
+.shiftLead {
+  margin: 0 0 0.7rem;
+  font-size: 1.15rem;
+  line-height: 1.35;
+  color: #f3efe3;
+}
+
+.shiftLead strong {
+  font-family: var(--name);
+  font-weight: 600;
+}
+
+.names {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.name {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 48px;
+  padding: 0 0.85rem 0 0.45rem;
+  border: 1px solid rgba(232, 226, 210, 0.35);
+  background: transparent;
+  color: #f3efe3;
+  cursor: pointer;
+}
+
+.name[aria-pressed="true"] {
+  background: #f3efe3;
+  border-color: #f3efe3;
+  color: #1b1914;
+}
+
+.nameKey {
+  display: grid;
+  place-items: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  border: 1px solid currentColor;
+  font-size: 0.72rem;
+  font-weight: 600;
+  opacity: 0.7;
+}
+
+.staff {
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.65;
+}
+
+.away {
+  margin: 0.65rem 0 0;
+  font-size: 0.82rem;
+  color: #a8a190;
+}
+
+/* ---------------------------------------------------------------- board */
+
+.board {
+  display: grid;
+  gap: 1.25rem;
+  padding: 1rem;
+}
+
+.wellHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.h {
+  margin: 0;
+  font-family: var(--name);
+  font-size: 1.55rem;
+  font-weight: 600;
+  color: var(--tape);
+  letter-spacing: 0.01em;
+}
+
+.count {
+  margin: 0;
+  font-family: var(--name);
+  font-size: 2.4rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--tape);
+}
+
+.h2 {
+  margin: 0 0 0.6rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #b7b09c;
+}
+
+.empty,
+.emptySmall {
+  margin: 0;
+  padding: 1rem 0;
+  color: #c8c1ae;
+  max-width: 36rem;
+}
+
+.emptySmall {
+  font-size: 0.95rem;
+}
+
+.cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.side {
+  display: grid;
+  gap: 1.25rem;
+  align-content: start;
+}
+
+/* ---------------------------------------------------------------- card */
+
+.card {
+  margin: 0;
+  padding: 0.9rem 1rem 1rem 1.15rem;
+  background: var(--card);
+  color: var(--ink);
+  border: 1px solid var(--card-edge);
+  border-left: 7px solid #b7b09c;
+  color-scheme: light;
+  cursor: pointer;
+}
+
+.card.orphan {
+  border-left-color: var(--tape);
+}
+
+.card.yours {
+  border-left-color: var(--held);
+}
+
+.card.lead {
+  padding: 1.15rem 1.1rem 1.2rem 1.25rem;
+}
+
+.card.focused {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.cardTop {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.cat {
+  margin: 0;
+  font-family: var(--name);
+  font-size: 1.85rem;
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+.lead .cat {
+  font-size: 2.15rem;
+}
+
+.meta,
+.where {
+  margin: 0;
+  font-size: 0.86rem;
+  color: var(--ink-3);
+}
+
+.kind {
+  margin: 0.7rem 0 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+.when {
+  margin: 0.15rem 0 0;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.orphan .when {
+  color: #6a4e00;
+}
+
+.brief {
+  margin: 0.55rem 0 0;
+  font-size: 1.12rem;
+  line-height: 1.35;
+}
+
+.context,
+.meds,
+.owner,
+.lock {
+  margin: 0.45rem 0 0;
+  font-size: 0.92rem;
+  color: var(--ink-2);
+}
+
+.meds {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.actions {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 0.85rem;
+}
+
+.take,
+.done,
+.drop {
+  min-height: 52px;
+  padding: 0.55rem 0.85rem;
+  border: 1px solid var(--ink);
+  cursor: pointer;
+  text-align: left;
+  font-weight: 600;
+}
+
+.take {
+  background: var(--tape);
+  border-color: var(--tape-ink);
+  color: var(--tape-ink);
+}
+
+.done {
+  background: var(--held);
+  border-color: var(--held);
+  color: #f3efe3;
+}
+
+.drop {
+  background: transparent;
+  color: var(--ink-2);
+  border-color: var(--card-edge);
+  min-height: 44px;
+  font-weight: 500;
+}
+
+.lock {
+  padding: 0.45rem 0;
+  font-weight: 600;
+  color: #6a4e00;
+}
+
+/* ---------------------------------------------------------------- quiet */
+
+.quiet {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.quietRow {
+  display: grid;
+  grid-template-columns: 7rem 1fr auto;
+  gap: 0.5rem;
+  width: 100%;
+  margin: 0;
+  padding: 0.45rem 0.15rem;
+  border: 0;
+  background: transparent;
+  color: #d5cebc;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.quietRow em {
+  font-family: var(--name);
+  font-style: normal;
+  font-weight: 600;
+  color: #f3efe3;
+}
+
+/* ---------------------------------------------------------------- rail */
+
+.rail {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0 1rem 1rem;
+  border: 1px solid rgba(232, 226, 210, 0.18);
+}
+
+.tick {
+  display: grid;
+  gap: 0.15rem;
+  min-height: 56px;
+  padding: 0.45rem 0.5rem;
+  border: 0;
+  background: rgba(0, 0, 0, 0.18);
+  color: #d5cebc;
+  text-align: left;
+  cursor: pointer;
+}
+
+.tickName {
+  font-family: var(--name);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #f3efe3;
+}
+
+.tickStep {
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.tick.orphan {
+  background: var(--tape);
+  color: var(--tape-ink);
+}
+
+.tick.orphan .tickName,
+.tick.orphan .tickStep {
+  color: var(--tape-ink);
+}
+
+.tick.yours {
+  background: var(--held);
+  color: #e8f0ea;
+}
+
+.tick.yours .tickName,
+.tick.yours .tickStep {
+  color: #e8f0ea;
+}
+
+.tick.held,
+.tick.waiting,
+.tick.clear {
+  color: #c8c1ae;
+}
+
+/* ------------------------------------------------------------- colophon */
+
+.colophon {
+  position: relative;
+  padding: 0.9rem 1rem 1.4rem;
+  border-top: 1px solid rgba(232, 226, 210, 0.14);
+  color: #9a9484;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  max-width: 52rem;
+}
+
+.colophon p {
+  margin: 0 0 0.5rem;
+}
+
+.colophon i {
+  font-style: italic;
+}
+
+.keys {
+  color: #7e796c;
+}
+
+.back {
+  position: absolute;
+  right: 1rem;
+  bottom: 1.2rem;
+  color: #7e796c;
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.68rem;
+}
+
+.back:hover {
+  color: #d5cebc;
+}
+
+@media (min-width: 860px) {
+  .mast {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    padding: 1.15rem 1.35rem 0.9rem;
+  }
+
+  .clock {
+    justify-content: end;
+  }
+
+  .now {
+    padding: 1rem 1.35rem 0.2rem;
+  }
+
+  .shift {
+    padding: 0.95rem 1.35rem 1.05rem;
+  }
+
+  .board {
+    grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
+    padding: 1.15rem 1.35rem;
+  }
+
+  .rail {
+    margin: 0 1.35rem 1.15rem;
+  }
+
+  .colophon {
+    padding: 1rem 1.35rem 1.5rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .rail {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .quietRow {
+    grid-template-columns: 1fr;
+    gap: 0.1rem;
+  }
+
+  .cat {
+    font-size: 1.7rem;
+  }
+
+  .lead .cat {
+    font-size: 1.95rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root * {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}

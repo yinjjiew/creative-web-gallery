@@ -1,0 +1,158 @@
+.page {
+  position: relative;
+  min-height: 100dvh;
+  background: #efebe3;
+  color: #2a2622;
+  font-family: var(--font-text), "Helvetica Neue", sans-serif;
+  font-size: 13px;
+  line-height: 1.45;
+  overflow: hidden;
+}
+
+.stage {
+  position: absolute;
+  inset: 0;
+  touch-action: none;
+}
+
+.stage canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: none;
+}
+
+.stage canvas:active,
+.stage[data-held="true"] canvas {
+  cursor: grabbing;
+}
+
+.placeholder {
+  position: absolute;
+  inset: 0;
+  background: #efebe3;
+}
+
+.didactic {
+  position: absolute;
+  left: clamp(14px, 3vw, 36px);
+  bottom: clamp(14px, 3vw, 32px);
+  z-index: 2;
+  width: min(17.5rem, calc(100vw - 5.5rem));
+  padding: 0.95rem 1.05rem 1rem;
+  background: #f4f0e7;
+  box-shadow:
+    0 0 0 1px #d9d2c6,
+    0 10px 28px rgba(40, 34, 28, 0.06);
+  pointer-events: auto;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.55rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+}
+
+.meta {
+  margin: 0.35rem 0 0;
+  color: #5c564e;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.note {
+  margin: 0.7rem 0 0;
+  color: #3d3832;
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+.note em {
+  font-style: italic;
+  font-family: var(--font-display), Georgia, serif;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.7rem;
+  align-items: center;
+  margin-top: 0.85rem;
+}
+
+.nudge {
+  appearance: none;
+  margin: 0;
+  padding: 0.32rem 0.62rem;
+  border: 1px solid #b9b1a4;
+  background: #f4f0e7;
+  color: #2a2622;
+  font: inherit;
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+}
+
+.nudge:hover {
+  background: #ebe5d9;
+}
+
+.nudge:focus-visible {
+  outline: 2px solid #2a2622;
+  outline-offset: 2px;
+}
+
+.status {
+  color: #6a645c;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.task {
+  position: absolute;
+  right: clamp(14px, 3vw, 36px);
+  bottom: clamp(14px, 3vw, 32px);
+  z-index: 2;
+  color: #7a746a;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.task:hover {
+  color: #2a2622;
+}
+
+.task:focus-visible {
+  outline: 2px solid #2a2622;
+  outline-offset: 3px;
+}
+
+@media (max-width: 540px) {
+  .didactic {
+    width: min(16.5rem, calc(100vw - 2rem));
+    padding: 0.8rem 0.85rem 0.85rem;
+  }
+
+  .title {
+    font-size: 1.35rem;
+  }
+
+  .task {
+    top: clamp(12px, 3vw, 24px);
+    bottom: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nudge {
+    border-color: #2a2622;
+  }
+}

@@ -1,9 +1,15 @@
 .bar {
   border-bottom: 1px solid var(--rule);
-  background: var(--paper);
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: blur(10px);
   position: sticky;
   top: 0;
   z-index: 10;
+}
+
+.live {
+  color: var(--signal) !important;
+  border-bottom-color: color-mix(in srgb, var(--signal) 45%, transparent) !important;
 }
 
 .inner {

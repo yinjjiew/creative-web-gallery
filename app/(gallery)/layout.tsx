@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono, Newsreader } from "next/font/google";
 
+import { Lamp } from "@/components/Lamp";
 import { Masthead } from "@/components/Masthead";
+import { overallProgress } from "@/lib/tasks";
 
 import "./gallery.css";
 
@@ -41,10 +43,13 @@ export default function GalleryLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const { complete, total } = overallProgress();
+
   return (
     <html lang="en" className={`${text.variable} ${mono.variable}`}>
       <body>
-        <Masthead />
+        <Lamp />
+        <Masthead complete={complete} total={total} />
         <main id="main">{children}</main>
         <footer className="shell" style={{ padding: "4rem var(--gutter) 3rem" }}>
           <hr className="rule" />
@@ -52,7 +57,7 @@ export default function GalleryLayout({
             className="mono"
             style={{ color: "var(--faint)", paddingTop: "1.25rem" }}
           >
-            Reference implementations. Prompts written for this catalogue.
+            Move the lamp. Open a plate. {complete} of {total} are live.
           </p>
         </footer>
       </body>
