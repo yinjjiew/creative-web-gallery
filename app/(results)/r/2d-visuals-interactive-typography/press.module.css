@@ -1,0 +1,229 @@
+/*
+ * A print-shop bench and a single sheet. Chrome lives on the wood, never on
+ * the rag, so labels stay readable whether the lamp is over them or not.
+ */
+
+.page {
+  --bench: #12100e;
+  --cream: #e4d6c2;
+  --mute: #8d8274;
+  --rule: #4a433a;
+
+  box-sizing: border-box;
+  position: relative;
+  height: 100dvh;
+  overflow: hidden;
+  overscroll-behavior: none;
+  background: var(--bench);
+  color: var(--cream);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.page *,
+.page *::before,
+.page *::after {
+  box-sizing: inherit;
+}
+
+.canvas,
+.pending {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: none;
+}
+
+.pending {
+  background: var(--bench);
+  cursor: default;
+}
+
+.canvas:focus {
+  outline: none;
+}
+
+.canvas:focus-visible {
+  outline: 2px solid var(--cream);
+  outline-offset: -10px;
+}
+
+.head,
+.foot {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 20px;
+  padding: 0 clamp(16px, 2.6vw, 32px);
+  pointer-events: none;
+}
+
+.head {
+  top: 0;
+  padding-top: clamp(12px, 1.8vw, 22px);
+}
+
+.foot {
+  bottom: 0;
+  padding-bottom: clamp(12px, 1.8vw, 22px);
+}
+
+.title {
+  margin: 0;
+  font-size: 17px;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+.note {
+  margin: 0;
+  color: var(--mute);
+  font-size: 12px;
+  font-style: italic;
+}
+
+.tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2em 1.2em;
+  pointer-events: auto;
+}
+
+.hint {
+  margin: 0;
+  color: var(--mute);
+  font-size: 12px;
+  font-style: italic;
+}
+
+button.act,
+.link {
+  pointer-events: auto;
+  margin: 0;
+  padding: 0 0 1px;
+  border: none;
+  border-bottom: 1px solid var(--rule);
+  background: none;
+  color: var(--cream);
+  font: inherit;
+  font-size: 13px;
+  font-style: italic;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button.act[aria-pressed="true"] {
+  border-bottom-color: var(--cream);
+}
+
+button.act:hover,
+button.act:focus-visible,
+.link:hover,
+.link:focus-visible {
+  border-bottom-color: var(--cream);
+}
+
+button.act:focus-visible,
+.link:focus-visible {
+  outline: 2px solid var(--cream);
+  outline-offset: 3px;
+}
+
+.proof {
+  position: absolute;
+  inset: clamp(56px, 10vh, 88px) clamp(20px, 8vw, 96px)
+    clamp(64px, 12vh, 100px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0;
+  padding: clamp(28px, 5vw, 56px) clamp(24px, 5vw, 48px);
+  overflow: auto;
+  border: 0;
+  background: #e4d6c2;
+  color: #2a2118;
+}
+
+.proof p {
+  margin: 0;
+  font-size: clamp(18px, 2.6vw, 26px);
+  font-style: italic;
+  line-height: 1.45;
+}
+
+.proof p + p {
+  margin-top: 1.15em;
+}
+
+.proof footer {
+  margin-top: 2em;
+  color: #6a5e50;
+  font-size: 12px;
+  font-style: italic;
+}
+
+.failed {
+  background: #e4d6c2;
+}
+
+.live,
+.offscreen {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 640px) {
+  .title {
+    font-size: 16px;
+  }
+
+  .note {
+    display: none;
+  }
+
+  .hint {
+    flex-basis: 100%;
+    font-size: 11px;
+  }
+
+  button.act,
+  .link {
+    font-size: 13px;
+  }
+
+  .proof {
+    inset: 52px 14px 72px;
+    padding: 28px 22px;
+  }
+
+  .proof p {
+    font-size: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button.act,
+  .link {
+    transition: none;
+  }
+}

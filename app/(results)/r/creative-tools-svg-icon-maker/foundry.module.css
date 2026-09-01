@@ -1,0 +1,774 @@
+/**
+ * A punchcutter's proof on chipboard. Warm desk, ivory sheet, iron-gall
+ * ink, one vermillion for construction. The spec line is the set; the plate
+ * is the local punch. Nothing glows.
+ */
+
+.root,
+.desk,
+.booting {
+  --desk: #c4bba8;
+  --sheet: #f6f1e4;
+  --ink: #1c1914;
+  --mute: #6e6858;
+  --hair: rgba(28, 25, 20, 0.16);
+  --hair-strong: rgba(28, 25, 20, 0.42);
+  --rule: #b83320;
+  --serif: var(--stk-serif), "Iowan Old Style", Georgia, serif;
+  --mono: var(--stk-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+
+.root {
+  min-height: 100dvh;
+  background: var(--desk);
+  color: var(--ink);
+  color-scheme: light;
+}
+
+.booting {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  background: var(--desk);
+  color: var(--mute);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.desk {
+  min-height: 100dvh;
+  background: var(--desk);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  padding: 16px 20px;
+}
+
+.desk,
+.desk *,
+.desk *::before,
+.desk *::after {
+  box-sizing: border-box;
+}
+
+.desk button,
+.desk input {
+  font: inherit;
+  color: inherit;
+}
+
+.desk button {
+  margin: 0;
+  background: none;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+}
+
+.desk button:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
+.desk h1,
+.desk p,
+.desk ul,
+.desk ol,
+.desk figure,
+.desk fieldset {
+  margin: 0;
+}
+
+.desk ul,
+.desk ol {
+  padding: 0;
+  list-style: none;
+}
+
+.desk :focus-visible {
+  outline: 2px solid var(--rule);
+  outline-offset: 2px;
+}
+
+.sheet {
+  min-height: calc(100dvh - 32px);
+  max-width: 1280px;
+  margin: 0 auto;
+  background: var(--sheet);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 0 1px var(--hair-strong);
+}
+
+/* ---------------------------------------------------------------- mast -- */
+
+.mast {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 20px 28px;
+  align-items: end;
+  padding: 22px 24px 16px;
+  border-bottom: 1px solid var(--hair);
+}
+
+.kicker {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--rule);
+}
+
+.word {
+  font-family: var(--serif);
+  font-size: clamp(32px, 4vw, 44px);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+}
+
+.dek {
+  max-width: 42em;
+  color: var(--mute);
+  font-size: 11.5px;
+  line-height: 1.5;
+}
+
+.escape {
+  align-self: start;
+  font-family: var(--serif);
+  font-size: 13px;
+  font-style: italic;
+  color: var(--mute);
+  text-decoration: none;
+}
+
+.escape:hover {
+  color: var(--ink);
+}
+
+/* ---------------------------------------------------------------- spec -- */
+
+.spec {
+  padding: 12px 24px 14px;
+  border-bottom: 1px solid var(--hair);
+}
+
+.specLabel {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--rule);
+}
+
+.specReadout {
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: var(--mute);
+  font-size: 11px;
+}
+
+.specRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 22px;
+  align-items: end;
+}
+
+.field {
+  border: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+.field legend {
+  padding: 0;
+  margin-bottom: 6px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.chip,
+.chipOn,
+.ghostBtn,
+.inkBtn,
+.tool,
+.toolOn {
+  border: 1px solid var(--hair-strong);
+  padding: 5px 8px;
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  line-height: 1;
+}
+
+.chipOn,
+.toolOn,
+.inkBtn {
+  background: var(--ink);
+  color: var(--sheet);
+  border-color: var(--ink);
+}
+
+.chip:hover,
+.ghostBtn:hover,
+.tool:hover,
+.proofBtn:hover {
+  border-color: var(--ink);
+}
+
+/* --------------------------------------------------------------- stage -- */
+
+.stage {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(176px, 22%) minmax(0, 1fr) minmax(200px, 24%);
+  min-height: 0;
+}
+
+.proof,
+.rail,
+.plateCol {
+  min-width: 0;
+  padding: 14px 16px 16px;
+}
+
+.proof,
+.rail {
+  background: color-mix(in srgb, var(--desk) 18%, var(--sheet));
+}
+
+.proof {
+  border-right: 1px solid var(--hair);
+}
+
+.rail {
+  border-left: 1px solid var(--hair);
+}
+
+.colHead {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+.proofList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.proofBtn,
+.proofOn {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 28px 1fr 36px;
+  gap: 10px;
+  align-items: center;
+  padding: 5px 6px;
+  text-align: left;
+  border: 1px solid transparent;
+}
+
+.proofOn {
+  background: var(--sheet);
+  border-color: var(--hair-strong);
+}
+
+.proofName {
+  font-family: var(--serif);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.den,
+.denWarn {
+  display: block;
+  height: 3px;
+  background: var(--hair);
+  position: relative;
+}
+
+.den i,
+.denWarn i {
+  display: block;
+  height: 100%;
+  background: var(--ink);
+}
+
+.denWarn i {
+  background: var(--rule);
+}
+
+.proofActs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.ghostBtn {
+  background: transparent;
+}
+
+/* --------------------------------------------------------------- plate -- */
+
+.plateCol {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.plateHead {
+  display: grid;
+  grid-template-columns: 1fr auto minmax(8rem, 12rem);
+  gap: 8px 12px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.plateHead .colHead {
+  margin: 0;
+}
+
+.nameLab {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+.name {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid var(--hair-strong);
+  background: transparent;
+  padding: 4px 0;
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 0;
+}
+
+.name:focus {
+  outline: none;
+  border-bottom-color: var(--rule);
+}
+
+.plateWrap {
+  position: relative;
+  flex: 1;
+  display: grid;
+  place-items: center;
+  min-height: 240px;
+  padding: 22px;
+}
+
+.plate {
+  width: min(52vh, 100%);
+  height: auto;
+  aspect-ratio: 1;
+  touch-action: none;
+  cursor: crosshair;
+  background: var(--sheet);
+  color: var(--ink);
+  display: block;
+  box-shadow: 0 0 0 1px var(--hair);
+  user-select: none;
+}
+
+.plateBed {
+  fill: var(--sheet);
+}
+
+.gridFine {
+  stroke: rgba(28, 25, 20, 0.07);
+  stroke-width: 0.04;
+}
+
+.gridStrong {
+  stroke: rgba(28, 25, 20, 0.16);
+  stroke-width: 0.05;
+}
+
+.keyline {
+  fill: none;
+  stroke: var(--rule);
+  stroke-width: 0.07;
+  stroke-dasharray: 0.35 0.35;
+}
+
+.ink {
+  color: var(--ink);
+}
+
+.still .ink,
+.still .ghost {
+  transition: none;
+}
+
+.ink {
+  transition: stroke-width 160ms ease;
+}
+
+.ghost {
+  color: var(--rule);
+  stroke: var(--rule);
+  fill: none;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.snap {
+  stroke: var(--rule);
+  stroke-width: 0.12;
+  pointer-events: none;
+}
+
+.crop {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+}
+
+.cropTl {
+  top: 8px;
+  left: 8px;
+  border-top: 1px solid var(--ink);
+  border-left: 1px solid var(--ink);
+}
+
+.cropTr {
+  top: 8px;
+  right: 8px;
+  border-top: 1px solid var(--ink);
+  border-right: 1px solid var(--ink);
+}
+
+.cropBl {
+  bottom: 8px;
+  left: 8px;
+  border-bottom: 1px solid var(--ink);
+  border-left: 1px solid var(--ink);
+}
+
+.cropBr {
+  bottom: 8px;
+  right: 8px;
+  border-bottom: 1px solid var(--ink);
+  border-right: 1px solid var(--ink);
+}
+
+.tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 10px;
+}
+
+.tool,
+.toolOn {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 6px 8px;
+  min-width: 56px;
+}
+
+.tool em,
+.toolOn em {
+  font-style: normal;
+  font-size: 9px;
+  letter-spacing: 0.02em;
+  color: var(--mute);
+}
+
+.toolOn em {
+  color: color-mix(in srgb, var(--sheet) 70%, var(--ink));
+}
+
+.plateHint {
+  margin-top: 8px;
+  color: var(--mute);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+/* ---------------------------------------------------------------- rail -- */
+
+.marks {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 28vh;
+  overflow: auto;
+}
+
+.marks li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  align-items: center;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--hair);
+  font-size: 10.5px;
+  color: var(--mute);
+  word-break: break-all;
+}
+
+.x {
+  padding: 2px 6px;
+  color: var(--ink);
+}
+
+.empty {
+  color: var(--mute);
+  font-size: 11px;
+  margin-bottom: 8px;
+}
+
+.sizes {
+  display: flex;
+  align-items: end;
+  gap: 16px;
+  padding: 8px 0 14px;
+}
+
+.sizeFig {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.sizeFig figcaption {
+  font-size: 10px;
+  color: var(--mute);
+}
+
+.bar,
+.barMobile {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  padding: 8px;
+  background: var(--ink);
+  color: var(--sheet);
+}
+
+.barMobile {
+  display: none;
+}
+
+.barBtn,
+.barOn {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  color: inherit;
+}
+
+.barOn {
+  background: color-mix(in srgb, var(--sheet) 14%, transparent);
+}
+
+/* ---------------------------------------------------------------- foot -- */
+
+.foot {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 20px 32px;
+  align-items: start;
+  padding: 14px 24px 18px;
+  border-top: 1px solid var(--hair);
+}
+
+.export {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.live {
+  flex-basis: 100%;
+  min-height: 1.2em;
+  color: var(--rule);
+  font-size: 11px;
+}
+
+.colophon {
+  font-family: var(--serif);
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--mute);
+  max-width: 46em;
+}
+
+/* -------------------------------------------------------------- phone -- */
+
+@media (max-width: 860px) {
+  .desk {
+    padding: 0;
+  }
+
+  .sheet {
+    min-height: 100dvh;
+    box-shadow: none;
+  }
+
+  .mast {
+    grid-template-columns: 1fr auto;
+    padding: 16px 14px 12px;
+  }
+
+  .dek {
+    grid-column: 1 / -1;
+  }
+
+  .spec {
+    padding: 10px 14px 12px;
+  }
+
+  .specLabel {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .stage {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .proof,
+  .rail,
+  .plateCol {
+    padding: 12px 14px;
+    background: transparent;
+    border: 0;
+  }
+
+  .proof {
+    order: 2;
+    border-top: 1px solid var(--hair);
+  }
+
+  .proofList {
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 4px;
+    padding-bottom: 6px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .proofBtn,
+  .proofOn {
+    width: auto;
+    grid-template-columns: 28px;
+    grid-template-rows: 28px auto 3px;
+    justify-items: center;
+    min-width: 64px;
+  }
+
+  .proofName {
+    font-size: 11px;
+    max-width: 64px;
+  }
+
+  .den,
+  .denWarn {
+    width: 28px;
+  }
+
+  .plateCol {
+    order: 1;
+  }
+
+  .plateHead {
+    grid-template-columns: 1fr;
+  }
+
+  .plateWrap {
+    min-height: 0;
+    padding: 18px 8px;
+  }
+
+  .plate {
+    width: min(100%, 56vw);
+  }
+
+  .tool em,
+  .toolOn em {
+    display: none;
+  }
+
+  .rail {
+    order: 3;
+    border-top: 1px solid var(--hair);
+  }
+
+  .marks {
+    max-height: 20vh;
+  }
+
+  .foot {
+    grid-template-columns: 1fr;
+    padding: 14px;
+  }
+
+  .chip,
+  .chipOn,
+  .ghostBtn,
+  .inkBtn,
+  .tool,
+  .toolOn {
+    min-height: 40px;
+  }
+
+  .barMobile {
+    display: flex;
+    margin: 0 14px;
+    justify-content: center;
+  }
+
+  .optHint {
+    display: none;
+  }
+
+  .dek {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ink,
+  .ghost {
+    transition: none;
+  }
+}

@@ -1,0 +1,380 @@
+/*
+ * Soot, brick, bone, the colour of cooling steel.
+ * The interface is a shop ticket, not a HUD. Same four values the canvas uses.
+ */
+
+.root {
+  min-height: 100dvh;
+  background: #100c0a;
+}
+
+.wrap {
+  --soot: #100c0a;
+  --bone: #e6d2b0;
+  --brick: #8a3a28;
+  --iron: #2a2622;
+  --dim: rgba(230, 210, 176, 0.72);
+  --faint: rgba(230, 210, 176, 0.52);
+
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: var(--soot);
+  color: var(--bone);
+  font-family: var(--ticket), ui-sans-serif, system-ui, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+}
+
+.piece {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: min(72vw, 520px);
+  height: min(46vh, 380px);
+  transform: translate(-50%, -52%);
+  pointer-events: auto;
+  touch-action: none;
+}
+
+.piece > div,
+.piece canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── running ticket ──────────────────────────────────────────────────────── */
+
+.hud {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.left,
+.right {
+  position: absolute;
+  top: clamp(14px, 2.8vh, 28px);
+  display: flex;
+  flex-direction: column;
+}
+
+.left {
+  left: clamp(16px, 3vw, 40px);
+  align-items: flex-start;
+}
+
+.right {
+  right: clamp(16px, 3vw, 40px);
+  align-items: flex-end;
+  text-align: right;
+}
+
+.tick {
+  font-size: 10px;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: 0.2em;
+}
+
+.name {
+  font-family: var(--display), "Times New Roman", serif;
+  font-size: clamp(22px, 3.2vw, 34px);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+.heat {
+  margin-top: 0.45em;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: lowercase;
+  color: var(--dim);
+  min-height: 1.2em;
+}
+
+.heat[data-ready="true"] {
+  color: var(--bone);
+}
+
+.count {
+  font-family: var(--display), "Times New Roman", serif;
+  font-variant-numeric: lining-nums tabular-nums;
+  font-size: clamp(22px, 3.2vw, 34px);
+  line-height: 1;
+}
+
+.word {
+  position: absolute;
+  left: 50%;
+  top: 18%;
+  transform: translateX(-50%);
+  margin: 0;
+  font-family: var(--display), "Times New Roman", serif;
+  font-style: italic;
+  font-size: clamp(18px, 2.8vw, 32px);
+  letter-spacing: 0.02em;
+  pointer-events: none;
+  animation: said 0.9s ease-out forwards;
+}
+
+.word[data-g="true"] {
+  color: var(--bone);
+}
+.word[data-g="fair"] {
+  color: var(--dim);
+}
+.word[data-g="early"],
+.word[data-g="late"] {
+  color: #c47848;
+}
+.word[data-g="cold"],
+.word[data-g="miss"] {
+  color: #9a7060;
+}
+
+@keyframes said {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 8px);
+  }
+  12% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -12px);
+  }
+}
+
+.hint {
+  position: absolute;
+  left: 50%;
+  bottom: 16%;
+  transform: translateX(-50%);
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: lowercase;
+  color: var(--dim);
+  pointer-events: none;
+  text-align: center;
+  max-width: 22rem;
+}
+
+/* ── cards ───────────────────────────────────────────────────────────────── */
+
+.card {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 0 clamp(18px, 3.4vw, 48px) clamp(56px, 10vh, 92px);
+  text-align: left;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    rgba(12, 9, 8, 0.94) 0%,
+    rgba(12, 9, 8, 0.55) 22%,
+    rgba(12, 9, 8, 0) 48%
+  );
+}
+
+.kicker {
+  margin: 0 0 1em;
+  font-size: 10px;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--display), "Times New Roman", serif;
+  font-weight: 500;
+  font-size: clamp(56px, 9vw, 120px);
+  line-height: 0.84;
+  letter-spacing: -0.03em;
+}
+
+.lede {
+  max-width: 28rem;
+  margin: 1.2em 0 0;
+  font-size: clamp(13px, 1.6vw, 16px);
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  color: var(--dim);
+}
+
+.lede em {
+  font-family: var(--display), "Times New Roman", serif;
+  font-style: italic;
+  font-size: 1.1em;
+  color: var(--bone);
+}
+
+.begin {
+  pointer-events: auto;
+  margin: 1.8em 0 0;
+  padding: 0.78em 2em 0.68em;
+  font: inherit;
+  font-size: clamp(12px, 1.5vw, 14px);
+  letter-spacing: 0.28em;
+  text-transform: lowercase;
+  color: var(--soot);
+  background: var(--bone);
+  border: 0;
+  cursor: pointer;
+}
+
+.begin:hover {
+  background: #f3e2c2;
+}
+
+.begin:active {
+  transform: translateY(1px);
+}
+
+.row {
+  pointer-events: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7em 1em;
+  margin-top: 1.6em;
+  align-items: center;
+}
+
+.ghost {
+  pointer-events: auto;
+  padding: 0.78em 1.4em 0.68em;
+  font: inherit;
+  font-size: clamp(12px, 1.5vw, 14px);
+  letter-spacing: 0.22em;
+  text-transform: lowercase;
+  color: var(--bone);
+  background: transparent;
+  border: 1px solid rgba(230, 210, 176, 0.4);
+  cursor: pointer;
+}
+
+.ghost:hover {
+  border-color: var(--bone);
+}
+
+.control {
+  margin: 1.1em 0 0;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--faint);
+}
+
+.control kbd {
+  font-family: inherit;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  padding: 0.2em 0.5em 0.12em;
+  border: 1px solid rgba(230, 210, 176, 0.4);
+  color: var(--dim);
+}
+
+.rack {
+  margin: 1.4em 0 0;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--faint);
+}
+
+.stat {
+  margin: 0.85em 0 0;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--dim);
+}
+
+/* ── corner ──────────────────────────────────────────────────────────────── */
+
+.corner {
+  position: absolute;
+  right: clamp(16px, 3vw, 40px);
+  bottom: clamp(14px, 2.4vh, 26px);
+  display: flex;
+  gap: 1.5em;
+  align-items: baseline;
+  pointer-events: auto;
+}
+
+.quiet {
+  padding: 0;
+  font: inherit;
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: lowercase;
+  color: var(--faint);
+  background: none;
+  border: 0;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.quiet:hover {
+  color: var(--bone);
+}
+
+.wrap :focus-visible {
+  outline: 1px solid var(--bone);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word {
+    animation: none;
+    opacity: 1;
+  }
+  .card {
+    background: linear-gradient(
+      to top,
+      rgba(12, 9, 8, 0.94) 0%,
+      rgba(12, 9, 8, 0.7) 42%,
+      rgba(12, 9, 8, 0) 78%
+    );
+  }
+}
+
+@media (max-width: 620px) {
+  .card {
+    padding-bottom: clamp(64px, 12vh, 96px);
+  }
+  .title {
+    font-size: clamp(48px, 16vw, 84px);
+  }
+  .lede {
+    max-width: 22rem;
+  }
+  .hint {
+    bottom: 18%;
+    width: 86%;
+  }
+  .piece {
+    width: 88vw;
+    height: 38vh;
+    top: 44%;
+  }
+  .corner {
+    gap: 1.1em;
+  }
+}

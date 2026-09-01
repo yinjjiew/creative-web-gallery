@@ -1,0 +1,764 @@
+/*
+ * Kestrel.
+ *
+ * Cool stone, not warm mill paper and not a gadget black. The register is an
+ * optician or a watch atelier: one ink, one paper, the alloy as the only
+ * colour, type large enough that a person between fifty and sixty-eight does
+ * not have to pinch to read the price. No cards, no glass, no gradient type.
+ *
+ * --metal is set from the chosen finish so the rules take on the case.
+ */
+
+.root {
+  --paper: #eef0ec;
+  --paper-2: #e3e5df;
+  --paper-3: #d5d8d1;
+  --ink: #141613;
+  --ink-2: #3a3d38;
+  --muted: #4a4e48;
+  --rule: #c5c8c1;
+  --metal: #5f6468;
+  --brass: #8f6a22;
+  --focus: #141613;
+
+  --display: var(--font-display), "Iowan Old Style", Georgia, serif;
+  --text: var(--font-text), "Atkinson Hyperlegible", ui-sans-serif, system-ui, sans-serif;
+
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--text);
+  font-size: 1.25rem;
+  line-height: 1.55;
+  min-height: 100vh;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: clip;
+  overflow-wrap: break-word;
+  padding-bottom: 5.5rem;
+}
+
+@media (min-width: 800px) {
+  .root {
+    padding-bottom: 0;
+  }
+}
+
+.root *,
+.root *::before,
+.root *::after {
+  box-sizing: border-box;
+}
+
+.root :focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.root a:focus-visible,
+.root button:focus-visible,
+.root input:focus-visible,
+.root select:focus-visible,
+.root textarea:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.7rem 1.1rem;
+  font: 700 1rem/1 var(--text);
+  z-index: 30;
+}
+
+.skip:focus {
+  left: 0.6rem;
+  top: 0.6rem;
+}
+
+/* ---------------------------------------------------------------- mast */
+
+.mast {
+  position: sticky;
+  top: 0;
+  z-index: 12;
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+}
+
+.mastInner {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0.7rem 1.1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.7rem 1.2rem;
+}
+
+.wordmark {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-family: var(--display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.mark {
+  width: 1.7rem;
+  height: 1.15rem;
+  color: var(--metal);
+  flex: none;
+}
+
+.nav {
+  display: none;
+  gap: 0.2rem 1.1rem;
+  flex: 1;
+}
+
+.nav a {
+  color: var(--ink-2);
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 0.45rem 0;
+  border-bottom: 2px solid transparent;
+}
+
+.nav a:hover {
+  color: var(--ink);
+  border-bottom-color: var(--metal);
+}
+
+@media (min-width: 980px) {
+  .nav {
+    display: flex;
+  }
+}
+
+.mastCta {
+  margin-left: auto;
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 1.05rem;
+  text-decoration: none;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 0.15rem;
+  border-bottom: 2px solid var(--metal);
+}
+
+/* ---------------------------------------------------------------- hero */
+
+.hero {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 1.6rem 1.1rem 2.2rem;
+  display: grid;
+  gap: 1.6rem;
+}
+
+@media (min-width: 860px) {
+  .hero {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    align-items: end;
+    padding-top: 2.4rem;
+    gap: 2.4rem;
+  }
+}
+
+.eyebrow {
+  margin: 0 0 0.6rem;
+  font-size: 1rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  font-weight: 700;
+}
+
+.headline {
+  margin: 0 0 1.1rem;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(2.35rem, 1.4rem + 4.2vw, 4.4rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+  max-width: 16ch;
+}
+
+.lede {
+  margin: 0 0 0.9rem;
+  max-width: 38rem;
+  color: var(--ink);
+  font-size: 1.2rem;
+}
+
+.heroMeta {
+  margin: 1.1rem 0 1.3rem;
+  color: var(--ink-2);
+  font-size: 1.05rem;
+}
+
+.heroFig,
+.benchFig,
+.essayFig,
+.caseFig {
+  margin: 0;
+  background: var(--paper-2);
+  padding: 1rem 0.8rem 0.8rem;
+}
+
+.factsSplit {
+  display: grid;
+  gap: 1.2rem;
+}
+
+@media (min-width: 760px) {
+  .factsSplit {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    align-items: start;
+  }
+}
+
+.heroFig figcaption,
+.benchFig figcaption,
+.essayFig figcaption {
+  margin: 0.4rem 0.2rem 0;
+  font-size: 1rem;
+  color: var(--ink-2);
+}
+
+.figureSvg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+}
+
+/* ---------------------------------------------------------------- type */
+
+.wrap {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 1.1rem;
+}
+
+.band,
+.essay,
+.section,
+.book {
+  padding: 2.4rem 0 2.8rem;
+  border-top: 1px solid var(--rule);
+}
+
+.essay {
+  background: var(--paper-2);
+}
+
+.book {
+  background: var(--paper-2);
+}
+
+.kicker {
+  margin: 0 0 0.55rem;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+.sectionTitle {
+  margin: 0 0 1rem;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(1.85rem, 1.2rem + 2vw, 2.7rem);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+  max-width: 22ch;
+}
+
+.display {
+  margin: 0 0 1.4rem;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(2rem, 1.2rem + 2.6vw, 3.2rem);
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+  max-width: 20ch;
+}
+
+.subhead {
+  margin: 2rem 0 0.7rem;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.55rem;
+  letter-spacing: -0.02em;
+}
+
+.measure,
+.prose {
+  margin: 0 0 1rem;
+  max-width: 40rem;
+}
+
+.essay p {
+  margin: 0 0 1rem;
+  max-width: 40rem;
+}
+
+.essayGrid {
+  display: grid;
+  gap: 1.6rem;
+}
+
+@media (min-width: 800px) {
+  .essayGrid {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    align-items: start;
+  }
+}
+
+.list {
+  margin: 0 0 1.1rem;
+  padding: 0 0 0 1.25rem;
+  max-width: 42rem;
+}
+
+.list li {
+  margin: 0 0 0.55rem;
+}
+
+.caption {
+  margin: 0.8rem 0 0;
+  font-size: 1.05rem;
+  color: var(--ink-2);
+  max-width: 42rem;
+}
+
+/* ---------------------------------------------------------------- object */
+
+.objectGrid {
+  display: grid;
+  gap: 1.4rem;
+  margin-top: 1.4rem;
+}
+
+@media (min-width: 860px) {
+  .objectGrid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.finishList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.finish {
+  display: flex;
+  gap: 0.85rem;
+  align-items: flex-start;
+  text-align: left;
+  width: 100%;
+  min-height: 52px;
+  padding: 0.7rem 0.75rem;
+  border: 2px solid var(--rule);
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
+}
+
+.finish[aria-pressed="true"] {
+  border-color: var(--ink);
+}
+
+.finish strong {
+  display: block;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.finish em {
+  display: block;
+  margin-top: 0.2rem;
+  font-style: normal;
+  font-size: 1.02rem;
+  color: var(--ink-2);
+}
+
+.swatch {
+  width: 2.4rem;
+  height: 2.4rem;
+  flex: none;
+  border: 1px solid rgb(20 22 19 / 25%);
+}
+
+/* ---------------------------------------------------------------- room */
+
+.room {
+  margin-top: 1.4rem;
+}
+
+.roomPlan {
+  background: var(--paper-2);
+  padding: 1rem;
+  max-width: 28rem;
+}
+
+.roomSvg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.roomTalk {
+  margin: 1.2rem 0 0.4rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.talkSelf,
+.talkHeld,
+.talkFar {
+  margin: 0;
+  padding: 0.35rem 0;
+  overflow-wrap: anywhere;
+}
+
+.talkSelf {
+  color: var(--ink);
+  font-size: 1.15rem;
+}
+
+.talkHeld {
+  color: var(--ink);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.talkFar {
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.talkWho {
+  display: inline-block;
+  min-width: 3.2rem;
+  font-weight: 700;
+  color: var(--ink-2);
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+}
+
+/* ---------------------------------------------------------------- choices / fit */
+
+.choiceSet {
+  margin: 1.2rem 0 0;
+  padding: 0;
+  border: 0;
+}
+
+.choiceSet legend {
+  padding: 0;
+  margin: 0 0 0.5rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.choiceRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.choice {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 52px;
+  padding: 0.4rem 0.75rem;
+  border: 2px solid var(--rule);
+  background: var(--paper);
+  cursor: pointer;
+  font-size: 1.05rem;
+}
+
+.choice:has(input:checked) {
+  border-color: var(--ink);
+}
+
+.choice input {
+  width: 1.15rem;
+  height: 1.15rem;
+  accent-color: var(--ink);
+  flex: none;
+}
+
+.choiceNote {
+  margin: 0.7rem 0 0;
+  max-width: 42rem;
+  color: var(--ink-2);
+  font-size: 1.05rem;
+}
+
+.chip {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+  min-height: 52px;
+  padding: 0.45rem 0.85rem;
+  border: 2px solid var(--rule);
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-size: 1.05rem;
+  cursor: pointer;
+}
+
+.chip span {
+  font-size: 0.95rem;
+  color: var(--ink-2);
+}
+
+.chip[aria-pressed="true"] {
+  border-color: var(--ink);
+}
+
+.fit {
+  display: grid;
+  gap: 1.4rem;
+  margin-top: 1.2rem;
+}
+
+@media (min-width: 720px) {
+  .fit {
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.1fr);
+    align-items: start;
+  }
+}
+
+.fitDraw {
+  background: var(--paper-2);
+  padding: 0.8rem;
+}
+
+/* ---------------------------------------------------------------- spec */
+
+.spec {
+  margin: 1.6rem 0 0;
+  border-top: 1px solid var(--ink);
+  max-width: 40rem;
+}
+
+.specRow {
+  display: grid;
+  grid-template-columns: minmax(8rem, 42%) minmax(0, 1fr);
+  gap: 0.6rem 1rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.specRow dt {
+  margin: 0;
+  color: var(--ink-2);
+  font-weight: 400;
+}
+
+.specRow dd {
+  margin: 0;
+  font-weight: 700;
+}
+
+/* ---------------------------------------------------------------- form */
+
+.form {
+  margin-top: 1.4rem;
+  max-width: 42rem;
+}
+
+.fieldRow {
+  display: grid;
+  gap: 0.8rem;
+}
+
+@media (min-width: 640px) {
+  .fieldRow {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin: 0.85rem 0 0;
+}
+
+.field label {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  min-height: 52px;
+  padding: 0.65rem 0.75rem;
+  border: 2px solid var(--ink-2);
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-size: 1.15rem;
+  border-radius: 0;
+}
+
+.field textarea {
+  min-height: 6.5rem;
+  resize: vertical;
+}
+
+.submit,
+.ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 0.7rem 1.3rem;
+  font: 700 1.15rem/1.2 var(--text);
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid var(--ink);
+}
+
+.submit {
+  background: var(--ink);
+  color: var(--paper);
+  margin-top: 1.1rem;
+}
+
+.ghost {
+  background: transparent;
+  color: var(--ink);
+  margin-top: 1rem;
+}
+
+.error {
+  margin: 0.8rem 0 0;
+  color: #6b1d12;
+  font-weight: 700;
+}
+
+.receipt {
+  border: 2px solid var(--ink);
+  padding: 1.1rem 1rem 1.2rem;
+  background: var(--paper);
+}
+
+.receiptTitle {
+  margin: 0.2rem 0 0.8rem;
+  font-family: var(--display);
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+
+.dl {
+  margin: 0.4rem 0 0;
+}
+
+.dlRow {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+@media (min-width: 560px) {
+  .dlRow {
+    grid-template-columns: 9.5rem minmax(0, 1fr);
+    gap: 0.8rem;
+  }
+}
+
+.dlRow dt {
+  font-weight: 700;
+  color: var(--ink-2);
+}
+
+.dlRow dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+/* ---------------------------------------------------------------- footer / dock */
+
+.colophon {
+  border-top: 1px solid var(--ink);
+  padding: 1.8rem 0 2.4rem;
+  color: var(--ink-2);
+  font-size: 1.05rem;
+}
+
+.colophon p {
+  margin: 0 0 0.8rem;
+  max-width: 48rem;
+}
+
+.colophon strong {
+  color: var(--ink);
+}
+
+.back {
+  color: var(--muted);
+  font-size: 1rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.back:hover {
+  color: var(--ink);
+}
+
+.dock {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 14;
+  padding: 0.65rem 1rem calc(0.65rem + env(safe-area-inset-bottom, 0px));
+  background: var(--paper);
+  border-top: 1px solid var(--rule);
+}
+
+.dock .submit {
+  width: 100%;
+  margin: 0;
+}
+
+@media (min-width: 800px) {
+  .dock {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

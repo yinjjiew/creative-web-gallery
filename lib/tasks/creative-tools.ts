@@ -115,7 +115,7 @@ You choose the drawing model, the constraint system, and the export format.`,
       "Interaction Design",
     ],
     resultRoute: "/r/creative-tools-svg-icon-maker",
-    status: "planned",
+    status: "complete",
     blurb:
       "An icon-set foundry on a shared grid: stroke weight, terminals, corner radius and optical scaling live in the set, so editing the system reshapes every icon at once.",
     direction:

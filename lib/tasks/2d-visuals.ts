@@ -99,7 +99,7 @@ There must be a way for someone to simply read the text — a reduced-motion pre
       "Robustness / Product Polish",
     ],
     resultRoute: "/r/2d-visuals-interactive-typography",
-    status: "planned",
+    status: "complete",
     blurb:
       "A letterpress impression in cotton paper, invisible under flat light and legible only under the raking light of your cursor. Reading it means moving across the page.",
     direction:

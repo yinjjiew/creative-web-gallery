@@ -109,7 +109,7 @@ Do not build a guided tour with hotspots. The learner has to be able to be wrong
       "Visual Design / Taste",
     ],
     resultRoute: "/r/educational-historical-exploration",
-    status: "planned",
+    status: "complete",
     blurb:
       "Conduct Snow's 1854 investigation yourself on the real geography, including the anomalies — the brewery, the workhouse, the widow in Hampstead — that look like refutations.",
     direction:

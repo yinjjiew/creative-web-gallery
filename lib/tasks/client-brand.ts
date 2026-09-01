@@ -43,7 +43,7 @@ AVOID — Stock photography of grey-haired couples laughing on beaches. Wellness
       "Interaction Design",
     ],
     resultRoute: "/r/client-brand-product-launch",
-    status: "planned",
+    status: "complete",
     blurb:
       "A hearing aid launch that argues the category should stop hiding — jewellery-grade industrial design, medical credibility intact, and accessibility as the actual brief.",
     direction:

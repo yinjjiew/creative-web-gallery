@@ -41,7 +41,7 @@ Avoid a full-bleed hero video with a one-word headline, a carousel of client log
       "Robustness / Product Polish",
     ],
     resultRoute: "/r/traditional-websites-company-homepage",
-    status: "planned",
+    status: "complete",
     blurb:
       "One homepage routing five incompatible audiences — procurement, academia, defence, sport, recruits — while proving engineering authority to a sceptic in twenty seconds.",
     direction:

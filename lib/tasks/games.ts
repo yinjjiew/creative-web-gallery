@@ -108,7 +108,7 @@ Visual identity: a real forge. Scale, slag, the specific colour sequence of cool
       "Robustness / Product Polish",
     ],
     resultRoute: "/r/games-rhythm",
-    status: "planned",
+    status: "complete",
     blurb:
       "Keep time on hot iron and the metal takes its shape from your accuracy. A good run and a bad run leave visibly different objects, and cooling steel sets the phrasing.",
     direction:
