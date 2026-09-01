@@ -165,7 +165,7 @@ export function createSim(
   canvas: HTMLCanvasElement,
   options: SimOptions,
 ): SimHandle | null {
-  const gl = canvas.getContext("webgl2", {
+  const glCtx = canvas.getContext("webgl2", {
     alpha: false,
     antialias: false,
     depth: false,
@@ -174,7 +174,8 @@ export function createSim(
     preserveDrawingBuffer: false,
     powerPreference: "high-performance",
   });
-  if (!gl) return null;
+  if (!glCtx) return null;
+  const gl: WebGL2RenderingContext = glCtx;
 
   const depositProg = link(gl, VERTEX, DEPOSIT);
   const stepProg = link(gl, VERTEX, STEP);
